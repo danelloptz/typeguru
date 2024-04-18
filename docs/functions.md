@@ -1,7 +1,7 @@
 # Функциональные модели
 
 ## Диаграмма вариантов использования приложения
-``` plantuml
+```plantuml
 @startuml
 
 skinparam actorStyle awesome
