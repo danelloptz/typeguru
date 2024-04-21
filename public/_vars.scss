@@ -1,0 +1,61 @@
+// labels
+$labels_largest: 150px;
+$labels_okay: 90px;
+$labels_huge: 80px;
+$labels_big: 60px;
+$labels_medium: 45px;
+$labels_normal: 30px;
+$labels_small: 20px;
+$labels_tiny: 15px;
+
+// text 
+$text_normal: 30px;
+$text_small: 20px;
+
+// colors
+$orange: #FBCC24; 
+$white: white;
+$dark: rgb(37, 36, 34);
+$pink: #f9cdcd;
+$violet: #5b3d85;
+$green: #C8F0B4;
+
+@font-face {
+    font-family: 'RMB';
+    src: url("fonts/RobotoMono-SemiBold.ttf");
+}
+@font-face {
+    font-family: 'RML';
+    src: url("fonts/RobotoMono-Light.ttf");
+}
+
+.button {
+    text-align: center;
+    display: inline-block;
+    padding: 15px 40px;
+    border: 1px solid #fff;
+    cursor: pointer;
+    letter-spacing: 2px;
+    position:relative;
+    overflow:hidden;
+    margin: 0 20px;
+    color: white;
+    min-width: 12vw;
+    background: none;
+  }
+  
+  .button:before {
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 100%;
+    background : #fff;
+    left: 0;
+    bottom: 0;
+    transition: all .3s;
+    opacity: 0.3;
+  }
+  
+  .button:hover:before {
+    height: 100%;
+  }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru" style="overflow: hidden;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <a id="end-link" href="#endGame" style="opacity: 0; position: absolute; user-select: none;" rel="modal:open">Link end</a>
+    <section class="modal_wrapper">
+        <div class="modal">
+            <div class="modal_close">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="24" height="24" fill="white"></rect> <path d="M7 17L16.8995 7.10051" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7 7.00001L16.8995 16.8995" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+            </div>
+            <div class="modal_row">
+                <h2>Имя: </h2>
+                <input class="modal_name" value="">
+            </div>
+            <div class="modal_row">
+                <h2>Email: </h2>
+                <input class="modal_email" value="">
+            </div>
+            <div class="modal_btns">
+                <button class="button button_fill modal_btns_save">Сохранить</button>
+                <button class="button modal_btns_cancel">Отменить</button>
+            </div>
+        </div>
+    </section>
+    <main class="game">
+        <div class="sandbox">
+            <input type="text" class="sandbox_input">
+            <div class="sandbox_words"></div>
+        </div>
+    </main>
+    <footer class="lobby_footer">
+        <a href="">©Василенко Данил, 2024</a>
+    </footer>
+    <div id="endGame" class="modal endGame">
+        <p>GameOver</p>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script src="../scripts/game.js"></script>
+</body>
+</html>

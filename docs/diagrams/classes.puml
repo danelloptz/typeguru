@@ -1,0 +1,47 @@
+@startuml
+
+' Классы:
+'-------------
+
+class User {
+ - email: String
+ - password: String
+ - name: String
+ + register()
+ + login()
+}
+
+class Game {
+ + startGame()
+ + continueGame()
+ + endGame()
+}
+
+class Statistics {
+ + loadUserStats()
+ + filterStatsByDateRange()
+}
+
+class Profile {
+ + updateProfile()
+ + toggleMusic()
+}
+
+class GameSession {
+ - sessionId: String
+ - user: User
+ - game: Game
+ + getInstance(): GameSession
+ + startSession()
+ + endSession()
+}
+
+' Ассоциации:
+'-------------
+
+User "1" -- "0..1" GameSession : creates >
+GameSession "1" -- "1" Game : manages >
+GameSession "1" -- "1" Statistics : manages >
+GameSession "1" -- "1" Profile : manages >
+
+@enduml

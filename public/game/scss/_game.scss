@@ -1,0 +1,61 @@
+.game {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: -webkit-linear-gradient(0deg, #1a191a,#263b42);background: linear-gradient(0deg, #1a191a,#263b42);
+    .sandbox {
+        position: relative;
+        width: 50vw;
+        height: 40vh;
+        .sandbox_words {
+            font-size: $text_normal;
+            color: gray;
+            display: flex;
+            flex-wrap: wrap;
+            pointer-events: none;
+            .sandbox_word { display: flex; }
+        }
+        .sandbox_input {
+            position: absolute;
+            opacity: 0;
+            left: 0;
+            top: 0;
+            width: 30vw;
+            height: 10vh;
+        }
+    }
+}
+
+.correct { color: green !important; }
+.incorrect { color: red !important; }
+.correct_space { 
+    width: $text_normal; 
+    height: $text_normal; 
+    position: relative;
+}
+.correct_space::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: green !important; 
+}
+
+.incorrect_space { 
+    width: $text_normal; 
+    height: $text_normal; 
+    position: relative;
+}
+.incorrect_space::before {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 70%;
+    height: 2px;
+    background: red !important; 
+}
