@@ -32,6 +32,7 @@ modalClose.addEventListener('click', CloseModal);
 
 // Ставим данные пользователя в меню
 let user_data = JSON.parse(localStorage.getItem('user')).data;
+console.log(user_data);
 modal_name.value = user_data.name;
 modal_email.value = user_data.email;
 user_name.innerHTML = user_data.name;

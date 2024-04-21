@@ -59,18 +59,22 @@ sandbox_input.addEventListener('input', (e) => {
         for (let letter in incorrectLetters) sumWrong += incorrectLetters[letter];
 
         let result_data = {
-            'time': timeTaken / 1000, 
-            'speed': text.length / (timeTaken / 1000),
-            'accuracy': 100 - (sumWrong / text.length * 100 ),
-            'email': user_data.email,
-            'wins': user_data.wins + 1
+            'exists': true,
+            'data': {
+                'name': user_data.name,
+                'time': timeTaken / 1000, 
+                'speed': text.length / (timeTaken / 1000),
+                'accuracy': 100 - (sumWrong / text.length * 100 ),
+                'email': user_data.email,
+                'wins': user_data.wins + 1
+            }
         }
         fetch('/api/endgame', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify(result_data)
+            body: JSON.stringify(result_data.data)
         })
         .then(response => response.json())
         .then(data => {
@@ -81,8 +85,8 @@ sandbox_input.addEventListener('input', (e) => {
         })
         .catch(error => console.error('Ошибка:', error));
         localStorage.setItem('user', JSON.stringify(result_data));
-        $('#end-link').modal();
-
+        console.log(JSON.parse(localStorage.getItem('user')).data);
+        $('#end-link').modal(); 
         // console.log('GameOver');
         // console.log('Неправильно введенные буквы:', incorrectLetters);
         

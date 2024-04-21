@@ -158,6 +158,7 @@ app.post('/api/endgame', (req, res) => {
    if(!req.body) return res.sendStatus(400);
 
    const { time, speed, accuracy, email, wins } = req.body;
+   console.log('time: ', time, 'speed: ', speed, 'accuracy: ', accuracy, 'email: ', email, 'wins: ', wins);
    const query = 'SELECT * FROM Users WHERE email = ?';
    connection.query(query, [email], (err, result) => {
       if (err) throw err;
