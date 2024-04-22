@@ -32,7 +32,6 @@ modalClose.addEventListener('click', CloseModal);
 
 // Ставим данные пользователя в меню
 let user_data = JSON.parse(localStorage.getItem('user')).data;
-console.log(user_data);
 modal_name.value = user_data.name;
 modal_email.value = user_data.email;
 user_name.innerHTML = user_data.name;
@@ -40,7 +39,6 @@ user_name.innerHTML = user_data.name;
 // Кнопки сохранения и отмены в меню
 modal_btns_save.addEventListener('click', () => {
     if (ValidateEmail(modal_email.value) && ValidatePass(modal_name.value)) {
-        console.log('валидэйт прошёл');
         let modal_data = {
             previous: user_data.email,
             email: modal_email.value,
@@ -59,10 +57,9 @@ modal_btns_save.addEventListener('click', () => {
             if (data.exists) {
                 user_data.email = modal_email.value;
                 user_data.name = modal_name.value;
-                localStorage.setItem('user', user_data);
+                localStorage.setItem('user', JSON.stringify(user_data));
                 user_name.innerHTML = user_data.name;
                 alert('Изменения сохранены');
-                // localStorage.setItem('user', JSON.stringify(data));
             } 
             else alert(data.message);
         })

@@ -2,6 +2,7 @@ let sandbox_words = document.querySelector('.sandbox_words');
 let text;
 let sandbox_input = document.querySelector('.sandbox_input'), pointer_letter = 0, pointer_word = 0;
 let sandbox_letter = document.getElementsByClassName('sandbox_letter');
+console.log(localStorage.getItem('user'));
 let user_data = JSON.parse(localStorage.getItem('user')).data;
 
 async function fetchText() {
