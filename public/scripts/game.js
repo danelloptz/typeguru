@@ -5,8 +5,10 @@ let sandbox_letter = document.getElementsByClassName('sandbox_letter');
 console.log(localStorage.getItem('user'));
 let user_data = JSON.parse(localStorage.getItem('user')).data;
 
+// ассинхронная функция, т.к ответ приходит не сразу
 async function fetchText() {
     try {
+        // настройки желаемого текста менять в ссылке (можно добавить пользовательские настройки)
         const response = await fetch('https://fish-text.ru/get?&type=sentence&number=3', {
             method: 'GET'
         });
@@ -16,12 +18,12 @@ async function fetchText() {
         let lines_add = [];
 
         text.split(' ').forEach(word => {
-            let words_tag = '';
+            let words_tag = ''; // здесь хранятся все span с буквами
             word.split('').forEach(letter => words_tag += (`<span class="sandbox_letter">${letter}</span>`));
-            words_tag += `<span class="sandbox_letter">&nbsp;</span>`;
+            words_tag += `<span class="sandbox_letter">&nbsp;</span>`; // пробел
             sandbox_words.innerHTML += `<div class="sandbox_word">${words_tag}</div>`
         });
-        sandbox_input.focus();
+        sandbox_input.focus(); // сразу доступен для ввода
     } catch (error) {
         console.error('Ошибка:', error);
     }
@@ -32,30 +34,31 @@ fetchText();
 
 let incorrectLetters = {}, startTime;
 
-sandbox_input.addEventListener('input', (e) => {
+function inputText() {
     if (sandbox_input.value.length < 2) startTime = new Date;
     let curr_letter = sandbox_input.value.slice(-1);
     if (pointer_letter <= text.length) {
-        if (curr_letter == ' ' && text[pointer_letter] != ' ') {
+        if (curr_letter == ' ' && text[pointer_letter] != ' ') { // если введён пробел, где его не должно быть, то просто убираем его (надо считать это ошибкой, переписать здесь логику)
             sandbox_input.value = sandbox_input.value.replace(' ', '');
             e.preventDefault();
         } else {
-            if (text[pointer_letter] == curr_letter) {
+            if (text[pointer_letter] == curr_letter) { // корректно введён символ
                 if (curr_letter != ' ') sandbox_letter[pointer_letter].classList.add('correct')
                 else sandbox_letter[pointer_letter].classList.add('correct_space')
             }
             else {
-                if (curr_letter != ' ') {
+                if (curr_letter != ' ') { // некорректный ввод символа
                     sandbox_letter[pointer_letter].classList.add('incorrect');
                     incorrectLetters[text[pointer_letter]] = (incorrectLetters[text[pointer_letter]] || 0) + 1;
                 }
-                else sandbox_letter[pointer_letter].classList.add('incorrect_space');
+                else sandbox_letter[pointer_letter].classList.add('incorrect_space'); // ожидается пробел
             } 
             pointer_letter++;
         }
     } else {
         let endTime = new Date(), sumWrong = 0;
         let timeTaken = endTime - startTime;
+        let modalResultTime = document.getElementById('endGame_time'), modalResultSpeed = document.getElementById('endGame_speed'), modalResultAccuracy = document.getElementById('endGame_accuracy');
 
         for (let letter in incorrectLetters) sumWrong += incorrectLetters[letter];
 
@@ -85,20 +88,11 @@ sandbox_input.addEventListener('input', (e) => {
             else alert(data.message);
         })
         .catch(error => console.error('Ошибка:', error));
-        localStorage.setItem('user', JSON.stringify(result_data));
+
+        localStorage.setItem('user', JSON.stringify(result_data)); // обновляем хранилище
         console.log(JSON.parse(localStorage.getItem('user')).data);
-        $('#end-link').modal(); 
-        // console.log('GameOver');
-        // console.log('Неправильно введенные буквы:', incorrectLetters);
-        
-        // console.log('Время на попытку:', timeTaken / 1000, 'секунд');
-        // console.log('Скорость печати: ', text.length / (timeTaken / 1000), 'символов в секунду');
-        // console.log('Точность печати: ', 100 - (sumWrong / text.length * 100 ));
-    }
-});
+        $('#end-link').modal(); // показываем модальное окно с результатами
+    }       
+}
 
-/*
-
-    Поля статистики: время, скорость, точность
-
-*/
+sandbox_input.addEventListener('input', inputText);

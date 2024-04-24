@@ -7,27 +7,29 @@ let modal_email = document.querySelector('.modal_email');
 let modal_btns_save = document.querySelector('.modal_btns_save');
 let modal_btns_cancel = document.querySelector('.modal_btns_cancel');
 
+// валидация email (ещё есть на серваке), на случай sql-инъекций
 function ValidateEmail(str) {
     let re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(str);
 }
+
+// валидация pass, на случай sql-инъекций
 function ValidatePass(str) {
     const regex = /['"\/\\=<>]/;
     return !regex.test(str);
 }
-
-modalClick.addEventListener('click', () => {
+function openModal() {
     modalWrapper.style.visibility = 'visible';
     modalWrapper.style.pointerEvents = 'all';
     modalClick.dataset.check = 1;
-});
-
+}
 function CloseModal() {
     modalWrapper.style.visibility = 'hidden';
     modalWrapper.style.pointerEvents = 'none';
     modalClick.dataset.check = 0;
 }
 
+modalClick.addEventListener('click',openModal);
 modalClose.addEventListener('click', CloseModal);
 
 // Ставим данные пользователя в меню
@@ -36,15 +38,17 @@ modal_name.value = user_data.name;
 modal_email.value = user_data.email;
 user_name.innerHTML = user_data.name;
 
+
 // Кнопки сохранения и отмены в меню
-modal_btns_save.addEventListener('click', () => {
+function saveButton() {
     if (ValidateEmail(modal_email.value) && ValidatePass(modal_name.value)) {
-        let modal_data = {
+        let modal_data = { // данные до/после и данные о текущем пользователе
             previous: user_data.email,
             email: modal_email.value,
             name: modal_name.value
         };
-    
+        
+        // post-запрос на сервер
         fetch('/api/modalChange', {
             method: 'POST',
             headers: {
@@ -54,6 +58,7 @@ modal_btns_save.addEventListener('click', () => {
         })
         .then(response => response.json())
         .then(data => {
+            // если успешный статус, то парсим данные в хранилище и обновляем их в ЛК 
             if (data.exists) {
                 user_data.email = modal_email.value;
                 user_data.name = modal_name.value;
@@ -65,17 +70,20 @@ modal_btns_save.addEventListener('click', () => {
         })
         .catch(error => console.error('Ошибка:', error));
     }
-});
-
-modal_btns_cancel.addEventListener('click', () => {
+}
+function cancelButton() {
     modal_email.value = user_data.email;
     modal_name.value = user_data.name;
     CloseModal();
-});
+}
+modal_btns_save.addEventListener('click', saveButton);
+modal_btns_cancel.addEventListener('click', cancelButton);
 
-let toogle = document.querySelector('.toggle');
-let audio = document.getElementById('audio');
-toogle.onclick = (e) => { 
+
+let toogle = document.querySelector('.toggle'); // переключатель
+let audio = document.getElementById('audio'); // аудио-файл
+
+function musicToogle() {
     if (toogle.dataset.check == 0) {
         audio.play();
         toogle.dataset.check = 1;
@@ -87,5 +95,6 @@ toogle.onclick = (e) => {
 
     e.preventDefault();
     toogle.classList.toggle('toggle-on');
+}
 
-};
+toogle.onclick = musicToogle;
