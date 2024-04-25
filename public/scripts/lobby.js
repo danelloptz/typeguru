@@ -83,7 +83,7 @@ modal_btns_cancel.addEventListener('click', cancelButton);
 let toogle = document.querySelector('.toggle'); // переключатель
 let audio = document.getElementById('audio'); // аудио-файл
 
-function musicToogle() {
+function musicToogle(e) {
     if (toogle.dataset.check == 0) {
         audio.play();
         toogle.dataset.check = 1;

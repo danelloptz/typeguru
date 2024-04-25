@@ -2,8 +2,8 @@ let sandbox_words = document.querySelector('.sandbox_words');
 let text;
 let sandbox_input = document.querySelector('.sandbox_input'), pointer_letter = 0, pointer_word = 0;
 let sandbox_letter = document.getElementsByClassName('sandbox_letter');
-console.log(localStorage.getItem('user'));
-let user_data = JSON.parse(localStorage.getItem('user')).data;
+let user_data = JSON.parse(localStorage.getItem('user'));
+console.log(JSON.parse(localStorage.getItem('user')));
 
 // ассинхронная функция, т.к ответ приходит не сразу
 async function fetchText() {
@@ -34,7 +34,7 @@ fetchText();
 
 let incorrectLetters = {}, startTime;
 
-function inputText() {
+function inputText(e) {
     if (sandbox_input.value.length < 2) startTime = new Date;
     let curr_letter = sandbox_input.value.slice(-1);
     if (pointer_letter <= text.length) {
@@ -61,6 +61,8 @@ function inputText() {
         let modalResultTime = document.getElementById('endGame_time'), modalResultSpeed = document.getElementById('endGame_speed'), modalResultAccuracy = document.getElementById('endGame_accuracy');
 
         for (let letter in incorrectLetters) sumWrong += incorrectLetters[letter];
+
+        console.log(user_data);
 
         let result_data = {
             'exists': true,
