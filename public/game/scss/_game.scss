@@ -59,3 +59,22 @@
     height: 2px;
     background: red !important; 
 }
+
+.endGame {
+    .endGame_wrapper {
+        display: flex !important;
+        flex-direction: column;
+        row-gap: 1vw;
+        padding: 3vw 2vw;
+        h2 {
+            text-align: center;
+            font-size: $labels_medium;
+        }
+        .endGame_row {
+            display: flex;
+            align-items: center;
+            height: 2vh;
+            column-gap: 1vw;
+        }
+    }
+}

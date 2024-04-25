@@ -16,6 +16,7 @@ function ValidatePass(str) {
 }
 
 localStorage.clear();
+console.log(localStorage);
 
 function login(e) {
     e.preventDefault();

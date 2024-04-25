@@ -2,14 +2,15 @@ let sandbox_words = document.querySelector('.sandbox_words');
 let text;
 let sandbox_input = document.querySelector('.sandbox_input'), pointer_letter = 0, pointer_word = 0;
 let sandbox_letter = document.getElementsByClassName('sandbox_letter');
-let user_data = JSON.parse(localStorage.getItem('user'));
-console.log(JSON.parse(localStorage.getItem('user')));
+let user_data = JSON.parse(localStorage.getItem('user')).data;
+
+console.log(localStorage.getItem('user'));
 
 // ассинхронная функция, т.к ответ приходит не сразу
 async function fetchText() {
     try {
         // настройки желаемого текста менять в ссылке (можно добавить пользовательские настройки)
-        const response = await fetch('https://fish-text.ru/get?&type=sentence&number=3', {
+        const response = await fetch('https://fish-text.ru/get?&type=sentence&number=1', {
             method: 'GET'
         });
         const data = await response.json();
@@ -62,8 +63,6 @@ function inputText(e) {
 
         for (let letter in incorrectLetters) sumWrong += incorrectLetters[letter];
 
-        console.log(user_data);
-
         let result_data = {
             'exists': true,
             'data': {
@@ -87,12 +86,16 @@ function inputText(e) {
             if (data.exists) {
                 alert('Изменения сохранены');
             } 
-            else alert(data.message);
+            else alert('ГОВНИЩЕ');
         })
         .catch(error => console.error('Ошибка:', error));
 
         localStorage.setItem('user', JSON.stringify(result_data)); // обновляем хранилище
-        console.log(JSON.parse(localStorage.getItem('user')).data);
+
+        modalResultTime.innerHTML += result_data.data.time.toFixed(2) + ' s';
+        modalResultSpeed.innerHTML += result_data.data.speed.toFixed(2) + ' s/m';
+        modalResultAccuracy.innerHTML += result_data.data.accuracy.toFixed(2) + '%';
+        
         $('#end-link').modal(); // показываем модальное окно с результатами
     }       
 }

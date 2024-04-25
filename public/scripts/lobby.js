@@ -7,6 +7,8 @@ let modal_email = document.querySelector('.modal_email');
 let modal_btns_save = document.querySelector('.modal_btns_save');
 let modal_btns_cancel = document.querySelector('.modal_btns_cancel');
 
+console.log(localStorage.getItem('user'));
+
 // валидация email (ещё есть на серваке), на случай sql-инъекций
 function ValidateEmail(str) {
     let re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

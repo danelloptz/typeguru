@@ -553,4 +553,22 @@ body {
   width: 70%;
   height: 2px;
   background: red !important;
+}
+
+.endGame .endGame_wrapper {
+  display: flex !important;
+  flex-direction: column;
+  row-gap: 1vw;
+  padding: 3vw 2vw;
+}
+.endGame .endGame_wrapper h2 {
+  text-align: center;
+  font-size: 45px;
+}
+.endGame .endGame_wrapper .endGame_row {
+  display: flex;
+  align-items: center;
+  height: 2vh;
+  -moz-column-gap: 1vw;
+       column-gap: 1vw;
 }/*# sourceMappingURL=style.css.map */
