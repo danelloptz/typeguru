@@ -1,4 +1,4 @@
-let sandbox_words = document.querySelector('.sandbox_words');
+let sandbox_words = document.querySelector('.sandbox_words'), sandboxField = document.querySelector('.sandbox'), resultField = document.querySelector('.results');
 let text;
 let sandbox_input = document.querySelector('.sandbox_input'), pointer_letter = 0, pointer_word = 0;
 let sandbox_letter = document.getElementsByClassName('sandbox_letter');
@@ -33,17 +33,7 @@ fetchText();
 
 let incorrectLetters = {}, start_time, last_input_value = 0, speedCheckpoints = [], last_time = 0, speedList = [];
 
-// function gameTicks() {
-//     while (pointer_letter <= text.length) {
-//         let curr_time = new Date;
-//         if (curr_time - last_time > 1000) {
-//             console.log('tick');
-//             last_time = curr_time;
-//         }
-//     }
-// }
-
-/* 
+/*
 Как реализовать график:
     - записывать в словарь, где ключ - секунда, значение - скорость
     - итоговый список значений (list), последняя секунда (last)
@@ -61,13 +51,10 @@ function inputText(e) {
     
     let curr_time = new Date();
     
-    if ((curr_time - start_time) / 1000 >= Math.ceil((last_time - start_time) / 1000) && String((curr_time - start_time) / 1000)[0] != String((last_time - start_time) / 1000)[0]) {
+    if ((curr_time - start_time) / 1000 >= Math.ceil((last_time - start_time) / 1000) && String((curr_time - start_time) / 1000).split('.')[0] != String((last_time - start_time) / 1000).split('.')[0]) {
         // Расчет средней скорости за прошедшую секунду
         let curr_speed = (pointer_letter + 1) / ((curr_time - start_time) / 1000);
-        let sub_arr = new Array(Math.floor((curr_time - last_time) / 1000)).fill(curr_speed);
-        // speedList.push([(curr_time - start_time) / 1000 ,curr_speed]);
-        // speedList.push((curr_time - start_time) / 1000); тут красота
-        speedList.push(...sub_arr); // тут говно
+        speedList.push([Math.floor((curr_time - start_time) / 1000), curr_speed]); // массив вида [текущая_секунда, скорость]
         last_time = curr_time; // Обновление last_time
     } 
     let curr_letter = sandbox_input.value.slice(-1);
@@ -95,10 +82,9 @@ function inputText(e) {
             }
         }
     } else {
-        console.log(speedList);
         let endTime = new Date(), sumWrong = 0;
         let timeTaken = endTime - start_time;
-        let modalResultTime = document.getElementById('endGame_time'), modalResultSpeed = document.getElementById('endGame_speed'), modalResultAccuracy = document.getElementById('endGame_accuracy');
+        let resultTime = document.getElementById('results_time'), resultSpeed = document.getElementById('results_speed'), modalResultAccuracy = document.getElementById('results_accuracy');
 
         for (let letter in incorrectLetters) sumWrong += incorrectLetters[letter];
 
@@ -128,12 +114,37 @@ function inputText(e) {
 
         localStorage.setItem('user', JSON.stringify(result_data));
 
-        modalResultTime.innerHTML = result_data.data.time.toFixed(2) + ' s';
-        modalResultSpeed.innerHTML = result_data.data.speed.toFixed(2) + ' s/m';
+        resultTime.innerHTML = result_data.data.time.toFixed(2) + ' s';
+        resultSpeed.innerHTML = result_data.data.speed.toFixed(2) + ' s/m';
         modalResultAccuracy.innerHTML = result_data.data.accuracy.toFixed(2) + '%';
+
+        // формирование массивов данных для графика скорости
+        let labelsModal = [], seriesModal = [];
+        for (let i = 0; i < speedList.length - 1; i++) {
+            // этот костыль, чтобы если была пауза и в какие-то секунды не было данных, просто записать данные из последней записанной секунды
+            let modal_repeat_index = speedList[i+1][0] - speedList[i][0] == 1 ? 1 : speedList[i+1][0] - speedList[i][0];
+            for (let j = 0; j < modal_repeat_index; j++) {
+                labelsModal.push(speedList[i][0]+j);
+                seriesModal.push(speedList[i][1]);
+            }
+        }
+
+        // Initialize a Line chart in the container with the ID chart1
+        new Chartist.Line('#chart1', {
+            labels: labelsModal,
+            series: [seriesModal]
+        }, {
+            axisY: {
+                onlyInteger: true
+            },
+            showArea: true
+        });
         
-        $('#end-link').modal();
+        // $('#end-link').modal();
         sandbox_input.blur();
+        sandboxField.style.display = 'none';
+        resultField.style.display = 'grid';
+        
     }       
     last_input_value = sandbox_input.value;
 }
@@ -141,8 +152,3 @@ function inputText(e) {
 sandbox_input.addEventListener('input', inputText);
 
 
-// Initialize a Line chart in the container with the ID chart1
-// new Chartist.Line('#chart1', {
-//     labels: [1, 2, 2, 4, 5, 6, 6, 6, 7],
-//     series: [[5.6, 2.1, 3.1, 4.3, 5.5, 6.7, 6.4, 3.2, 7.1]]
-// });

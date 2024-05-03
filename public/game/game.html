@@ -15,28 +15,29 @@
             <input type="text" class="sandbox_input">
             <div class="sandbox_words"></div>
         </div>
+        <section class="results">
+            <div class="results_block">
+                <h2>Результаты: </h2>
+                <div class="results_row">
+                    <h3>Время: </h3>
+                    <span id="results_time"></span>
+                </div>
+                <div class="results_row">
+                    <h3>Скорость: </h3>
+                    <span id="results_speed"></span>
+                </div>
+                <div class="results_row">
+                    <h3>Точность: </h3>
+                    <span id="results_accuracy"></span>
+                </div>
+            </div>   
+            <div class="ct-chart ct-golden-section" id="chart1"></div>
+        </section>
         <!-- <div class="ct-chart ct-golden-section" id="chart1"></div> -->
     </main>
     <footer class="lobby_footer">
         <a href="">©Василенко Данил, 2024</a>
     </footer>
-    <section id="endGame" class="modal endGame">
-        <div class="endGame_wrapper">
-            <h2>Результаты: </h2>
-            <div class="endGame_row">
-                <h3>Время: </h3>
-                <span id="endGame_time"></span>
-            </div>
-            <div class="endGame_row">
-                <h3>Скорость: </h3>
-                <span id="endGame_speed"></span>
-            </div>
-            <div class="endGame_row">
-                <h3>Точность: </h3>
-                <span id="endGame_accuracy"></span>
-            </div>
-        </div>    
-    </section>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
       <script src="../bower_components/chartist/dist/chartist.min.js"></script>
