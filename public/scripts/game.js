@@ -53,8 +53,8 @@ function inputText(e) {
     
     if ((curr_time - start_time) / 1000 >= Math.ceil((last_time - start_time) / 1000) && String((curr_time - start_time) / 1000).split('.')[0] != String((last_time - start_time) / 1000).split('.')[0]) {
         // Расчет средней скорости за прошедшую секунду
-        let curr_speed = (pointer_letter + 1) / ((curr_time - start_time) / 1000);
-        speedList.push([Math.floor((curr_time - start_time) / 1000), curr_speed]); // массив вида [текущая_секунда, скорость]
+        let curr_speed = ((pointer_letter + 1) / ((curr_time - start_time) / 1000)).toFixed(2);
+        speedList.push([Math.floor((curr_time - start_time) / 1000), +curr_speed]); // массив вида [текущая_секунда, скорость]
         last_time = curr_time; // Обновление last_time
     } 
     let curr_letter = sandbox_input.value.slice(-1);
@@ -112,11 +112,19 @@ function inputText(e) {
         })
       .catch(error => console.error('Ошибка:', error));
 
+
+        // =========== Сравнение с прошлой попыткой ===========
+        let lastTake = user_data;
+        if (result_data.data.speed>= lastTake.speed) console.log('Увеличилась на ', result_data.data.speed - lastTake.speed, ' s/m')
+        else console.log('Уменьшилась на ', lastTake.speed - result_data.data.speed, ' s/m');
+
         localStorage.setItem('user', JSON.stringify(result_data));
 
-        resultTime.innerHTML = result_data.data.time.toFixed(2) + ' s';
-        resultSpeed.innerHTML = result_data.data.speed.toFixed(2) + ' s/m';
-        modalResultAccuracy.innerHTML = result_data.data.accuracy.toFixed(2) + '%';
+        resultTime.innerHTML = result_data.data.time.toFixed(2) + '<span style="color: white;opacity: .4; font-size: 30px;">s</span>';
+        resultSpeed.innerHTML = result_data.data.speed.toFixed(2) + '<span style="color: white;opacity: .4;font-size: 30px;">s/m</span>';
+        modalResultAccuracy.innerHTML = result_data.data.accuracy.toFixed(2) + '<span style="color: white;opacity: .4;font-size: 30px;">%</span>';
+
+        console.log(speedList);
 
         // формирование массивов данных для графика скорости
         let labelsModal = [], seriesModal = [];
@@ -129,18 +137,25 @@ function inputText(e) {
             }
         }
 
-        // Initialize a Line chart in the container with the ID chart1
+        // Диаграмма скорости
         new Chartist.Line('#chart1', {
             labels: labelsModal,
             series: [seriesModal]
         }, {
             axisY: {
-                onlyInteger: true
-            },
-            showArea: true
+                labelInterpolationFnc: function(value, index) {
+                  return index % 4 === 0 ? value : null; // показывать значения через 4 (чтобы меньше было)
+                }
+              },
+              axisX: {
+                labelInterpolationFnc: function(value, index) {
+                  return index % Math.trunc(labelsModal.length / 10) === 0 ? value : null; // показывать значения через 4 (чтобы меньше было)
+                }
+              },
+            showArea: true, // закрашивать область
+            low: 0,         // минимальное значение
         });
         
-        // $('#end-link').modal();
         sandbox_input.blur();
         sandboxField.style.display = 'none';
         resultField.style.display = 'grid';

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "RMB";
   src: url("fonts/RobotoMono-SemiBold.ttf");
@@ -563,23 +564,44 @@ body {
 }
 .results .results_block {
   display: flex !important;
+  justify-content: center;
+  height: 100%;
+}
+.results .results_block .results_block_content {
+  display: flex !important;
   flex-direction: column;
+  justify-content: center;
+  height: 100%;
   row-gap: 1vw;
   padding: 3vw 2vw;
   color: white;
 }
-.results .results_block h2 {
+.results .results_block .results_block_content h2 {
   text-align: center;
-  font-size: 45px;
+  font-size: 60px;
+  text-align: start;
 }
-.results .results_block .results_row {
+.results .results_block .results_block_content .results_row {
+  width: auto;
   display: flex;
+  flex-direction: column;
+}
+.results .results_block .results_block_content .results_row h3 {
+  color: white;
+  opacity: 0.6;
+}
+.results .results_block .results_block_content .results_row span {
+  font-size: 60px;
+  color: #FBCC24;
+}
+.results .diagram_block {
+  display: flex !important;
+  justify-content: center;
   align-items: center;
-  height: 2vh;
-  -moz-column-gap: 1vw;
-       column-gap: 1vw;
+  height: 100%;
 }
 
+/* ========= Элементы диаграммы ========= */
 /* Use this selector to override the line style on a given series */
 .ct-series-a .ct-line {
   /* Set the colour of this series line */
@@ -594,7 +616,7 @@ body {
   /* Colour of your points */
   stroke: #FBCC24;
   /* Size of your points */
-  stroke-width: 20px;
+  stroke-width: 10px;
   /* Make your points appear as squares */
 }
 
@@ -606,4 +628,8 @@ body {
   color: white;
   letter-spacing: 1px;
   font-family: "RML";
+}
+
+.ct-chart {
+  height: 50vh;
 }/*# sourceMappingURL=style.css.map */

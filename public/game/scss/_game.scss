@@ -68,22 +68,47 @@
     height: 100vh;
     .results_block {
         display: flex !important;
-        flex-direction: column;
-        row-gap: 1vw;
-        padding: 3vw 2vw;
-        color: white;
-        h2 {
-            text-align: center;
-            font-size: $labels_medium;
+        justify-content: center;
+        height: 100%;
+        .results_block_content {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            row-gap: 1vw;
+            padding: 3vw 2vw;
+            color: white;
+            h2 {
+                text-align: center;
+                font-size: $labels_big;
+                text-align: start;
+            }
+            .results_row {
+                width: auto;
+                display: flex;
+                flex-direction: column;
+                h3 {
+                    color: white;
+                    opacity: .6;
+                }
+                span {
+                    font-size: $labels_big;
+                    color: $orange;
+                }
+            }
         }
-        .results_row {
-            display: flex;
-            align-items: center;
-            height: 2vh;
-            column-gap: 1vw;
-        }
+        
+    }
+    .diagram_block {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
     }
 }
+
+
+/* ========= Элементы диаграммы ========= */
 
 /* Use this selector to override the line style on a given series */
 .ct-series-a .ct-line {
@@ -92,21 +117,24 @@
     /* Control the thikness of your lines */
     stroke-width: 5px;
     /* Create a dashed line with a pattern */
-  }
-  
-  /* This selector overrides the points style on line charts. Points on line charts are actually just very short strokes. This allows you to customize even the point size in CSS */
-  .ct-series-a .ct-point {
+}
+
+/* This selector overrides the points style on line charts. Points on line charts are actually just very short strokes. This allows you to customize even the point size in CSS */
+.ct-series-a .ct-point {
     /* Colour of your points */
     stroke: $orange;
     /* Size of your points */
-    stroke-width: 20px;
+    stroke-width: 10px;
     /* Make your points appear as squares */
-  }
-  .ct-series-a .ct-area {
+}
+.ct-series-a .ct-area {
     fill: $orange_light;
-  }
-  .ct-label {
+}
+.ct-label {
     color: white;
     letter-spacing: 1px;
     font-family: 'RML';
-  }
+}
+.ct-chart {
+    height: 50vh;
+}

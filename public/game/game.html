@@ -17,21 +17,31 @@
         </div>
         <section class="results">
             <div class="results_block">
-                <h2>Результаты: </h2>
-                <div class="results_row">
-                    <h3>Время: </h3>
-                    <span id="results_time"></span>
-                </div>
-                <div class="results_row">
-                    <h3>Скорость: </h3>
-                    <span id="results_speed"></span>
-                </div>
-                <div class="results_row">
-                    <h3>Точность: </h3>
-                    <span id="results_accuracy"></span>
+                <div class="results_block_content">
+                    <h2>Результаты: </h2>
+                    <div class="results_row">
+                        <h3>Время: </h3>
+                        <span id="results_time"></span>
+                    </div>
+                    <div class="results_row">
+                        <div class="results_column">
+                            <h3>Скорость: </h3>
+                            <span id="results_speed"></span>
+                        </div>
+                        <div class="results_changes">
+                            <h3></h3>
+                            <!-- Иконка стрелочки  -->
+                        </div>
+                    </div>
+                    <div class="results_row">
+                        <h3>Точность: </h3>
+                        <span id="results_accuracy"></span>
+                    </div>
                 </div>
             </div>   
-            <div class="ct-chart ct-golden-section" id="chart1"></div>
+            <div class="diagram_block"> 
+                <div class="ct-chart ct-golden-section" id="chart1"></div>
+            </div>
         </section>
         <!-- <div class="ct-chart ct-golden-section" id="chart1"></div> -->
     </main>
