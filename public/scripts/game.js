@@ -84,7 +84,7 @@ function inputText(e) {
     } else {
         let endTime = new Date(), sumWrong = 0;
         let timeTaken = endTime - start_time;
-        let resultTime = document.getElementById('results_time'), resultSpeed = document.getElementById('results_speed'), modalResultAccuracy = document.getElementById('results_accuracy');
+        let resultTime = document.getElementById('results_time'), resultSpeed = document.getElementById('results_speed'), modalResultAccuracy = document.getElementById('results_accuracy'), speed_changes = document.getElementById('speed_changes'), arrow_speed_changes = document.getElementById('arrow_speed_changes'),arrow_speed_stroke = document.getElementById('arrow_speed_stroke'), accuracy_changes = document.getElementById('accuracy_changes'), arrow_accuracy_changes = document.getElementById('arrow_accuracy_changes'),arrow_accuracy_stroke = document.getElementById('arrow_accuracy_stroke');
 
         for (let letter in incorrectLetters) sumWrong += incorrectLetters[letter];
 
@@ -114,17 +114,31 @@ function inputText(e) {
 
 
         // =========== Сравнение с прошлой попыткой ===========
-        let lastTake = user_data;
-        if (result_data.data.speed>= lastTake.speed) console.log('Увеличилась на ', result_data.data.speed - lastTake.speed, ' s/m')
-        else console.log('Уменьшилась на ', lastTake.speed - result_data.data.speed, ' s/m');
+        let lastTake = user_data, speed_diff = (result_data.data.speed - lastTake.speed).toFixed(2), accuracy_diff = (result_data.data.accuracy - lastTake.accuracy).toFixed(2);
+        speed_changes.innerHTML = speed_diff, accuracy_changes.innerHTML = accuracy_diff;
+        if (speed_diff > 0) {
+            speed_changes.style.color = 'green';
+            arrow_speed_stroke.style.stroke = 'green';
+        } else {
+            speed_changes.style.color = 'red';
+            arrow_speed_stroke.style.stroke = 'red';
+            arrow_speed_changes.style.transform = 'rotate(180deg)';
+        } 
+
+        if (accuracy_diff > 0) {
+            accuracy_changes.style.color = 'green';
+            arrow_accuracy_stroke.style.stroke = 'green';
+        } else {
+            accuracy_changes.style.color = 'red';
+            arrow_accuracy_stroke.style.stroke = 'red';
+            arrow_accuracy_changes.style.transform = 'rotate(180deg)';
+        }
 
         localStorage.setItem('user', JSON.stringify(result_data));
 
         resultTime.innerHTML = result_data.data.time.toFixed(2) + '<span style="color: white;opacity: .4; font-size: 30px;">s</span>';
         resultSpeed.innerHTML = result_data.data.speed.toFixed(2) + '<span style="color: white;opacity: .4;font-size: 30px;">s/m</span>';
         modalResultAccuracy.innerHTML = result_data.data.accuracy.toFixed(2) + '<span style="color: white;opacity: .4;font-size: 30px;">%</span>';
-
-        console.log(speedList);
 
         // формирование массивов данных для графика скорости
         let labelsModal = [], seriesModal = [];

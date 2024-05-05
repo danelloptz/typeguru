@@ -83,18 +83,41 @@
                 font-size: $labels_big;
                 text-align: start;
             }
+            .results_line {
+                width: auto;
+                height: 1px;
+                background: white;
+                opacity: .6;
+                margin-bottom: 10px;
+            }
             .results_row {
                 width: auto;
                 display: flex;
-                flex-direction: column;
-                h3 {
-                    color: white;
-                    opacity: .6;
+                column-gap: 2vw;
+                .results_column {
+                    display: flex;
+                    flex-direction: column;
+                    h3 {
+                        color: white;
+                        opacity: .6;
+                    }
+                    span {
+                        font-size: $labels_big;
+                        color: $orange;
+                    }
                 }
-                span {
-                    font-size: $labels_big;
-                    color: $orange;
+                .results_changes {
+                    display: flex;
+                    align-items: end;
+                    span {
+                        font-size: $labels_big;
+                    }
+                    svg {
+                        width: auto;
+                        height: calc($labels_big + 10px);
+                    }
                 }
+                
             }
         }
         

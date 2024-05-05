@@ -20,6 +20,7 @@
   color: white;
   min-width: 12vw;
   background: none;
+  font-size: 20px;
 }
 
 .button:before {
@@ -581,18 +582,41 @@ body {
   font-size: 60px;
   text-align: start;
 }
+.results .results_block .results_block_content .results_line {
+  width: auto;
+  height: 1px;
+  background: white;
+  opacity: 0.6;
+  margin-bottom: 10px;
+}
 .results .results_block .results_block_content .results_row {
   width: auto;
   display: flex;
+  -moz-column-gap: 2vw;
+       column-gap: 2vw;
+}
+.results .results_block .results_block_content .results_row .results_column {
+  display: flex;
   flex-direction: column;
 }
-.results .results_block .results_block_content .results_row h3 {
+.results .results_block .results_block_content .results_row .results_column h3 {
   color: white;
   opacity: 0.6;
 }
-.results .results_block .results_block_content .results_row span {
+.results .results_block .results_block_content .results_row .results_column span {
   font-size: 60px;
   color: #FBCC24;
+}
+.results .results_block .results_block_content .results_row .results_changes {
+  display: flex;
+  align-items: end;
+}
+.results .results_block .results_block_content .results_row .results_changes span {
+  font-size: 60px;
+}
+.results .results_block .results_block_content .results_row .results_changes svg {
+  width: auto;
+  height: 70px;
 }
 .results .diagram_block {
   display: flex !important;

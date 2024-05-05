@@ -19,9 +19,12 @@
             <div class="results_block">
                 <div class="results_block_content">
                     <h2>Результаты: </h2>
+                    <div class="results_line"></div>
                     <div class="results_row">
-                        <h3>Время: </h3>
-                        <span id="results_time"></span>
+                        <div class="results_column">
+                            <h3>Время: </h3>
+                            <span id="results_time"></span>
+                        </div>
                     </div>
                     <div class="results_row">
                         <div class="results_column">
@@ -29,13 +32,24 @@
                             <span id="results_speed"></span>
                         </div>
                         <div class="results_changes">
-                            <h3></h3>
-                            <!-- Иконка стрелочки  -->
+                            <span id="speed_changes"></span>
+                            <svg id="arrow_speed_changes" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 6V18M12 6L7 11M12 6L17 11" id="arrow_speed_stroke" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                         </div>
                     </div>
                     <div class="results_row">
-                        <h3>Точность: </h3>
-                        <span id="results_accuracy"></span>
+                        <div class="results_column">
+                            <h3>Точность: </h3>
+                            <span id="results_accuracy"></span>
+                        </div>
+                        <div class="results_changes">
+                            <span id="accuracy_changes"></span>
+                            <svg id="arrow_accuracy_changes" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 6V18M12 6L7 11M12 6L17 11" id="arrow_accuracy_stroke" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        </div>
+                    </div>
+                    <div class="results_line"></div>
+                    <div class="results_row">
+                        <a onclick="location.reload();"><button class="button" id="gameContinue">Играть</button></a>
+                        <a href="lobby.html"><button class="button" id="gameQuit">Лобби</button></a>
                     </div>
                 </div>
             </div>   
