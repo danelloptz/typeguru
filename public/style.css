@@ -130,6 +130,14 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+@keyframes Cursor {
+  from {
+    transform: translateX(-6px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+}
 .lobby {
   width: 100%;
   height: 100vh;
@@ -517,6 +525,7 @@ body {
   height: 10vh;
 }
 
+/* ========= Стили для введённых символов во время игры ========= */
 .correct {
   color: green !important;
 }
@@ -557,6 +566,22 @@ body {
   background: red !important;
 }
 
+.activeLetter {
+  position: relative;
+}
+.activeLetter::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background-color: #FBCC24;
+  transition: 0.2s;
+  animation: Cursor 0.1s linear;
+}
+
+/* ========= Окно результатов, после завершения попытки ========= */
 .results {
   display: none;
   grid-template-columns: 1fr 1fr;

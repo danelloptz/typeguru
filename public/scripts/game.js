@@ -51,6 +51,7 @@ function inputText(e) {
     
     let curr_time = new Date();
     
+    // тут крутая проверка 
     if ((curr_time - start_time) / 1000 >= Math.ceil((last_time - start_time) / 1000) && String((curr_time - start_time) / 1000).split('.')[0] != String((last_time - start_time) / 1000).split('.')[0]) {
         // Расчет средней скорости за прошедшую секунду
         let curr_speed = ((pointer_letter + 1) / ((curr_time - start_time) / 1000)).toFixed(2);
@@ -63,8 +64,12 @@ function inputText(e) {
             sandbox_input.value = sandbox_input.value.replace(' ', '');
             e.preventDefault();
         } else {
-            if (sandbox_input.value.length < last_input_value.length) {
+            if (sandbox_input.value.length < last_input_value.length) { // был нажат backspace
                 pointer_letter--;
+                try {
+                    sandbox_letter[pointer_letter - 1].classList.add('activeLetter');
+                    sandbox_letter[pointer_letter].classList.remove('activeLetter');
+                } catch(e) {}
                 ['incorrect', 'correct', 'incorrect_space', 'correct_space'].forEach(className => sandbox_letter[pointer_letter].classList.remove(className));
             } else {
                 if (text[pointer_letter] == curr_letter) {
@@ -77,7 +82,14 @@ function inputText(e) {
                         incorrectLetters[text[pointer_letter]] = (incorrectLetters[text[pointer_letter]] || 0) + 1;
                     }
                     else sandbox_letter[pointer_letter].classList.add('incorrect_space');
-                } 
+                }
+
+                // тут надо бы написать по нормальному, но мне лень
+                try {
+                    sandbox_letter[pointer_letter - 1].classList.remove('activeLetter');
+                    sandbox_letter[pointer_letter].classList.add('activeLetter');
+                } catch(e) {}
+                
                 pointer_letter++;
             }
         }

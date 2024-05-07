@@ -15,7 +15,10 @@
             display: flex;
             flex-wrap: wrap;
             pointer-events: none;
-            .sandbox_word { display: flex; }
+            .sandbox_word { 
+                display: flex; 
+                
+            }
         }
         .sandbox_input {
             position: absolute;
@@ -28,6 +31,7 @@
     }
 }
 
+/* ========= Стили для введённых символов во время игры ========= */
 .correct { color: green !important; }
 .incorrect { color: red !important; }
 .correct_space { 
@@ -59,8 +63,22 @@
     height: 2px;
     background: red !important; 
 }
+.activeLetter {
+    position: relative;
+    &::after {
+        position: absolute;
+        content: "";
+        top: 0;
+        right: 0;
+        width: 2px;
+        height: 100%;
+        background-color: $orange;
+        transition: .2s;
+        animation: Cursor .1s linear;
+    }
+}
 
-
+/* ========= Окно результатов, после завершения попытки ========= */
 .results {
     display: none;
     grid-template-columns: 1fr 1fr;
