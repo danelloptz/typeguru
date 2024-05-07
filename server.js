@@ -154,43 +154,71 @@ app.post('/api/modalChange', (req, res) => {
    });
 });
 
-app.post('/api/endgame', (req, res) => {
-   if(!req.body) return res.sendStatus(400);
+app.post('/api/endgame', async (req, res) => {
+   if (!req.body) return res.sendStatus(400);
 
    const { id, time, speed, accuracy, email, wins } = req.body;
-   let queryStatus = false;
-   
-   let maxId = 0; // берём последний id
-   connection.query("SELECT max(id) as 'm' FROM Attempts", function (err, res) {
-      maxId = res[0].m;
-   });
 
-   // тут делаем текущую дату в формате 'чсило/месяц/год час:минута:секунда AM/PM'
-   // время получается как у пользователя (не по гринвичу, а как у него в системе)
-   const now = new Date();
-   const options = { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-   const formattedDate = now.toLocaleString('en-US', options).replace(',', '');
+   // логика написана через ассинхрон, т.к запросы в БД ассинхронны, а в данном случае необходимо делать 
+   // запросы последовательно
+   try {
+       // Получаем последний id
+       let maxId = await getMaxId();
 
-   // обновляем таблицу с пользователями
-   connection.query('SELECT * FROM Users WHERE email = ?', [email], (err, result) => {
-      if (err) throw err;
-      if (result.length > 0) {
-         connection.query("UPDATE Users SET time = ?, speed = ?, accuracy = ?, wins = ? WHERE email = ?", [time, speed, accuracy, wins + 1, email], (err, result) => {
-            if (err) throw err;
-            // добавляем попытку в таблицу с попытками
-            connection.query('INSERT INTO Attempts (id, user_id, date, time, speed, accuracy) VALUES (?,?,?,?,?,?)', [maxId+1, id, formattedDate, time, speed, accuracy], (err, result) => {
-               if (err) throw err;
-               return res.json({ exists: true });
-            });
-         });   
-      } else {
-         res.json({ exists: false, message: "Что-то пошло не так" });
-         return;
-      }
-   });
+       // Форматируем текущее время
+       const now = new Date();
+       const options = { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+       const formattedDate = now.toLocaleString('en-US', options).replace(',', '');
 
-   
+       // Обновляем таблицу с пользователями
+       await updateUser(email, time, speed, accuracy, wins + 1);
+
+       // Добавляем попытку в таблицу с попытками
+       await addAttempt(maxId + 1, id, formattedDate, time, speed, accuracy);
+
+       return res.json({ exists: true });
+   } catch (error) {
+       console.error(error);
+       return res.status(500).json({ error: 'An error occurred while processing your request.' });
+   }
 });
+
+// Функция для получения последнего id
+async function getMaxId() {
+   return new Promise((resolve, reject) => {
+       connection.query("SELECT max(id) as 'm' FROM Attempts", function (err, res) {
+           if (err) reject(err);
+           resolve(res[0].m);
+       });
+   });
+}
+
+// Функция для обновления информации о пользователе
+async function updateUser(email, time, speed, accuracy, wins) {
+   return new Promise((resolve, reject) => {
+       connection.query('SELECT * FROM Users WHERE email =?', [email], (err, result) => {
+           if (err) reject(err);
+           if (result.length > 0) {
+               connection.query("UPDATE Users SET time =?, speed =?, accuracy =?, wins =? WHERE email =?", [time, speed, accuracy, wins, email], (err, result) => {
+                   if (err) reject(err);
+                   resolve();
+               });
+           } else {
+               reject(new Error("User not found"));
+           }
+       });
+   });
+}
+
+// Функция для добавления попытки
+async function addAttempt(id, userId, date, time, speed, accuracy) {
+   return new Promise((resolve, reject) => {
+       connection.query('INSERT INTO Attempts (id, user_id, date, time, speed, accuracy) VALUES (?,?,?,?,?,?)', [id, userId, date, time, speed, accuracy], (err, result) => {
+           if (err) reject(err);
+           resolve();
+       });
+   });
+}
 
 // Приватим папку game для неавторизованных пользователей
 app.use('/public/game', isAuthenticated, express.static(path.join(__dirname, 'public/game')));
