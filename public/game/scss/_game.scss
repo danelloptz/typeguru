@@ -84,6 +84,10 @@
     grid-template-columns: 1fr 1fr;
     width: 100%;
     height: 100vh;
+    @media (max-width: 1000px) {
+        grid-template-columns: 1fr;
+        align-items: center;
+    }
     .results_block {
         display: flex !important;
         justify-content: center;
@@ -96,10 +100,25 @@
             row-gap: 1vw;
             padding: 3vw 2vw;
             color: white;
+            @media (max-width: 1200px) {
+                padding: 0;
+            }
             h2 {
                 text-align: center;
                 font-size: $labels_big;
                 text-align: start;
+                @media (max-width: 1200px) {
+                    font-size: $labels_medium;
+                }
+                @media (max-width: 1000px) {
+                    font-size: $labels_big;
+                }
+                @media (max-width: 700px) {
+                    font-size: $labels_medium;
+                }
+                @media (max-width: 430px) {
+                    font-size: $labels_normal;
+                }
             }
             .results_line {
                 width: auto;
@@ -112,6 +131,15 @@
                 width: auto;
                 display: flex;
                 column-gap: 2vw;
+                &:last-child {
+                    justify-content: space-around;
+                }
+                @media (max-width: 570px) {
+                    flex-direction: column;
+                    &:last-child {
+                        flex-direction: row;
+                    }
+                }
                 .results_column {
                     display: flex;
                     flex-direction: column;
@@ -122,6 +150,18 @@
                     span {
                         font-size: $labels_big;
                         color: $orange;
+                        @media (max-width: 1200px) {
+                            font-size: $labels_medium;
+                        }
+                        @media (max-width: 1000px) {
+                            font-size: $labels_big;
+                        }
+                        @media (max-width: 700px) {
+                            font-size: $labels_medium;
+                        }
+                        @media (max-width: 430px) {
+                            font-size: $labels_normal;
+                        }
                     }
                 }
                 .results_changes {
@@ -129,10 +169,34 @@
                     align-items: end;
                     span {
                         font-size: $labels_big;
+                        @media (max-width: 1200px) {
+                            font-size: $labels_medium;
+                        }
+                        @media (max-width: 1000px) {
+                            font-size: $labels_big;
+                        }
+                        @media (max-width: 700px) {
+                            font-size: $labels_medium;
+                        }
+                        @media (max-width: 430px) {
+                            font-size: $labels_normal;
+                        }
                     }
                     svg {
                         width: auto;
                         height: calc($labels_big + 10px);
+                        @media (max-width: 1200px) {
+                            height: calc($labels_medium + 10px);
+                        }
+                        @media (max-width: 1000px) {
+                            height: calc($labels_big + 10px);
+                        }
+                        @media (max-width: 700px) {
+                            height: calc($labels_medium + 10px);
+                        }
+                        @media (max-width: 430px) {
+                            height: calc($labels_normal + 10px);
+                        }
                     }
                 }
                 
@@ -178,4 +242,7 @@
 }
 .ct-chart {
     height: 50vh;
+    @media (max-width: 1200px) {
+        height: 40vh;
+    }
 }

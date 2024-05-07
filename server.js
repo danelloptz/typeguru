@@ -28,7 +28,7 @@ const connection = mysql.createConnection({
  host: hostname,
  user: "root",
  database: "TestBD",
- password: "Co6aegui"
+ password: "1234"
 });
 
 // Проверка подключения к БД
@@ -157,21 +157,39 @@ app.post('/api/modalChange', (req, res) => {
 app.post('/api/endgame', (req, res) => {
    if(!req.body) return res.sendStatus(400);
 
-   const { time, speed, accuracy, email, wins } = req.body;
-   console.log('time: ', time, 'speed: ', speed, 'accuracy: ', accuracy, 'email: ', email, 'wins: ', wins);
-   const query = 'SELECT * FROM Users WHERE email = ?';
-   connection.query(query, [email], (err, result) => {
+   const { id, time, speed, accuracy, email, wins } = req.body;
+   let queryStatus = false;
+   
+   let maxId = 0; // берём последний id
+   connection.query("SELECT max(id) as 'm' FROM Attempts", function (err, res) {
+      maxId = res[0].m;
+   });
+
+   // тут делаем текущую дату в формате 'чсило/месяц/год час:минута:секунда AM/PM'
+   // время получается как у пользователя (не по гринвичу, а как у него в системе)
+   const now = new Date();
+   const options = { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+   const formattedDate = now.toLocaleString('en-US', options).replace(',', '');
+
+   // обновляем таблицу с пользователями
+   connection.query('SELECT * FROM Users WHERE email = ?', [email], (err, result) => {
       if (err) throw err;
       if (result.length > 0) {
          connection.query("UPDATE Users SET time = ?, speed = ?, accuracy = ?, wins = ? WHERE email = ?", [time, speed, accuracy, wins + 1, email], (err, result) => {
             if (err) throw err;
-            return res.json({ exists: true });
+            // добавляем попытку в таблицу с попытками
+            connection.query('INSERT INTO Attempts (id, user_id, date, time, speed, accuracy) VALUES (?,?,?,?,?,?)', [maxId+1, id, formattedDate, time, speed, accuracy], (err, result) => {
+               if (err) throw err;
+               return res.json({ exists: true });
+            });
          });   
       } else {
          res.json({ exists: false, message: "Что-то пошло не так" });
          return;
       }
    });
+
+   
 });
 
 // Приватим папку game для неавторизованных пользователей

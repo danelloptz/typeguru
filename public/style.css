@@ -22,6 +22,28 @@
   background: none;
   font-size: 20px;
 }
+@media (max-width: 700px) {
+  .button {
+    width: 220px;
+    height: 50px;
+    font-size: 15px;
+  }
+}
+@media (max-width: 600px) {
+  .button {
+    width: 130px;
+    height: 40px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 450px) {
+  .button {
+    width: 100px;
+    height: 40px;
+    letter-spacing: 1px;
+    font-size: 10px;
+  }
+}
 
 .button:before {
   content: "";
@@ -588,6 +610,12 @@ body {
   width: 100%;
   height: 100vh;
 }
+@media (max-width: 1000px) {
+  .results {
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+}
 .results .results_block {
   display: flex !important;
   justify-content: center;
@@ -602,10 +630,35 @@ body {
   padding: 3vw 2vw;
   color: white;
 }
+@media (max-width: 1200px) {
+  .results .results_block .results_block_content {
+    padding: 0;
+  }
+}
 .results .results_block .results_block_content h2 {
   text-align: center;
   font-size: 60px;
   text-align: start;
+}
+@media (max-width: 1200px) {
+  .results .results_block .results_block_content h2 {
+    font-size: 45px;
+  }
+}
+@media (max-width: 1000px) {
+  .results .results_block .results_block_content h2 {
+    font-size: 60px;
+  }
+}
+@media (max-width: 700px) {
+  .results .results_block .results_block_content h2 {
+    font-size: 45px;
+  }
+}
+@media (max-width: 430px) {
+  .results .results_block .results_block_content h2 {
+    font-size: 30px;
+  }
 }
 .results .results_block .results_block_content .results_line {
   width: auto;
@@ -620,6 +673,17 @@ body {
   -moz-column-gap: 2vw;
        column-gap: 2vw;
 }
+.results .results_block .results_block_content .results_row:last-child {
+  justify-content: space-around;
+}
+@media (max-width: 570px) {
+  .results .results_block .results_block_content .results_row {
+    flex-direction: column;
+  }
+  .results .results_block .results_block_content .results_row:last-child {
+    flex-direction: row;
+  }
+}
 .results .results_block .results_block_content .results_row .results_column {
   display: flex;
   flex-direction: column;
@@ -632,6 +696,26 @@ body {
   font-size: 60px;
   color: #FBCC24;
 }
+@media (max-width: 1200px) {
+  .results .results_block .results_block_content .results_row .results_column span {
+    font-size: 45px;
+  }
+}
+@media (max-width: 1000px) {
+  .results .results_block .results_block_content .results_row .results_column span {
+    font-size: 60px;
+  }
+}
+@media (max-width: 700px) {
+  .results .results_block .results_block_content .results_row .results_column span {
+    font-size: 45px;
+  }
+}
+@media (max-width: 430px) {
+  .results .results_block .results_block_content .results_row .results_column span {
+    font-size: 30px;
+  }
+}
 .results .results_block .results_block_content .results_row .results_changes {
   display: flex;
   align-items: end;
@@ -639,9 +723,49 @@ body {
 .results .results_block .results_block_content .results_row .results_changes span {
   font-size: 60px;
 }
+@media (max-width: 1200px) {
+  .results .results_block .results_block_content .results_row .results_changes span {
+    font-size: 45px;
+  }
+}
+@media (max-width: 1000px) {
+  .results .results_block .results_block_content .results_row .results_changes span {
+    font-size: 60px;
+  }
+}
+@media (max-width: 700px) {
+  .results .results_block .results_block_content .results_row .results_changes span {
+    font-size: 45px;
+  }
+}
+@media (max-width: 430px) {
+  .results .results_block .results_block_content .results_row .results_changes span {
+    font-size: 30px;
+  }
+}
 .results .results_block .results_block_content .results_row .results_changes svg {
   width: auto;
   height: 70px;
+}
+@media (max-width: 1200px) {
+  .results .results_block .results_block_content .results_row .results_changes svg {
+    height: 55px;
+  }
+}
+@media (max-width: 1000px) {
+  .results .results_block .results_block_content .results_row .results_changes svg {
+    height: 70px;
+  }
+}
+@media (max-width: 700px) {
+  .results .results_block .results_block_content .results_row .results_changes svg {
+    height: 55px;
+  }
+}
+@media (max-width: 430px) {
+  .results .results_block .results_block_content .results_row .results_changes svg {
+    height: 40px;
+  }
 }
 .results .diagram_block {
   display: flex !important;
@@ -681,4 +805,9 @@ body {
 
 .ct-chart {
   height: 50vh;
+}
+@media (max-width: 1200px) {
+  .ct-chart {
+    height: 40vh;
+  }
 }/*# sourceMappingURL=style.css.map */

@@ -103,6 +103,7 @@ function inputText(e) {
         let result_data = {
             'exists': true,
             'data': {
+                'id': user_data.id,
                 'name': user_data.name,
                 'time': timeTaken / 1000, 
                 'speed': text.length / (timeTaken / 1000),
