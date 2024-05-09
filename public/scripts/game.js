@@ -100,6 +100,9 @@ function inputText(e) {
 
         for (let letter in incorrectLetters) sumWrong += incorrectLetters[letter];
 
+        // очки за попытку
+        const gameKef = (text.length / (timeTaken / 1000)) * (100 - (sumWrong / text.length * 100 )) * 10;
+
         let result_data = {
             'exists': true,
             'data': {
@@ -109,7 +112,8 @@ function inputText(e) {
                 'speed': text.length / (timeTaken / 1000),
                 'accuracy': 100 - (sumWrong / text.length * 100 ),
                 'email': user_data.email,
-                'wins': user_data.wins + 1
+                'wins': user_data.wins + 1,
+                'points': gameKef
             }
         }
         fetch('/api/endgame', {

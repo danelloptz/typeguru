@@ -2,3 +2,8 @@
     from {transform: translateX(-6px);}
     to {transform: translateX(0px);}
 }
+
+@keyframes BarGrow {
+    from {height: 0% !important;}
+    to {height: 100% !important;}
+}

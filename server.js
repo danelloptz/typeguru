@@ -157,7 +157,7 @@ app.post('/api/modalChange', (req, res) => {
 app.post('/api/endgame', async (req, res) => {
    if (!req.body) return res.sendStatus(400);
 
-   const { id, time, speed, accuracy, email, wins } = req.body;
+   const { id, time, speed, accuracy, email, wins, points } = req.body;
 
    // логика написана через ассинхрон, т.к запросы в БД ассинхронны, а в данном случае необходимо делать 
    // запросы последовательно
@@ -166,15 +166,14 @@ app.post('/api/endgame', async (req, res) => {
        let maxId = await getMaxId();
 
        // Форматируем текущее время
-       const now = new Date();
-       const options = { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-       const formattedDate = now.toLocaleString('en-US', options).replace(',', '');
+       const date = new Date();
 
        // Обновляем таблицу с пользователями
        await updateUser(email, time, speed, accuracy, wins + 1);
 
        // Добавляем попытку в таблицу с попытками
-       await addAttempt(maxId + 1, id, formattedDate, time, speed, accuracy);
+       await addAttempt(maxId + 1, id, date.getTime(), time, speed, accuracy, points);
+      //  const kef = await calculateKef(speed, accuracy, )
 
        return res.json({ exists: true });
    } catch (error) {
@@ -211,14 +210,32 @@ async function updateUser(email, time, speed, accuracy, wins) {
 }
 
 // Функция для добавления попытки
-async function addAttempt(id, userId, date, time, speed, accuracy) {
+async function addAttempt(id, userId, date, time, speed, accuracy, points) {
    return new Promise((resolve, reject) => {
-       connection.query('INSERT INTO Attempts (id, user_id, date, time, speed, accuracy) VALUES (?,?,?,?,?,?)', [id, userId, date, time, speed, accuracy], (err, result) => {
+       connection.query('INSERT INTO Attempts (id, user_id, date, time, speed, accuracy, points) VALUES (?,?,?,?,?,?,?)', [id, userId, date, time, speed, accuracy, points], (err, result) => {
            if (err) reject(err);
            resolve();
        });
    });
 }
+
+
+// Маршрут регистрации
+app.post('/api/sevendays', (req, res) => {
+   if(!req.body) return res.sendStatus(400);
+   const user_id = req.body.id;
+
+  connection.query('SELECT * FROM Attempts WHERE user_id =?', [user_id], (err, result) => {
+   if (err) throw err;
+   if (result.length > 0) {
+      return res.json({ exists: true, data: result });
+   } else {
+      res.json({ exists: false, message: "Что-то пошло не так" });
+      return;
+   }
+});
+});
+
 
 // Приватим папку game для неавторизованных пользователей
 app.use('/public/game', isAuthenticated, express.static(path.join(__dirname, 'public/game')));

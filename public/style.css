@@ -160,6 +160,14 @@ body {
     transform: translateX(0px);
   }
 }
+@keyframes BarGrow {
+  from {
+    height: 0% !important;
+  }
+  to {
+    height: 100% !important;
+  }
+}
 .lobby {
   width: 100%;
   height: 100vh;
@@ -810,4 +818,82 @@ body {
   .ct-chart {
     height: 40vh;
   }
+}
+
+@keyframes Cursor {
+  from {
+    transform: translateX(-6px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+}
+@keyframes BarGrow {
+  from {
+    height: 0% !important;
+  }
+  to {
+    height: 100% !important;
+  }
+}
+.stats {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "h1 h1" "bar smth";
+  row-gap: 15px;
+  padding-top: 2vh;
+  background: linear-gradient(0deg, #1a191a, #263b42);
+}
+.stats h1 {
+  grid-area: h1;
+  align-self: center;
+  font-size: 60px;
+  text-align: center;
+  color: #FBCC24;
+}
+@media (max-width: 1200px) {
+  .stats h1 {
+    font-size: 45px;
+  }
+}
+@media (max-width: 1000px) {
+  .stats h1 {
+    font-size: 60px;
+  }
+}
+@media (max-width: 700px) {
+  .stats h1 {
+    font-size: 45px;
+  }
+}
+@media (max-width: 430px) {
+  .stats h1 {
+    font-size: 30px;
+  }
+}
+.stats .stats_bar {
+  grid-area: bar;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 15px;
+  padding: 0 2vw;
+}
+.stats .stats_bar h2 {
+  font-size: 30px;
+  color: white;
+  opacity: 0.6;
+}
+
+.ct-chart-bar {
+  width: 100% !important;
+}
+
+.ct-bar {
+  stroke: #FBCC24 !important;
+  /* Control the thikness of your lines */
+  stroke-width: 30px;
 }/*# sourceMappingURL=style.css.map */
