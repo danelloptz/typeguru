@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" style="overflow: hidden;">
+<html lang="ru" style="overflow-x: hidden;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,16 +11,85 @@
 </head>
 <body>
     <main class="stats">
-       <h1>Статистика</h1>
-       <section class="stats_bar">
-            <h2>Время печати за последние 7 дней: </h2>
+        <section class="stats_menu"> <!-- dashboard -->
+            <img src="../img/profile_image.png" alt="аватарка пользователя">
+            <div class="stats_menu_icons">
+                <div class="stats_menu_item">
+                    <svg class="stats_menu_item_active" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="0.00025"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12.5 11.75C12.9142 11.75 13.25 11.4142 13.25 11C13.25 10.5858 12.9142 10.25 12.5 10.25V11.75ZM5.5 10.25C5.08579 10.25 4.75 10.5858 4.75 11C4.75 11.4142 5.08579 11.75 5.5 11.75V10.25ZM12.5 10.25C12.0858 10.25 11.75 10.5858 11.75 11C11.75 11.4142 12.0858 11.75 12.5 11.75V10.25ZM19.5 11.75C19.9142 11.75 20.25 11.4142 20.25 11C20.25 10.5858 19.9142 10.25 19.5 10.25V11.75ZM11.75 11C11.75 11.4142 12.0858 11.75 12.5 11.75C12.9142 11.75 13.25 11.4142 13.25 11H11.75ZM13.25 5C13.25 4.58579 12.9142 4.25 12.5 4.25C12.0858 4.25 11.75 4.58579 11.75 5H13.25ZM6.25 11C6.25 10.5858 5.91421 10.25 5.5 10.25C5.08579 10.25 4.75 10.5858 4.75 11H6.25ZM20.25 11C20.25 10.5858 19.9142 10.25 19.5 10.25C19.0858 10.25 18.75 10.5858 18.75 11H20.25ZM4.75 11C4.75 11.4142 5.08579 11.75 5.5 11.75C5.91421 11.75 6.25 11.4142 6.25 11H4.75ZM12.5 5.75C12.9142 5.75 13.25 5.41421 13.25 5C13.25 4.58579 12.9142 4.25 12.5 4.25V5.75ZM18.75 11C18.75 11.4142 19.0858 11.75 19.5 11.75C19.9142 11.75 20.25 11.4142 20.25 11H18.75ZM12.5 4.25C12.0858 4.25 11.75 4.58579 11.75 5C11.75 5.41421 12.0858 5.75 12.5 5.75V4.25ZM12.5 10.25H5.5V11.75H12.5V10.25ZM12.5 11.75H19.5V10.25H12.5V11.75ZM13.25 11V5H11.75V11H13.25ZM4.75 11V15H6.25V11H4.75ZM4.75 15C4.75 17.6234 6.87665 19.75 9.5 19.75V18.25C7.70507 18.25 6.25 16.7949 6.25 15H4.75ZM9.5 19.75H15.5V18.25H9.5V19.75ZM15.5 19.75C18.1234 19.75 20.25 17.6234 20.25 15H18.75C18.75 16.7949 17.2949 18.25 15.5 18.25V19.75ZM20.25 15V11H18.75V15H20.25ZM6.25 11V9H4.75V11H6.25ZM6.25 9C6.25 7.20507 7.70507 5.75 9.5 5.75V4.25C6.87665 4.25 4.75 6.37665 4.75 9H6.25ZM9.5 5.75H12.5V4.25H9.5V5.75ZM20.25 11V9H18.75V11H20.25ZM20.25 9C20.25 6.37665 18.1234 4.25 15.5 4.25V5.75C17.2949 5.75 18.75 7.20507 18.75 9H20.25ZM15.5 4.25H12.5V5.75H15.5V4.25Z" fill="#abd5e9"></path> </g></svg>
+                    <span class="stats_menu_item_active">ПАНЕЛЬ</span>
+                </div>
+                <div class="stats_menu_item">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#707070"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g id="Complete"> <g id="support"> <g> <circle cx="12" cy="12" fill="none" r="4" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="translate(-5 12) rotate(-45)"></circle> <circle cx="12" cy="12" fill="none" r="10" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="translate(-5 12) rotate(-45)"></circle> <line fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="5" x2="9" y1="5" y2="9"></line> <line fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="15" x2="19" y1="9" y2="5"></line> <line fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="15" x2="19" y1="15" y2="19"></line> <line fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="9" x2="5" y1="15" y2="19"></line> </g> </g> </g> </g></svg>
+                    <span>ПОМОЩЬ</span>
+                </div>
+                <div class="stats_menu_item">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7.84308 20.1979C9.8718 21.3993 10.8862 22 12 22C13.1138 22 14.1282 21.3993 16.1569 20.1979L16.8431 19.7915C18.8718 18.5901 19.8862 17.9894 20.4431 17C21 16.0106 21 14.8092 21 12.4063M20.8147 8C20.7326 7.62759 20.6141 7.3038 20.4431 7C19.8862 6.01057 18.8718 5.40987 16.8431 4.20846L16.1569 3.80211C14.1282 2.6007 13.1138 2 12 2C10.8862 2 9.8718 2.6007 7.84308 3.80211L7.15692 4.20846C5.1282 5.40987 4.11384 6.01057 3.55692 7C3 7.98943 3 9.19084 3 11.5937V12.4063C3 14.8092 3 16.0106 3.55692 17C3.78326 17.4021 4.08516 17.74 4.5 18.0802" stroke="#707070" stroke-width="1.5" stroke-linecap="round"></path> <circle cx="12" cy="12" r="3" stroke="#707070" stroke-width="1.5"></circle> </g></svg>
+                    <span>НАСТРОЙКИ</span>
+                </div>
+            </div>
+            <div class="stats_menu_lang">
+                <svg viewBox="0 -4 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g clip-path="url(#clip0_503_2726)"> <rect x="0.25" y="0.25" width="27.5" height="19.5" rx="1.75" fill="white" stroke="#F5F5F5" stroke-width="0.5"></rect> <mask id="mask0_503_2726" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="20"> <rect x="0.25" y="0.25" width="27.5" height="19.5" rx="1.75" fill="white" stroke="white" stroke-width="0.5"></rect> </mask> <g mask="url(#mask0_503_2726)"> <path fill-rule="evenodd" clip-rule="evenodd" d="M0 13.3333H28V6.66667H0V13.3333Z" fill="#0C47B7"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M0 20H28V13.3333H0V20Z" fill="#E53B35"></path> </g> </g> <defs> <clipPath id="clip0_503_2726"> <rect width="28" height="20" rx="2" fill="white"></rect> </clipPath> </defs> </g></svg>
+            </div>
+        </section>
+        <section class="stats_title">
+            <h1>Статистика &#9996; </h1>
+        </section>
+        <article class="stats_content">
+            <section class="stats_content_panels">
+                <div class="stats_content_panel">
+                    <svg fill="#000000" viewBox="0 0 24 24" id="Outline" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>194 restore</title> <path d="M12,6a1,1,0,0,0-1,1v5a1,1,0,0,0,.293.707l3,3a1,1,0,0,0,1.414-1.414L13,11.586V7A1,1,0,0,0,12,6Z M23.812,10.132A12,12,0,0,0,3.578,3.415V1a1,1,0,0,0-2,0V5a2,2,0,0,0,2,2h4a1,1,0,0,0,0-2H4.827a9.99,9.99,0,1,1-2.835,7.878A.982.982,0,0,0,1,12a1.007,1.007,0,0,0-1,1.1,12,12,0,1,0,23.808-2.969Z"></path></g></svg>
+                    <h2 class="summary_time">12 <span>мин.</span></h2>
+                    <span>Общее время печати</span>
+                </div>
+                <div class="stats_content_panel">
+                    <svg fill="#000000" viewBox="0 0 512 512" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title></title><path d="M256,62.24c-106.82,0-193.72,86.56-193.72,192.94s86.9,193,193.72,193,193.72-86.56,193.72-192.95S362.82,62.24,256,62.24Zm0,369.89c-98,0-177.72-79.38-177.72-176.95S158,78.24,256,78.24s177.72,79.38,177.72,176.94S354,432.13,256,432.13Zm127.58-103.6h0v0h0a8,8,0,0,1-10.9,2.91l-20-11.51a8,8,0,0,1,8-13.87l12.91,7.41A130.31,130.31,0,0,0,387,263.19H372.18a8,8,0,0,1,0-16H387a129.36,129.36,0,0,0-13.56-50.32l-12.87,7.4a7.91,7.91,0,0,1-4,1.07,8,8,0,0,1-4-14.94l12.8-7.35a131.91,131.91,0,0,0-37-36.83L321,159a8,8,0,0,1-13.84-8l7.39-12.75A130.71,130.71,0,0,0,264,124.73v14.76a8,8,0,0,1-16,0V124.73a130.71,130.71,0,0,0-50.56,13.5L204.83,151A8,8,0,1,1,191,159l-7.41-12.78a132,132,0,0,0-37,36.82l12.8,7.36a8,8,0,1,1-8,13.87l-12.88-7.4A129.36,129.36,0,0,0,125,247.18h14.86a8,8,0,0,1,0,16H125a130.31,130.31,0,0,0,13.53,50.33l12.9-7.41a8,8,0,1,1,8,13.87l-20,11.51a8,8,0,0,1-10.89-2.91h0l0,0h0a146.26,146.26,0,0,1-19.71-72.94c0-.14,0-.27,0-.41s0-.24,0-.36A145.42,145.42,0,0,1,128,182.59a7.54,7.54,0,0,1,.38-.75,7.25,7.25,0,0,1,.53-.79,148.09,148.09,0,0,1,52.63-52.42,7.52,7.52,0,0,1,.75-.5,8.52,8.52,0,0,1,.8-.4,146.86,146.86,0,0,1,72.51-19.25h.72a146.86,146.86,0,0,1,72.51,19.25,8.52,8.52,0,0,1,.8.4,7.52,7.52,0,0,1,.75.5,148,148,0,0,1,52.63,52.42,7.25,7.25,0,0,1,.53.79c.14.25.27.5.38.75a145.42,145.42,0,0,1,19.33,72.23c0,.12,0,.24,0,.37s0,.26,0,.4a146.26,146.26,0,0,1-19.7,72.92Zm-96.33-73.37a31.24,31.24,0,0,0-39.42-30l-27.56-47.54a8,8,0,1,0-13.84,8L234,233.15a31.09,31.09,0,0,0,22,53.14,31.5,31.5,0,0,0,8.15-1.08l5.28,9.12a8,8,0,0,0,13.84-8L278,277.22A31.13,31.13,0,0,0,287.25,255.16Zm-46.43,0a15.16,15.16,0,0,1,7.59-13.08h0a15.1,15.1,0,1,1-7.6,13.08Zm61.61,84.5H209.57a8,8,0,0,0-8,8v46.23a8,8,0,0,0,8,8h92.86a8,8,0,0,0,8-8V347.66A8,8,0,0,0,302.43,339.66Zm-8,46.23H217.57V355.66h76.86Z"></path></g></svg>
+                    <h2 class="summary_time">4.5 <span>с/м</span></h2>
+                    <span>Средняя скорость печати</span>
+                </div>
+                <div class="stats_content_panel">
+                    <svg fill="#000000" viewBox="0 0 512 512" enable-background="new 0 0 512 512" id="Dart" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M242.633,394.779c-79.31,0-143.826-64.529-143.826-143.825c0-79.324,64.516-143.839,143.826-143.839 c79.311,0,143.84,64.516,143.84,143.839c0,29.977-9.234,57.833-24.99,80.9l28.646,27.597c22.28-30.41,35.448-67.916,35.448-108.504 c0-101.514-82.294-183.808-183.808-183.808c-101.514,0-183.808,82.293-183.808,183.808c0,101.514,82.293,183.807,183.808,183.807 c47.778,0,91.294-18.231,123.981-48.113l-30.852-25.456C309.905,382.137,277.721,394.779,242.633,394.779z"></path> <path d="M332.242,303.686c9.103-15.467,14.33-33.488,14.33-52.731c0-57.522-46.625-104.147-104.133-104.147 c-57.522,0-104.148,46.625-104.148,104.147c0,57.508,46.626,104.134,104.148,104.134c22.818,0,43.923-7.344,61.082-19.793 l-37.05-30.57c-7.138,3.099-15.006,4.828-23.283,4.828c-32.366,0-58.604-26.236-58.604-58.606 c0-32.365,26.239-58.604,58.604-58.604c32.362,0,58.604,26.239,58.604,58.604c0,7.029-1.265,13.755-3.537,19.997L332.242,303.686z"></path> <path d="M453.709,405.172l-32.604-31.611c0.373-0.549-2.334-1.516-4.999-1.607l-26.233,3.906l-1.658-1.587L283.391,273.285 l0.241-0.271c0.672-0.753,0.605-1.907-0.147-2.579l-0.027-0.024c-0.753-0.672-1.908-0.606-2.579,0.147l-0.268,0.3 c-3.884-2.614-8.93-2.601-12.778-0.096l-24.926-19.23c-0.212-0.164-0.641,0-0.971,0.369l-0.012,0.014 c-0.33,0.37-0.443,0.814-0.256,1.007l21.991,22.62c-1.913,4.063-1.309,8.956,1.672,12.448l-0.268,0.301 c-0.672,0.753-0.605,1.908,0.147,2.579l0.027,0.024c0.753,0.672,1.907,0.605,2.579-0.147l0.242-0.271l112.276,92.641l4.202,3.468 l-2.535-2.091l-0.878,26.063c-0.071,2.126,0.852,4.164,2.497,5.513l34.828,28.551c0.689,0.564,1.723,0.069,1.715-0.821 l-0.261-28.027l13.403,11.062c0.666,0.552,1.501,0.788,2.313,0.725c0.501-0.038,0.986-0.204,1.427-0.47 c0.096-0.057,0.194-0.105,0.284-0.174c0.03-0.023,0.056-0.055,0.085-0.078c0.133-0.107,0.264-0.219,0.381-0.35l0.006-0.006 c0-0.001,0.001-0.001,0.002-0.002l0.041-0.047c0.001-0.001,0.001-0.001,0.001-0.001l0.007-0.007 c0.244-0.274,0.422-0.586,0.557-0.91c0.023-0.057,0.058-0.111,0.078-0.17c0.002-0.006,0.002-0.014,0.005-0.02 c0.132-0.383,0.191-0.785,0.176-1.184c-0.028-0.814-0.358-1.618-0.983-2.219l-8.428-8.109l-4.006-3.859l27.816-2.928 C453.981,406.929,454.367,405.811,453.709,405.172z"></path> </g> </g></svg>
+                    <h2 class="summary_time">92<span>%</span></h2>
+                    <span>Средняя точность печати</span>
+                </div>
+            </section>
+            <h2 class="stats_content_label">Время печати за последние 7 дней: </h2>
             <div class="ct-chart ct-perfect-fourth"></div>
-       </section>
-       
+        </article>
+       <!-- <section class="stats_bar">
+            
+       </section> -->
+       <!-- <section class="stats_attempts">
+        <table>
+            <tr>
+              <th>Дата</th>
+              <th>Очки</th>
+              <th>Скорость</th>
+              <th>Точность</th>
+            </tr>
+            <tr>
+                <td class="stats_attempts_row_date">09.05.2024</td>
+                <td class="stats_attempts_row_speed">4.56</td>
+                <td class="stats_attempts_row_accutacy">93.42%</td>
+                <td class="stats_attempts_row_points">4345</td>
+            </tr>
+            <tr>
+                <td class="stats_attempts_row_date">09.05.2024</td>
+                <td class="stats_attempts_row_speed">4.56</td>
+                <td class="stats_attempts_row_accutacy">93.42%</td>
+                <td class="stats_attempts_row_points">4345</td>
+            </tr>
+            <tr>
+                <td class="stats_attempts_row_date">09.05.2024</td>
+                <td class="stats_attempts_row_speed">4.56</td>
+                <td class="stats_attempts_row_accutacy">93.42%</td>
+                <td class="stats_attempts_row_points">4345</td>
+            </tr>
+          </table>
+       </section> -->
+        <footer class="lobby_footer">
+            <a href="">©Василенко Данил, 2024</a>
+        </footer>
     </main>
-    <footer class="lobby_footer">
-        <a href="">©Василенко Данил, 2024</a>
-    </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <script src="../bower_components/chartist/dist/chartist.min.js"></script>

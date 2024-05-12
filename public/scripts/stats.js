@@ -21,7 +21,6 @@ function stats7Days() {
         else attempts = data.data;
         const timesSeries = parseDate(); // все попытки за последние 7 дней
         const timesLabels = getLast7Dates();
-        console.log(timesLabels);
         drawBarDiagram(timesSeries, timesLabels);
     })
   .catch(error => console.error('Ошибка:', error));
@@ -29,13 +28,14 @@ function stats7Days() {
 
 stats7Days();
 
+// получает все попытки в виде словаря, возвращает массив из 7 элементов - общее время на каждый из 7 последних дней
 function parseDate() {
     let curr_date = new Date().getTime(), result = Array.from({ length: 7 }, () => 0);
     attempts.forEach(row => {
         let index = Math.trunc((curr_date - row.date) / (1000 * 60 * 60 * 24));
         if (index <= 7) result[index] += +row.time;
     });
-    return result.sort((a, b) => a - b);
+    return result.reverse();
 }
 
 // возвращает строку в формате 'мм/дд'

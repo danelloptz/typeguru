@@ -1,40 +1,149 @@
 @import './keyframes';
 .stats {
     width: 100%;
-    height: 100vh;
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
-        "h1 h1"
-        "bar smth";
-    row-gap: 15px;
-    padding-top: 2vh;
-    background: -webkit-linear-gradient(0deg, #1a191a,#263b42);background: linear-gradient(0deg, #1a191a,#263b42);
-    h1 {
-        grid-area: h1;
-        align-self: center;
-        font-size: $labels_big;
-        text-align: center;
-        color: $orange;
-        @media (max-width: 1200px) {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    // row-gap: 15px;
+    padding-left: 7vw;
+    padding-right: 2vw;
+    row-gap: 3vh;
+    background: $black;
+    .stats_menu {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 6vw;
+        background: $black;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4vh 0;
+        img {
+            width: 70%;
+            height: auto;
+            border-radius: 50%;
+        }   
+        .stats_menu_icons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 5vh;
+            .stats_menu_item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                row-gap: 1vh;
+                padding: 5px;
+                cursor: pointer;
+                svg {
+                    width: 2vw;
+                    height: 2vw;
+                    stroke: #707070;
+                }
+                span {
+                    font-size: 13px;
+                    letter-spacing: 1px;
+                    color: #707070;
+                }
+                .stats_menu_item_active {
+                    color: $cyan !important;
+                    stroke: $cyan !important;
+                }
+            }
+        }
+        .stats_menu_lang {
+            width: 3vw;
+            height: 3vw;
+            border-radius: 50%;
+            overflow: hidden;
+            svg {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+    }
+    .stats_title {
+        width: 100%;
+        height: 10vh;
+        display: flex;
+        align-items: center;
+        padding-left: 2vw;
+        background: $black;
+        padding-top: 5vh;
+        h1 {
             font-size: $labels_medium;
+            color: white;
+            letter-spacing: 1.5px;
         }
-        @media (max-width: 1000px) {
-            font-size: $labels_big;
+    }
+    .stats_content {
+        display: flex;
+        flex-direction: column;
+        background: $black_light;
+        border-radius: 60px;
+        padding: 2vw;
+        .stats_content_panels {
+            display: flex;
+            height: 20vw;
+            column-gap: 2vw;
+            margin: auto;
+            .stats_content_panel {
+                height: 100%;
+                width: 20vw;
+                display: flex;
+                flex-direction: column;
+                justify-content: end;
+                padding: 2vh;
+                position: relative;
+                border-radius: 10%;
+                &:nth-child(1) {
+                    background: #abd5e9;
+                }
+                &:nth-child(2) {
+                    background: #a6c0f1;
+                }
+                &:nth-child(3) {
+                    background: #c6a5f1;
+                }
+                svg {
+                    width: 4vw;
+                    height: 4vw;
+                    position: absolute;
+                    top: 4vh;
+                    left: 4vh;
+                }
+                h2 {
+                    color: $black;
+                    font-size: $labels_okay;
+                    letter-spacing: 1.5px;
+                    span {
+                        font-size: $labels_normal;
+                    }
+                }
+                span {
+                    color: $black;
+                    font-size: $labels_small;
+                    letter-spacing: 1px;
+                }
+            }
         }
-        @media (max-width: 700px) {
-            font-size: $labels_medium;
-        }
-        @media (max-width: 430px) {
+        .stats_content_label {
             font-size: $labels_normal;
+            color: white;
+            letter-spacing: 1.5px;
+            margin-top: 6vh;
         }
     }
     .stats_bar {
-        grid-area: bar;
         display: flex;
         flex-direction: column;
-        width: 100%;
+        width: 50%;
         row-gap: 15px;
         padding: 0 2vw;
         h2 {
@@ -43,14 +152,62 @@
             opacity: .6;
         }
     }
+    // .stats_attempts {
+    //     grid-area: attempts;
+    //     width: 100%;
+    //     table {
+    //         font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    //         border-collapse: collapse;
+    //         color: white;
+    //         width: 100%;
+    //       }
+    //       th {
+    //         border-bottom: 3px solid $green;
+    //         padding: 10px;
+    //         text-align: left;
+    //         font-size: $labels_normal;
+    //         color: white;
+    //       }
+    //       td {
+    //         padding: 10px;
+    //         background: none;
+    //       }
+    //       tr {
+    //         border-bottom: 1px solid $dark;
+    //       }
+    //       tr:nth-child(odd) {
+    //         background: none;
+    //       }
+    //       tr:nth-child(even) {
+    //         background: none;
+    //       }
+    // }
+    .lobby_footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 5vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .ct-chart-bar {
-    width: 100% !important;
+    width: 50% !important;
 }
 
 .ct-bar {
-    stroke: $orange !important;
+    stroke: $cyan !important;
     /* Control the thikness of your lines */
     stroke-width: 30px;
+    opacity: .7;
+    cursor: pointer;
+    &:last-child {
+        opacity: 1;
+    }
+}
+.ct-bar:hover {
+    opacity: 1;
 }
