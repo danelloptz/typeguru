@@ -860,10 +860,22 @@ body {
   align-items: center;
   padding: 4vh 0;
 }
-.stats .stats_menu img {
+.stats .stats_menu .stats_menu_img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 2vh;
+}
+.stats .stats_menu .stats_menu_img img {
   width: 70%;
   height: auto;
   border-radius: 50%;
+}
+.stats .stats_menu .stats_menu_img span {
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: #abd5e9;
+  word-wrap: break-word;
 }
 .stats .stats_menu .stats_menu_icons {
   display: flex;
@@ -896,7 +908,6 @@ body {
 .stats .stats_menu .stats_menu_lang {
   width: 3vw;
   height: 3vw;
-  border-radius: 50%;
   overflow: hidden;
 }
 .stats .stats_menu .stats_menu_lang svg {
@@ -954,6 +965,9 @@ body {
 .stats .stats_content .stats_content_panels .stats_content_panel:nth-child(3) {
   background: #c6a5f1;
 }
+.stats .stats_content .stats_content_panels .stats_content_panel:nth-child(4) {
+  background: #f7cddb;
+}
 .stats .stats_content .stats_content_panels .stats_content_panel svg {
   width: 4vw;
   height: 4vw;
@@ -973,6 +987,7 @@ body {
   color: #171215;
   font-size: 20px;
   letter-spacing: 1px;
+  opacity: 0.7;
 }
 .stats .stats_content .stats_content_label {
   font-size: 30px;

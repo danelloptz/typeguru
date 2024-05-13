@@ -112,9 +112,16 @@ app.post('/api/signup', (req, res) => {
             if (err) throw err;
             if (result.serverStatus == 2) {
                req.session.isAuthenticated = true;
-               return res.json({ exists: true, data: {
-                  name: name,
-                  email: email
+               return res.json({ 
+                  exists: true, 
+                  data: {
+                     id: maxId+1,
+                     name: name,
+                     email: email,
+                     speed: 0,
+                     accuracy: 0, 
+                     wins: 0, 
+                     points: 0
                } });
             } else {
                return res.json({ exists: false, message: "Регистрация неудачна"});
