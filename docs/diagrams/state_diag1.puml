@@ -1,0 +1,56 @@
+@startuml
+[*] --> Fetch: Отправление запроса на сервер по адресу /api/sevendays
+
+Fetch --> Response: Получение ответа от сервера
+
+state Response <<choice>> 
+  Response --> ErrorHandling: data.exist == False
+  Response --> ProcessingData: data.exist == True
+
+state ErrorHandling {
+  ErrorHandling --> ShowErrorMessage: Показ сообщения об ошибке
+}
+
+state ShowErrorMessage {
+  ShowErrorMessage --> End: Конец
+}
+
+state ProcessingData {
+  ProcessingData --> parseDate: Возвращает все попытки за последние 7 дней
+  state parseDate {
+    parseDate --> timesSeries: Массив с активностью пользователя
+  }
+  state getLast7Dates {
+    getLast7Dates --> timesLabels: Массив с последними 7 датами
+  }
+  state getAverage {
+    getAverage --> averageStats: Получение средних статистических данных
+  }
+  state drawBarDiagram {
+  }
+
+  state setValues {
+    setValues --> time: Запись средних значений в лэйблы в разделе статистики
+    setValues --> speed
+    setValues --> accuracy
+    setValues --> points
+  }
+
+  state bestUsersAttempts {
+    bestUsersAttempts --> setTopAttempts: Топ 5 попыток пользователей (по кол-ву очков)
+  }
+  state setTopAttempts {
+    setTopAttempts --> End: Попытки выведены на экран
+  }
+}
+
+
+
+
+timesSeries --> getLast7Dates
+getLast7Dates --> getAverage
+getAverage --> drawBarDiagram : Отрисовка диаграммы скорости
+drawBarDiagram --> setValues
+setValues --> bestUsersAttempts
+bestUsersAttempts --> setTopAttempts
+@enduml

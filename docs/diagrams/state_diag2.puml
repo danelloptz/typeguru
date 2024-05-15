@@ -1,0 +1,45 @@
+@startuml
+[*] --> Login: Пользователь вводит данные для входа
+
+Login --> EmailValidation: Проверка валидности электронной почты
+state EmailValidation {
+}
+
+state PassValidation {
+}
+
+state Fetch {
+  fetch --> Response: Отправка данных на сервер
+}
+
+state Response {
+  Response --> data: Получение ответа от сервера
+}
+
+state Response <<choice>> 
+  Response --> ErrorHandling: data.exists == False
+
+state ErrorHandling {
+  ErrorHandling --> ShowErrorMessage: Вывод сообщения об ошибке
+}
+
+state ShowErrorMessage {
+}
+
+state SuccessProcessing {
+  SuccessProcessing --> localStorage: Сохранение данных пользователя
+  state localStorage {
+    localStorage --> Redirect: Перенаправление на страницу игры
+  }
+}
+state Redirect {
+}
+PassValidation --> Fetch: Пароль валиден
+EmailValidation --> PassValidation: Электронная почта валидна, проверка пароля
+EmailValidation --> ErrorHandling : Неправильные данные
+PassValidation --> ErrorHandling : Неправильные данные
+data --> SuccessProcessing: data.exists == True
+ShowErrorMessage --> End: Конец
+Redirect --> End: Конец
+
+@enduml

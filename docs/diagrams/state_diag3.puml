@@ -1,0 +1,31 @@
+@startuml
+[*] --> FetchText: Запуск функции fetchText
+
+FetchText --> Fetch : Запрос на сервер
+
+state Fetch {
+  Fetch --> Response
+}
+Response --> ErrorHandling : была возвращена ошибка
+Response --> WordsChange : статус - успех
+
+state WordsChange {
+  WordsChange --> LetterChange : forEach по каждому слову
+  state LetterChange { 
+   LetterChange --> words_tag : forEach по каждой букве
+  }
+  words_tag --> SetWord : добавление слова из букв, обёрнутых в теги
+}
+
+
+
+state ErrorHandling {
+  ErrorHandling --> ShowErrorMessage: Вывод сообщения об ошибке
+}
+
+state ShowErrorMessage {
+}
+
+ShowErrorMessage --> End : конец
+WordsChange --> End : конец
+@enduml
