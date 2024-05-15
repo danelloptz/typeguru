@@ -42,19 +42,6 @@ connection.connect(function(err) {
 
 app.use(express.json()); // Обрабатываем принимаемые данные, как json
 
-// Пробный маршрут. Выдаём всех пользователей с всеми данными
-app.get('/api/data', (req, res) => {
-   connection.query("SELECT * FROM Users", function(err, results) {
-      if (err) {
-          console.log("Ошибка: " + err.message);
-          res.status(500).send("Ошибка при выполнении запроса к базе данных");
-          return;
-      }
-      res.json(results);
-      return;
-  });
-});
-
 // Маршрут авторизации
 app.post('/api/signin', (req, res) => {
    if(!req.body) return res.sendStatus(400);
@@ -164,11 +151,12 @@ app.post('/api/modalChange', (req, res) => {
 app.post('/api/endgame', async (req, res) => {
    if (!req.body) return res.sendStatus(400);
 
-   const { id, time, speed, accuracy, email, wins, points } = req.body;
-
+   
+   const { id, name, time, speed, accuracy, email, wins, points } = req.body;
    // логика написана через ассинхрон, т.к запросы в БД ассинхронны, а в данном случае необходимо делать 
    // запросы последовательно
    try {
+
        // Получаем последний id
        let maxId = await getMaxId();
 
@@ -179,7 +167,7 @@ app.post('/api/endgame', async (req, res) => {
        await updateUser(email, time, speed, accuracy, wins + 1);
 
        // Добавляем попытку в таблицу с попытками
-       await addAttempt(maxId + 1, id, date.getTime(), time, speed, accuracy, points);
+       await addAttempt(maxId + 1, id, name, date.getTime(), time, speed, accuracy, points);
       //  const kef = await calculateKef(speed, accuracy, )
 
        return res.json({ exists: true });
@@ -217,9 +205,9 @@ async function updateUser(email, time, speed, accuracy, wins) {
 }
 
 // Функция для добавления попытки
-async function addAttempt(id, userId, date, time, speed, accuracy, points) {
+async function addAttempt(id, userId, name, date, time, speed, accuracy, points) {
    return new Promise((resolve, reject) => {
-       connection.query('INSERT INTO Attempts (id, user_id, date, time, speed, accuracy, points) VALUES (?,?,?,?,?,?,?)', [id, userId, date, time, speed, accuracy, points], (err, result) => {
+       connection.query('INSERT INTO Attempts (id, user_id, name, date, time, speed, accuracy, points) VALUES (?,?,?,?,?,?,?,?)', [id, userId, name, date, time, speed, accuracy, points], (err, result) => {
            if (err) reject(err);
            resolve();
        });
@@ -227,22 +215,43 @@ async function addAttempt(id, userId, date, time, speed, accuracy, points) {
 }
 
 
-// Маршрут регистрации
+// Все попытки пользователя
 app.post('/api/sevendays', (req, res) => {
    if(!req.body) return res.sendStatus(400);
    const user_id = req.body.id;
 
   connection.query('SELECT * FROM Attempts WHERE user_id =?', [user_id], (err, result) => {
+      if (err) throw err;
+      if (result.length > 0) {
+         return res.json({ exists: true, data: result });
+      } else {
+         res.json({ exists: false, message: "Что-то пошло не так" });
+         return;
+      }
+   });
+});
+
+// Топ 5 попыток на сервере
+app.get('/api/topfive', (req, res) => {
+  connection.query('SELECT * FROM ( SELECT *, ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY points DESC) AS rn FROM Attempts ) t WHERE rn = 1 ORDER BY points DESC LIMIT 5;', (err, result) => {
    if (err) throw err;
    if (result.length > 0) {
-      return res.json({ exists: true, data: result });
+      let userIds = result.map( (row) => row.user_id ); 
+      connection.query(`SELECT * FROM Users WHERE id IN (${userIds.map(id => `${id}`).join(', ')})`, (error, result_names) => {
+         if (err) throw err;
+         if (result.length > 0) {
+            return res.json({ exists: true, data: result, dataUsers: result_names });
+         } else {
+            res.json({ exists: false, message: "Что-то пошло не так" });
+            return;
+         }
+      });
    } else {
       res.json({ exists: false, message: "Что-то пошло не так" });
       return;
    }
 });
 });
-
 
 // Приватим папку game для неавторизованных пользователей
 app.use('/public/game', isAuthenticated, express.static(path.join(__dirname, 'public/game')));

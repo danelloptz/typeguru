@@ -1,201 +1,36 @@
 # Структурные модели
 
-@startuml
+* [оффлайн файл](diagrams/classes.puml)
+![Диаграмма классов и объектов](diagrams/classes.png)
 
-' Классы:
-'-------------
+## Описание содержания диаграммы классов и диаграммы объектов         
+Эта диаграмма UML описывает структуру системы, включающую различные классы и их взаимодействия. Вот краткое описание каждого класса и ассоциаций между ними:
 
-class User {
- - email: String
- - password: String
- - name: String
- + register()
- + login()
- + ValidateEmail()
- + ValidatePass()
-}
+### Классы:        
+User: Представляет пользователя системы. Имеет поля для идентификатора (id), электронной почты (email), пароля (password) и имени (name). Объявлены методы для регистрации (register()), входа в систему (login()), проверки электронной почты (ValidateEmail()) и пароля (ValidatePass()).         
 
-class Game {
- + fetchText()
- + inputText()
-}
+Game: Отвечает за логику игры. Методы включают fetchText() для получения текстовых данных и inputText() для ввода текста пользователем.         
 
-class Statistics {
- + fetchLastStats()
- + filterByDateRange()
- + fetchAllStats()
-}
+Statistics: Обрабатывает статистику игроков. Содержит методы для расчета статистики за последние 7 дней (stats7Days()), определения лучших попыток пользователей (bestUsersAttempts()), установки топ-попыток (setTopAttempts()), а также форматирования дат и отображения графиков.         
 
-class Profile {
- + ValidateEmail()
- + ValidatePass()
- + saveButton()
- + cancelButton()
- + musicToogle()
-}
+Profile: Управляет профилем пользователя. Включает методы для валидации электронной почты и пароля, сохранения и отмены изменений, а также переключения музыки.         
 
-class Lobby {
- + OpenModal()
- + CloseModal()
-}
-class LocaleStorage {
- - name: String
- - email: String
- - wins: Number
- - speed: Number
- - accuracy: Number
- - time: Number
-}
-class Server {
- +app: express.Application
- +connection: mysql.Connection
- +PORT: number
- + isAuthenticated()
+Lobby: Отвечает за лобби (зону ожидания) перед началом игры. Методы включают открытие модального окна (OpenModal()) и его закрытие (CloseModal()).         
 
-}
+LocaleStorage: Хранит локальные данные пользователя, такие как имя, электронная почта, количество побед, скорость и точность.         
 
-class Database {
- + connection: mysql.Connection
- - id: Number
- - name: String
- - email: String
- - games: Number
- - pass: hash
- - time: Number
- - speed: Number
- - accuracy: Number
-}
+Server: Представляет сер         верную часть приложения, использующую Express.js для обработки HTTP-запросов и MySQL для работы с базой данных. Включает методы для проверки аутентификации пользователя (isAuthenticated()).         
 
-class Session {
- +isAuthenticated: boolean
-}
+Database: Абстракция над базой данных, используемой для хранения информации о пользователях и их попытках.         
 
-class UserController {
- + connection: mysql.Connection
- + /api/data
- + /api/signin
- + /api/signup
- + /api/signout
- + /api/modalChange
- + /api/endgame
- + /public/game
- + /public
-}
+Users и Attempts: Таблицы в базе данных, которые хранят информацию о пользователях и их попытках соответственно.         
 
-' Ассоциации:
-'-------------
+UserController: Контроллер API, обрабатывающий запросы к серверу. Включает маршруты для различных операций, таких как получение данных, регистрация, вход в систему, выход из системы, изменение модальных окон и окончание игры.         
 
-User -- Lobby : вход в систему >
-Lobby -- Game : клик по кнопке >
-Lobby -- Statistics : клик по кнопке >
-Lobby -- Profile : клик по иконке >
-User -- LocaleStorage : данные с авторизации >
-Profile -- LocaleStorage : изменения в данных >
-Game -- LocaleStorage : завершение игры >
-Lobby -- LocaleStorage : завершение игры >
-Statistics -- LocaleStorage : завершение игры >
-
-Server -- Database : uses >
-Server --  UserController : uses >
-UserController -- Database : uses >
-
-
-
-@startuml
-
-' Классы:
-'-------------
-
-class User {
- - email: String
- - password: String
- - name: String
- + register()
- + login()
- + ValidateEmail()
- + ValidatePass()
-}
-
-class Game {
- + fetchText()
- + inputText()
-}
-
-class Statistics {
- + fetchLastStats()
- + filterByDateRange()
- + fetchAllStats()
-}
-
-class Profile {
- + ValidateEmail()
- + ValidatePass()
- + saveButton()
- + cancelButton()
- + musicToogle()
-}
-
-class Lobby {
- + OpenModal()
- + CloseModal()
-}
-class LocaleStorage {
- - name: String
- - email: String
- - wins: Number
- - speed: Number
- - accuracy: Number
- - time: Number
-}
-class Server {
- +app: express.Application
- +connection: mysql.Connection
- +PORT: number
- + isAuthenticated()
-
-}
-
-class Database {
- + connection: mysql.Connection
- - id: Number
- - name: String
- - email: String
- - games: Number
- - pass: hash
- - time: Number
- - speed: Number
- - accuracy: Number
-}
-
-class Session {
- +isAuthenticated: boolean
-}
-
-class UserController {
- + connection: mysql.Connection
- + /api/data
- + /api/signin
- + /api/signup
- + /api/signout
- + /api/modalChange
- + /api/endgame
- + /public/game
- + /public
-}
-
-' Ассоциации:
-'-------------
-
-User --> Lobby : ассоциация
-Lobby --> Game : ассоциация 
-Lobby --> Statistics : ассоциация
-Lobby --> Profile : ассоциация
-User --|> LocaleStorage : наследование
-Profile <|-- LocaleStorage : наследование
-Game <|-- LocaleStorage : наследование
-Lobby <|-- LocaleStorage : наследование
-Statistics <|-- LocaleStorage : наследование 
-
-Server --> Database : ассоциация
-Server --|>  UserController : Наследование
-UserController --> Database : ассоциация
+### Ассоциации:         
+User связан с Lobby, что позволяет пользователю войти в систему через лобби.         
+Lobby связан с Game, Statistics, и Profile, позволяя пользователю перейти к игре, просмотреть статистику или изменить профиль.         
+User и Profile связаны с LocaleStorage для хранения и обновления данных пользователя.         
+Game и другие классы связаны с LocaleStorage для сохранения состояния игры после ее завершения.         
+Server использует Database для хранения и извлечения данных.         
+Server и UserController используют Database для выполнения операций с данными пользователей и их попытками.         

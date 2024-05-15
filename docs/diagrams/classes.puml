@@ -4,44 +4,116 @@
 '-------------
 
 class User {
+ - id: Number
  - email: String
  - password: String
  - name: String
  + register()
  + login()
+ + ValidateEmail()
+ + ValidatePass()
 }
 
 class Game {
- + startGame()
- + continueGame()
- + endGame()
+ + fetchText()
+ + inputText()
 }
 
 class Statistics {
- + loadUserStats()
- + filterStatsByDateRange()
+ + stats7Days()
+ + bestUsersAttempts()
+ + setTopAttempts()
+ + parseDate()
+ + getAverage()
+ + formatDate()
+ + getLast7Dates()
+ + drawBarDiagram()
+ + setValues()
 }
 
 class Profile {
- + updateProfile()
- + toggleMusic()
+ + ValidateEmail()
+ + ValidatePass()
+ + saveButton()
+ + cancelButton()
+ + musicToogle()
 }
 
-class GameSession {
- - sessionId: String
- - user: User
- - game: Game
- + getInstance(): GameSession
- + startSession()
- + endSession()
+class Lobby {
+ + OpenModal()
+ + CloseModal()
+}
+class LocaleStorage {
+ - id: Number
+ - name: String
+ - email: String
+ - wins: Number
+ - speed: Number
+ - accuracy: Number
+ - time: Number
+}
+class Server {
+ +app: express.Application
+ +connection: mysql.Connection
+ +PORT: number
+ + isAuthenticated()
+
+}
+
+class Database {
+}
+
+class Users {
+ - id: Number
+ - name: String
+ - email: String
+ - games: Number
+ - pass: hash
+ - time: Number
+ - speed: Number
+ - accuracy: Number
+}
+
+class Attempts {
+ - id: Number
+ - user_id: Number
+ - name: String
+ - date: String
+ - time: Number
+ - speed: Number
+ - accuracy: Number
+}
+
+class UserController {
+ + connection: mysql.Connection
+ + /api/data
+ + /api/signin
+ + /api/signup
+ + /api/signout
+ + /api/modalChange
+ + /api/endgame
+ + /public/game
+ + /public
+ + getMaxId()
+ + updateUser()
+ + addAttempt()
 }
 
 ' Ассоциации:
 '-------------
 
-User "1" -- "0..1" GameSession : creates >
-GameSession "1" -- "1" Game : manages >
-GameSession "1" -- "1" Statistics : manages >
-GameSession "1" -- "1" Profile : manages >
+User --> Lobby : ассоциация
+Lobby --> Game : ассоциация
+Lobby --> Statistics : ассоциация
+Lobby --> Profile : ассоциация
+User --|> LocaleStorage : наследование
+Profile <|-- LocaleStorage : наследование
+Game <|-- LocaleStorage : наследование
+Lobby <|-- LocaleStorage : наследование
+Statistics <|-- LocaleStorage : наследование
 
-@enduml
+Server --> Database : ассоциация
+Server --|>  UserController : наследование
+UserController --> Database : ассоциация
+Database --|> Users : наследование
+Database --|> Attempts : наследование

@@ -35,17 +35,17 @@ modalClick.addEventListener('click',openModal);
 modalClose.addEventListener('click', CloseModal);
 
 // Ставим данные пользователя в меню
-let user_data = JSON.parse(localStorage.getItem('user')).data;
-modal_name.value = user_data.name;
-modal_email.value = user_data.email;
-user_name.innerHTML = user_data.name;
+let user_data = JSON.parse(localStorage.getItem('user'));
+modal_name.value = user_data.data.name;
+modal_email.value = user_data.data.email;
+user_name.innerHTML = user_data.data.name;
 
 
 // Кнопки сохранения и отмены в меню
 function saveButton() {
     if (ValidateEmail(modal_email.value) && ValidatePass(modal_name.value)) {
         let modal_data = { // данные до/после и данные о текущем пользователе
-            previous: user_data.email,
+            previous: user_data.data.email,
             email: modal_email.value,
             name: modal_name.value
         };
@@ -62,10 +62,10 @@ function saveButton() {
         .then(data => {
             // если успешный статус, то парсим данные в хранилище и обновляем их в ЛК 
             if (data.exists) {
-                user_data.email = modal_email.value;
-                user_data.name = modal_name.value;
+                user_data.data.email = modal_email.value;
+                user_data.data.name = modal_name.value;
                 localStorage.setItem('user', JSON.stringify(user_data));
-                user_name.innerHTML = user_data.name;
+                user_name.innerHTML = user_data.data.name;
                 alert('Изменения сохранены');
             } 
             else alert(data.message);
@@ -74,8 +74,8 @@ function saveButton() {
     }
 }
 function cancelButton() {
-    modal_email.value = user_data.email;
-    modal_name.value = user_data.name;
+    modal_email.value = user_data.data.email;
+    modal_name.value = user_data.data.name;
     CloseModal();
 }
 modal_btns_save.addEventListener('click', saveButton);

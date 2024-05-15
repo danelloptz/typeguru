@@ -1,10 +1,10 @@
 let user_data = JSON.parse(localStorage.getItem('user')).data; // данные о пользователе
 let attempts, dates = [];
-let userName = document.getElementById('userName'), summary_time = document.getElementById('summary_time'), summary_speed = document.getElementById('summary_speed'), summary_accuracy = document.getElementById('summary_accuracy'), best_points = document.getElementById('best_points');
+let userName = document.getElementById('userName'), summary_time = document.getElementById('summary_time'), summary_speed = document.getElementById('summary_speed'), summary_accuracy = document.getElementById('summary_accuracy'), best_points = document.getElementById('best_points'), stats_top = document.querySelector('.stats_top');
 
 userName.innerHTML = user_data.name; // имя пользователя под аватаркой
 
-function stats7Days() {
+async function stats7Days() {
     let send_data = {
         'exists': true,
         'data': {
@@ -27,8 +27,48 @@ function stats7Days() {
         const averageStats = getAverage(); // общее время, средняя скорость и точность
         drawBarDiagram(timesSeries, timesLabels);
         setValues(averageStats);
+        bestUsersAttempts();
     })
   .catch(error => console.error('Ошибка:', error));
+}
+
+// топ 5 попыток пользователей (по кол-ву очков)
+async function bestUsersAttempts() {
+  try {
+    const response = await fetch('/api/topfive', {
+      method: 'GET',
+    });
+    const data = await response.json();
+    
+    if (!data.exists) {
+      alert('ГОВНИЩЕ');
+    } else {
+      setTopAttempts(data); // топ результатов
+    }
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
+}
+
+// создаём строки с лучшими результатами, не более 5 строк
+function setTopAttempts(list) {
+  list.data.forEach((row, index) => {
+    let date = new Date(+row.date);
+    stats_top.innerHTML += 
+    `
+    <div class="stats_top_row">
+      <div>
+          <img src="../img/profile_image.png">
+          <span>${list.dataUsers[index].name}</span>
+      </div>
+      <span>${formatDate(date) + '/' + date.getFullYear()}</span>
+      <span>${row.points}</span>
+      <span>${Number(row.speed).toFixed(1)}</span>
+      <span>${Number(row.accuracy).toFixed(1)}</span>
+    </div>
+    `
+  });
+  // в Attempts хранится имя, а оно может переименовываться, так что нужно брать имя из Users по user_id
 }
 
 stats7Days();
@@ -40,11 +80,12 @@ function parseDate() {
         let index = Math.trunc((curr_date - row.date) / (1000 * 60 * 60 * 24));
         // просто прекрасная проверка, что даже если разница между метками меньше 24 часов и они в разные дни, то будет добавляться в нужную сумму
         if (index == 0) index = (new Date().getHours() < new Date(+row.date).getHours()) ? 1 : 0;
-        if (index <= 7) result[index] += +row.time;
+        if (index < 7) result[index] += +row.time;
     });
     return result.reverse();
 }
 
+// возвращает 4 поля данных для лэйблов в статистике
 function getAverage() {
   let sumTime = 0, sumSpeed = 0, sumAccuracy = 0, maxPoints = 0;
   attempts.forEach(row => {
@@ -75,6 +116,7 @@ function getLast7Dates() {
     return dates;
 }
 
+// рисуем столбчатую диграмму
 function drawBarDiagram(timesSeries, timesLabels) {
     var data = {
         labels: timesLabels,

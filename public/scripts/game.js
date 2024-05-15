@@ -190,7 +190,6 @@ function inputText(e) {
         sandbox_input.blur();
         sandboxField.style.display = 'none';
         resultField.style.display = 'grid';
-        
     }       
     last_input_value = sandbox_input.value;
 }
