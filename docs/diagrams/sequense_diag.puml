@@ -2,50 +2,59 @@
 actor User
 participant "JavaScript" as JS
 participant "HTML DOM" as DOM
+participant "Server" as Server
 participant "Database" as DB
 
-User -> JS: Input event
+User -> DOM: Ввод символа
 activate JS
-JS -> DOM: Get input value
+JS -> DOM: Обращение к введённому символу
 activate DOM
-DOM --> JS: Return input value
+DOM --> JS: Получение введённого символа
 deactivate DOM
-JS -> JS: Check input length
+JS -> JS: Проверка длины всех введённых символов
 alt length < 2
-    JS -> JS: Initialize start_time and last_time
+    JS -> JS: Если длина меньше 2, то старт времени
 else
-    JS -> JS: Calculate current time
-    JS -> JS: Compare current time with last_time
+    JS -> JS: Записываем текущую дату
     alt current time - start_time >= last_time - start_time
-        JS -> JS: Calculate current speed
-        JS -> JS: Update speedList
-        JS -> JS: Update last_time
-JS -> DOM: Update input value
+        JS -> JS: если прошла секунда, то записываем текущую скорость
+        JS -> JS: Вносим скорость в speedList
+        JS -> JS: Обновляем last_time
+JS -> JS: Обрабатываем корректность ввода
+JS -> DOM: Устанавливаем класс в зависимости от корректности ввода
 activate DOM
-DOM --> JS: Return updated input value
+DOM --> JS: Статус
 deactivate DOM
-JS -> JS: Process input character
-alt backspace pressed
-    JS -> JS: Decrement pointer_letter
-    JS -> JS: Update classList for letters
-else
-    JS -> JS: Increment pointer_letter
-    JS -> JS: Update classList for letters based on correctness
-JS -> JS: End of input handling
-deactivate JS
-User -> JS: Submit form
+activate User
+JS -> User : Статус
+User -> JS : Ввод последнего символа
+deactivate User
 activate JS
-JS -> JS: Calculate game score
-JS -> JS: Prepare result data
-JS -> JS: Send POST request to '/api/endgame'
-activate DB
-DB --> JS: Return response
-deactivate DB
-JS -> JS: Handle response
-alt response indicates success
-    JS -> JS: Update UI with results
-    JS -> JS: Store result data in localStorage
-else
-    JS -> JS: Show error message
+JS -> JS : Подсчёт статистики за попытку
+JS -> JS :Создание объекта для отправки на сервер
+JS -> Server : POST по адресу /api/endgame
+deactivate JS
+Server -> Database : Получаем последний id пользователя
+Database -> Server : id
+activate Server
+Server -> Server : Текущее время
+Server -> Database : Обновление данных в таблице Users 
+Database -> Server : Статус
+Server -> Database : Добавление попытки в таблицу Attempts
+Database -> Server : Статус
+Server -> JS : Статус
+deactivate Server
+activate JS
+JS -> DOM : Вывода данных
+DOM -> JS : Статус
+JS -> JS : Запись данных в localStorage
+JS -> JS : Создание диаграммы скорости
+JS -> DOM : Вывод диаграммы
+deactivate JS
+activate DOM
+DOM -> User 
+
+
+
 deactivate JS
 @enduml
