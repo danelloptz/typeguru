@@ -1,0 +1,51 @@
+@startuml
+actor User
+participant "JavaScript" as JS
+participant "HTML DOM" as DOM
+participant "Database" as DB
+
+User -> JS: Input event
+activate JS
+JS -> DOM: Get input value
+activate DOM
+DOM --> JS: Return input value
+deactivate DOM
+JS -> JS: Check input length
+alt length < 2
+    JS -> JS: Initialize start_time and last_time
+else
+    JS -> JS: Calculate current time
+    JS -> JS: Compare current time with last_time
+    alt current time - start_time >= last_time - start_time
+        JS -> JS: Calculate current speed
+        JS -> JS: Update speedList
+        JS -> JS: Update last_time
+JS -> DOM: Update input value
+activate DOM
+DOM --> JS: Return updated input value
+deactivate DOM
+JS -> JS: Process input character
+alt backspace pressed
+    JS -> JS: Decrement pointer_letter
+    JS -> JS: Update classList for letters
+else
+    JS -> JS: Increment pointer_letter
+    JS -> JS: Update classList for letters based on correctness
+JS -> JS: End of input handling
+deactivate JS
+User -> JS: Submit form
+activate JS
+JS -> JS: Calculate game score
+JS -> JS: Prepare result data
+JS -> JS: Send POST request to '/api/endgame'
+activate DB
+DB --> JS: Return response
+deactivate DB
+JS -> JS: Handle response
+alt response indicates success
+    JS -> JS: Update UI with results
+    JS -> JS: Store result data in localStorage
+else
+    JS -> JS: Show error message
+deactivate JS
+@enduml

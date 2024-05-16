@@ -1,0 +1,118 @@
+@startuml
+
+' Классы:
+'-------------
+
+class User {
+ - id: 1
+ - email: example@gmail.com
+ - password: 123
+ - name: Jack
+ + register()
+ + login()
+ + ValidateEmail(email_input.value)
+ + ValidatePass(pass_input.value)
+}
+
+class Game {
+ + fetchText()
+ + inputText()
+}
+
+class Statistics {
+ + stats7Days()
+ + bestUsersAttempts()
+ + setTopAttempts()
+ + parseDate()
+ + getAverage()
+ + formatDate()
+ + getLast7Dates()
+ + drawBarDiagram()
+ + setValues()
+}
+
+class Profile {
+ + ValidateEmail()
+ + ValidatePass()
+ + saveButton()
+ + cancelButton()
+ + musicToogle()
+}
+
+class Lobby {
+ + OpenModal()
+ + CloseModal()
+}
+class LocaleStorage {
+ - id: 1
+ - email: example@gmail.com
+ - name: Jack
+ - wins: 2
+ - speed: 5.5
+ - accuracy: 92.32%
+ - time: 20.24
+}
+class Server {
+ +app: express.Application
+ +connection: mysql.Connection
+ +PORT: 3000
+ + isAuthenticated()
+
+}
+
+class Database {
+}
+
+class Users {
+ - id: [1, 2, 3]
+ - name: [Jack, James, John]
+ - email: [example@gmail.com, ass@gmail.com, jj@mail.com]
+ - games: [2, 13, 4]
+ - pass: [hash, hash, hash]
+ - time: [20.24, 23.76, 14.44]
+ - speed: [5.5, 4.5, 6.1]
+ - accuracy: [92.32, 87.45, 90.34]
+}
+
+class Attempts {
+ - id: [1, 2]
+ - user_id: [1, 1]
+ - date: [1715848609653, 1715848607842]
+ - time: [20.24, 24.12]
+ - speed: [5.5, 3.4]
+ - accuracy: [92.32, 90.45]
+}
+
+class UserController {
+ + connection: mysql.Connection
+ + /api/data
+ + /api/signin
+ + /api/signup
+ + /api/signout
+ + /api/modalChange
+ + /api/endgame
+ + /public/game
+ + /public
+ + getMaxId()
+ + updateUser()
+ + addAttempt()
+}
+
+' Ассоциации:
+'-------------
+
+User --> Lobby : ассоциация
+Lobby --> Game : ассоциация
+Lobby --> Statistics : ассоциация
+Lobby --> Profile : ассоциация
+User --|> LocaleStorage : наследование
+Profile <|-- LocaleStorage : наследование
+Game <|-- LocaleStorage : наследование
+Lobby <|-- LocaleStorage : наследование
+Statistics <|-- LocaleStorage : наследование
+
+Server --> Database : ассоциация
+Server --|>  UserController : наследование
+UserController --> Database : ассоциация
+Database --|> Users : наследование
+Database --|> Attempts : наследование
