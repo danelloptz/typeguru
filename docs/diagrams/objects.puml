@@ -43,7 +43,7 @@ class Lobby {
  + OpenModal()
  + CloseModal()
 }
-class LocaleStorage {
+entity LocaleStorage {
  - id: 1
  - email: example@gmail.com
  - name: Jack
@@ -60,10 +60,10 @@ class Server {
 
 }
 
-class Database {
+entity Database {
 }
 
-class Users {
+entity Users {
  - id: [1, 2, 3]
  - name: [Jack, James, John]
  - email: [example@gmail.com, ass@gmail.com, jj@mail.com]
@@ -74,7 +74,7 @@ class Users {
  - accuracy: [92.32, 87.45, 90.34]
 }
 
-class Attempts {
+entity Attempts {
  - id: [1, 2]
  - user_id: [1, 1]
  - date: [1715848609653, 1715848607842]
@@ -101,18 +101,18 @@ class UserController {
 ' Ассоциации:
 '-------------
 
-User --> Lobby : ассоциация
+Profile --> User
+User --|> Statistics : наследование
+Game <--> User
 Lobby --> Game : ассоциация
 Lobby --> Statistics : ассоциация
 Lobby --> Profile : ассоциация
 User --|> LocaleStorage : наследование
-Profile <|-- LocaleStorage : наследование
-Game <|-- LocaleStorage : наследование
-Lobby <|-- LocaleStorage : наследование
-Statistics <|-- LocaleStorage : наследование
 
+Statistics --> Server
+Game --> Server
 Server --> Database : ассоциация
 Server --|>  UserController : наследование
 UserController --> Database : ассоциация
-Database --|> Users : наследование
-Database --|> Attempts : наследование
+Database --> Users 
+Database --> Attempts 

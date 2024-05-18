@@ -43,15 +43,6 @@ class Lobby {
  + OpenModal()
  + CloseModal()
 }
-class LocaleStorage {
- - id: Number
- - name: String
- - email: String
- - wins: Number
- - speed: Number
- - accuracy: Number
- - time: Number
-}
 class Server {
  +app: express.Application
  +connection: mysql.Connection
@@ -61,27 +52,6 @@ class Server {
 }
 
 class Database {
-}
-
-class Users {
- - id: Number
- - name: String
- - email: String
- - games: Number
- - pass: hash
- - time: Number
- - speed: Number
- - accuracy: Number
-}
-
-class Attempts {
- - id: Number
- - user_id: Number
- - name: String
- - date: String
- - time: Number
- - speed: Number
- - accuracy: Number
 }
 
 class UserController {
@@ -102,18 +72,14 @@ class UserController {
 ' Ассоциации:
 '-------------
 
-User --> Lobby : ассоциация
 Lobby --> Game : ассоциация
 Lobby --> Statistics : ассоциация
 Lobby --> Profile : ассоциация
-User --|> LocaleStorage : наследование
-Profile <|-- LocaleStorage : наследование
-Game <|-- LocaleStorage : наследование
-Lobby <|-- LocaleStorage : наследование
-Statistics <|-- LocaleStorage : наследование
+Game --> Server
+Statistics --> Server
+Profile --> User
+User <--> Game
+User --|> Statistics  : наследование
 
-Server --> Database : ассоциация
 Server --|>  UserController : наследование
 UserController --> Database : ассоциация
-Database --|> Users : наследование
-Database --|> Attempts : наследование
