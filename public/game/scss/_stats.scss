@@ -163,30 +163,107 @@
             }
         }
     }
-    .stats_bar {
+    .stats_row {
+        width: 100%;
         display: flex;
-        flex-direction: column;
-        width: 50%;
-        row-gap: 15px;
-        padding: 2vw 1vw;
-        background: $black_light;
-        border-radius: 40px;
-        h2 {
-            font-size: $labels_normal;
-            color: white;
-            opacity: .6;
-            text-align: center;
+        justify-content: space-between;
+        column-gap: 2vw;
+        .stats_bar, .average_stats, .stats_all {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            row-gap: 15px;
+            padding: 2vw 1vw;
+            background: $black_light;
+            border-radius: 40px;
+            h2 {
+                font-size: $labels_normal;
+                color: white;
+                opacity: .6;
+                text-align: center;
+            }
+            .average_stats_row {
+                display: flex;
+                .average_stats_switch {
+                    width: 10%;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 1vw;
+                    svg {
+                        width: 100%;
+                        height:auto;
+                        background: none;
+                        padding: 10px;
+                        border-radius: 15px;
+                        g path { fill: $cyan_light; }
+                    }
+                    .svg_active {
+                        background: $cyan_light;
+                    }
+                }
+                .ct-series-a .ct-line {
+                    stroke: $purple;
+                    stroke-width: 5px;
+                }
+    
+                .ct-series-a .ct-point {
+                    stroke: $purple;
+                    stroke-width: 10px;
+                }
+                .ct-series-a .ct-area {
+                    fill: $purple_light;
+                }
+            }
+            .stats_all_rows .stats_all_row {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                column-gap: 1vw;
+                align-items: center;
+                padding: 2vh 3vh;
+                margin-bottom: 1vw;
+                &:first-of-type { margin-bottom: 0vh; }
+                h3, span, div span {
+                    font-size: $labels_small;
+                    color: white;
+                    letter-spacing: 1px;
+                    text-align: center;
+                }
+                h3 { 
+                    font-size: $labels_normal; 
+                    font-weight: 600; 
+                    font-family: 'RML';
+                    color: $cyan; 
+                }
+            }
+        }
+        .stats_all {
+            align-items: center;
+            overflow-y: auto;
+            height: 73vh;
+            -ms-overflow-style: none; /* Скрытие полосы прокрутки в IE */
+            scrollbar-width: none; /* Скрытие полосы прокрутки в Firefox */
+            &::-webkit-scrollbar { /* Скрытие полосы прокрутки в Chrome, Safari */
+                display: none;
+            }
+            .stats_all_rows .stats_all_row h3 { color: $purple; }
+            .stats_showAll {
+                font-size: $labels_small; 
+                font-weight: 600; 
+                font-family: 'RML';
+                color: $purple_light; 
+                cursor: pointer;
+            }
         }
     }
+    
     .stats_top {
         display: flex;
         flex-direction: column;
         width: auto;
         row-gap: 15px;
-        padding: 2vw 1vw;
+        padding: 2vw 0;
         background: $black_light;
         border-radius: 40px;
-        row-gap: 2vh;
         h2 {
             font-size: $labels_normal;
             color: white;
@@ -194,12 +271,12 @@
             text-align: center;
         }
         .stats_top_row {
-            height: 10vh;
+            height: 14vh;
             display: grid;
             grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
             column-gap: 1vw;
             align-items: center;
-            padding: 0 1vw;
+            padding: 2vh 3vh;
             margin-bottom: 1vw;
             &:first-of-type { margin-bottom: 0vh; }
             div {
@@ -219,6 +296,13 @@
                 width: auto;
                 height: 10vh;
                 border-radius: 50%;
+            }
+        }
+        .stats_top_row_active {
+            background: $cyan_light;
+            h3, span, div span {
+                font-size: $labels_normal;
+                font-weight: 800;
             }
         }
     }

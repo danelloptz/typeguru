@@ -1002,7 +1002,14 @@ body {
 .stats .stats_content .stats_content_label span {
   color: #abd5e9;
 }
-.stats .stats_bar {
+.stats .stats_row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  -moz-column-gap: 2vw;
+       column-gap: 2vw;
+}
+.stats .stats_row .stats_bar, .stats .stats_row .average_stats, .stats .stats_row .stats_all {
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -1011,21 +1018,97 @@ body {
   background: #1c191b;
   border-radius: 40px;
 }
-.stats .stats_bar h2 {
+.stats .stats_row .stats_bar h2, .stats .stats_row .average_stats h2, .stats .stats_row .stats_all h2 {
   font-size: 30px;
   color: white;
   opacity: 0.6;
   text-align: center;
+}
+.stats .stats_row .stats_bar .average_stats_row, .stats .stats_row .average_stats .average_stats_row, .stats .stats_row .stats_all .average_stats_row {
+  display: flex;
+}
+.stats .stats_row .stats_bar .average_stats_row .average_stats_switch, .stats .stats_row .average_stats .average_stats_row .average_stats_switch, .stats .stats_row .stats_all .average_stats_row .average_stats_switch {
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1vw;
+}
+.stats .stats_row .stats_bar .average_stats_row .average_stats_switch svg, .stats .stats_row .average_stats .average_stats_row .average_stats_switch svg, .stats .stats_row .stats_all .average_stats_row .average_stats_switch svg {
+  width: 100%;
+  height: auto;
+  background: none;
+  padding: 10px;
+  border-radius: 15px;
+}
+.stats .stats_row .stats_bar .average_stats_row .average_stats_switch svg g path, .stats .stats_row .average_stats .average_stats_row .average_stats_switch svg g path, .stats .stats_row .stats_all .average_stats_row .average_stats_switch svg g path {
+  fill: rgba(171, 213, 233, 0.4941176471);
+}
+.stats .stats_row .stats_bar .average_stats_row .average_stats_switch .svg_active, .stats .stats_row .average_stats .average_stats_row .average_stats_switch .svg_active, .stats .stats_row .stats_all .average_stats_row .average_stats_switch .svg_active {
+  background: rgba(171, 213, 233, 0.4941176471);
+}
+.stats .stats_row .stats_bar .average_stats_row .ct-series-a .ct-line, .stats .stats_row .average_stats .average_stats_row .ct-series-a .ct-line, .stats .stats_row .stats_all .average_stats_row .ct-series-a .ct-line {
+  stroke: #c6a5f1;
+  stroke-width: 5px;
+}
+.stats .stats_row .stats_bar .average_stats_row .ct-series-a .ct-point, .stats .stats_row .average_stats .average_stats_row .ct-series-a .ct-point, .stats .stats_row .stats_all .average_stats_row .ct-series-a .ct-point {
+  stroke: #c6a5f1;
+  stroke-width: 10px;
+}
+.stats .stats_row .stats_bar .average_stats_row .ct-series-a .ct-area, .stats .stats_row .average_stats .average_stats_row .ct-series-a .ct-area, .stats .stats_row .stats_all .average_stats_row .ct-series-a .ct-area {
+  fill: rgba(198, 165, 241, 0.5960784314);
+}
+.stats .stats_row .stats_bar .stats_all_rows .stats_all_row, .stats .stats_row .average_stats .stats_all_rows .stats_all_row, .stats .stats_row .stats_all .stats_all_rows .stats_all_row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  -moz-column-gap: 1vw;
+       column-gap: 1vw;
+  align-items: center;
+  padding: 2vh 3vh;
+  margin-bottom: 1vw;
+}
+.stats .stats_row .stats_bar .stats_all_rows .stats_all_row:first-of-type, .stats .stats_row .average_stats .stats_all_rows .stats_all_row:first-of-type, .stats .stats_row .stats_all .stats_all_rows .stats_all_row:first-of-type {
+  margin-bottom: 0vh;
+}
+.stats .stats_row .stats_bar .stats_all_rows .stats_all_row h3, .stats .stats_row .stats_bar .stats_all_rows .stats_all_row span, .stats .stats_row .stats_bar .stats_all_rows .stats_all_row div span, .stats .stats_row .average_stats .stats_all_rows .stats_all_row h3, .stats .stats_row .average_stats .stats_all_rows .stats_all_row span, .stats .stats_row .average_stats .stats_all_rows .stats_all_row div span, .stats .stats_row .stats_all .stats_all_rows .stats_all_row h3, .stats .stats_row .stats_all .stats_all_rows .stats_all_row span, .stats .stats_row .stats_all .stats_all_rows .stats_all_row div span {
+  font-size: 20px;
+  color: white;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.stats .stats_row .stats_bar .stats_all_rows .stats_all_row h3, .stats .stats_row .average_stats .stats_all_rows .stats_all_row h3, .stats .stats_row .stats_all .stats_all_rows .stats_all_row h3 {
+  font-size: 30px;
+  font-weight: 600;
+  font-family: "RML";
+  color: #abd5e9;
+}
+.stats .stats_row .stats_all {
+  align-items: center;
+  overflow-y: auto;
+  height: 73vh;
+  -ms-overflow-style: none; /* Скрытие полосы прокрутки в IE */
+  scrollbar-width: none; /* Скрытие полосы прокрутки в Firefox */
+}
+.stats .stats_row .stats_all::-webkit-scrollbar { /* Скрытие полосы прокрутки в Chrome, Safari */
+  display: none;
+}
+.stats .stats_row .stats_all .stats_all_rows .stats_all_row h3 {
+  color: #c6a5f1;
+}
+.stats .stats_row .stats_all .stats_showAll {
+  font-size: 20px;
+  font-weight: 600;
+  font-family: "RML";
+  color: rgba(198, 165, 241, 0.5960784314);
+  cursor: pointer;
 }
 .stats .stats_top {
   display: flex;
   flex-direction: column;
   width: auto;
   row-gap: 15px;
-  padding: 2vw 1vw;
+  padding: 2vw 0;
   background: #1c191b;
   border-radius: 40px;
-  row-gap: 2vh;
 }
 .stats .stats_top h2 {
   font-size: 30px;
@@ -1034,13 +1117,13 @@ body {
   text-align: center;
 }
 .stats .stats_top .stats_top_row {
-  height: 10vh;
+  height: 14vh;
   display: grid;
   grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
   -moz-column-gap: 1vw;
        column-gap: 1vw;
   align-items: center;
-  padding: 0 1vw;
+  padding: 2vh 3vh;
   margin-bottom: 1vw;
 }
 .stats .stats_top .stats_top_row:first-of-type {
@@ -1069,6 +1152,13 @@ body {
   width: auto;
   height: 10vh;
   border-radius: 50%;
+}
+.stats .stats_top .stats_top_row_active {
+  background: rgba(171, 213, 233, 0.4941176471);
+}
+.stats .stats_top .stats_top_row_active h3, .stats .stats_top .stats_top_row_active span, .stats .stats_top .stats_top_row_active div span {
+  font-size: 30px;
+  font-weight: 800;
 }
 .stats .lobby_footer {
   position: absolute;
