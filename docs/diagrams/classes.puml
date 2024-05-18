@@ -51,9 +51,6 @@ class Server {
 
 }
 
-class Database {
-}
-
 class UserController {
  + connection: mysql.Connection
  + /api/data
@@ -82,4 +79,3 @@ User <--> Game
 User --|> Statistics  : наследование
 
 Server --|>  UserController : наследование
-UserController --> Database : ассоциация
