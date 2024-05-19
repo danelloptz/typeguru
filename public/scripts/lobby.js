@@ -100,3 +100,24 @@ function musicToogle(e) {
 }
 
 toogle.onclick = musicToogle;
+
+function changeAvatar(e) {
+    let file = e.target.files[0];
+    if (!file) return;
+  
+    let formData = new FormData();
+    formData.append('file', file);
+  
+    fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    }).then(response => response.json())
+     .then(data => {
+        if (data.exists) console.log('Успех')
+      })
+     .catch(error => {
+        console.error('Ошибка загрузки:', error);
+      });
+}
+
+document.getElementById('changeAvatar').addEventListener('change', (e) => changeAvatar(e));

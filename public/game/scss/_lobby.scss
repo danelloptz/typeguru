@@ -144,6 +144,9 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
                 font-size: $labels_normal;
                 color: $green;
             }
+            input[type='file'] {
+                color: transparent;
+              }
             input {
                 width: 70%;
                 height: 100%;

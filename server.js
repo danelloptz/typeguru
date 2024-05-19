@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 const path = require('path');
 const app = express();
 const mysql = require('mysql2');
@@ -252,6 +254,11 @@ app.get('/api/topfive', (req, res) => {
    }
 });
 });
+
+// смена аватарки
+app.post('/api/upload', upload.single('file'), (req, res) => {
+   res.json({ exists: true });
+ });
 
 // Приватим папку game для неавторизованных пользователей
 app.use('/public/game', isAuthenticated, express.static(path.join(__dirname, 'public/game')));

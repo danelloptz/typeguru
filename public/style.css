@@ -313,6 +313,9 @@ body {
   font-size: 30px;
   color: #C8F0B4;
 }
+.modal_wrapper .modal .modal_row input[type=file] {
+  color: transparent;
+}
 .modal_wrapper .modal .modal_row input {
   width: 70%;
   height: 100%;

@@ -234,9 +234,11 @@ stats_showAll.addEventListener('click', el => {
   if (stats_showAll.getAttribute('data-flag') == 0) {
     userAttempts(attempts, 0, 5, attempts.length);
     stats_showAll.setAttribute('data-flag', '1');
+    stats_showAll.innerHTML = 'Скрыть все';
   } 
   else {
     userAttempts(attempts, 1);
     stats_showAll.setAttribute('data-flag', '0');
+    stats_showAll.innerHTML = 'Показать все';
   } 
 })
