@@ -6,11 +6,11 @@ let pass_input = document.getElementById('pass');
 let pass_confirm_input = document.getElementById('pass_confirm');
 
 
-function ValidateEmail(str) {
+export function ValidateEmail(str) {
     let re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(str);
 }
-function ValidatePass(str) {
+export function ValidatePass(str) {
     const regex = /['"\/\\=<>]/;
     return !regex.test(str);
 }
@@ -18,44 +18,50 @@ function ValidatePass(str) {
 localStorage.clear();
 console.log(localStorage);
 
-function login(e) {
-    e.preventDefault();
-    if (ValidateEmail(email_input.value) && ValidatePass(pass_input.value)) {
+export function login(email_input, pass_input, e = 'test') {
+    if (e!= 'test') e.preventDefault();
+    if (ValidateEmail(email_input) && ValidatePass(pass_input)) {
         let sign_data = {
-            email: email_input.value,
-            pass: pass_input.value
+            email: email_input,
+            pass: pass_input
         };
     
-        fetch('/api/signin', {
+        return fetch('/api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify(sign_data)
         })
-        .then(response => response.json())
-        .then(data => {
+       .then(response => response.json())
+       .then(data => {
             if (data.exists) {
                 localStorage.setItem('user', JSON.stringify(data));
-                document.location.href = "http://127.0.0.1:3000/public/game/lobby.html";
+                if (e != 'test') document.location.href = "http://127.0.0.1:3000/public/game/lobby.html";
             } 
             else alert(data.message);
+            return data.exists;
         })
-        .catch(error => console.error('Ошибка:', error));
+       .catch(error => {
+            console.error('Ошибка:', error);
+            return false;
+        });
     } else {
         alert('Неправильный формат ввода данных');
+        return false;
     }
 }
-function registr(e) {
-    e.preventDefault();
-    if (ValidateEmail(email_input.value) && ValidatePass(pass_input.value) && ValidatePass(name_input.value) && pass_input.value == pass_confirm_input.value) {
+
+export function registr(email_input, pass_input, name_input, pass_confirm_input, e = 'test') {
+    if (e != 'test') e.preventDefault();
+    if (ValidateEmail(email_input) && ValidatePass(pass_input) && ValidatePass(name_input) && pass_input == pass_confirm_input) {
         let signup_data = {
-            name: name_input.value,
-            email: email_input.value,
-            pass: pass_input.value
+            name: name_input,
+            email: email_input,
+            pass: pass_input
         };
     
-        fetch('/api/signup', {
+        return fetch('/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -73,10 +79,10 @@ function registr(e) {
             }
             else alert(data.message);
         })
-        .catch(error => console.error('Ошибка:', error));
-        
+        .catch(error => console.error('Ошибка:', error))
+        .finally(() => 'ЖОПА');
     }
 }
 
-if (sign_btn) sign_btn.addEventListener('click', login);
-if (signup_btn) signup_btn.addEventListener('click', registr);
+if (sign_btn) sign_btn.addEventListener('click', (e) => login(email_input.value, pass_input.value, e) );
+if (signup_btn) signup_btn.addEventListener('click', (e) => registr(email_input.value, pass_input.value, name_input.value, pass_confirm_input.value, e));
