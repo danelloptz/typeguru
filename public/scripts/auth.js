@@ -16,7 +16,6 @@ export function ValidatePass(str) {
 }
 
 localStorage.clear();
-console.log(localStorage);
 
 export function login(email_input, pass_input, e = 'test') {
     if (e!= 'test') e.preventDefault();
@@ -68,19 +67,22 @@ export function registr(email_input, pass_input, name_input, pass_confirm_input,
             },
             body: JSON.stringify(signup_data)
         })
-        .then((response) => {
-            
-            return response.json();
-        })
+        .then((response) => response.json())
         .then(data => {
             if (data.exists) {
                 localStorage.setItem('user', JSON.stringify(data));
-                document.location.href = "http://127.0.0.1:3000/public/game/lobby.html";
+                if (e != 'test') document.location.href = "http://127.0.0.1:3000/public/game/lobby.html";
+                return data.exists;
             }
             else alert(data.message);
         })
-        .catch(error => console.error('Ошибка:', error))
-        .finally(() => 'ЖОПА');
+        .catch(error => {
+            console.error('Ошибка:', error);
+            return false;
+        });
+    } else {
+        alert('Неправильный формат ввода данных');
+        return false;
     }
 }
 
