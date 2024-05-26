@@ -3,7 +3,6 @@
  */
 
 
-// auth.test.js
 const { login, registr, ValidateEmail, ValidatePass } = require('../scripts/auth'); 
 
 describe('Аунтефикация пользователя в системе', () => {

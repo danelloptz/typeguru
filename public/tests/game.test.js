@@ -3,7 +3,6 @@
  */
 
 
-// auth.test.js
 const { checkLetter } = require('../scripts/game_modules'); 
 
 describe('Проверка введённого символа', () => {

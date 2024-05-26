@@ -1,3 +1,5 @@
+import { parseDate } from "./stats_modules.js";
+
 let user_data = JSON.parse(localStorage.getItem('user')).data; // данные о пользователе
 let attempts, dates = [];
 let userName = document.getElementById('userName'), summary_time = document.getElementById('summary_time'), summary_speed = document.getElementById('summary_speed'), summary_accuracy = document.getElementById('summary_accuracy'), best_points = document.getElementById('best_points'), stats_top = document.querySelector('.stats_top'), speed_diag = document.getElementById('speed_diag'), accur_diag = document.getElementById('accur_diag'), points_diag = document.getElementById('points_diag'), svg_average = document.querySelectorAll('.svg_average'), stats_all = document.querySelector('.stats_all_rows'), stats_showAll = document.querySelector('.stats_showAll');
@@ -24,7 +26,7 @@ async function stats7Days() {
   .then(data => {
         if (data.exists) {
           attempts = data.data;
-          [timesSeries, speedSeries, accuracySeries, pointsSeries] = parseDate(); //  средние попытки за последние 7 дней (среднее за каждый день)
+          [timesSeries, speedSeries, accuracySeries, pointsSeries] = parseDate(attempts); //  средние попытки за последние 7 дней (среднее за каждый день)
           timesLabels = getLast7Dates();
           const averageStats = getAverage(); // общее время, средняя скорость и точность
           drawBarDiagram(timesSeries, timesLabels);
@@ -79,25 +81,6 @@ function setTopAttempts(list) {
 }
 
 stats7Days();
-
-// ========== МОЖНО ПОПРОБОВАТЬ ==========
-// получает все попытки в виде словаря, возвращает массив из 7 элементов - общее время на каждый из 7 последних дней
-function parseDate() {
-    let curr_date = new Date().getTime(), result = Array.from({ length: 7 }, () => 0), speed_average = Array.from({ length: 7 }, () => 0), accuracy_average = Array.from({ length: 7 }, () => 0), points_average = Array.from({ length: 7 }, () => 0);
-    attempts.forEach(row => {
-      // debugger;
-        let index = Math.trunc((curr_date - row.date) / (1000 * 60 * 60 * 24));
-        // просто прекрасная проверка, что даже если разница между метками меньше 24 часов и они в разные дни, то будет добавляться в нужную сумму
-        if (index == 0) index = (new Date().getHours() < new Date(+row.date).getHours()) ? 1 : 0;
-        if (index < 7) {
-          result[index] += +row.time;
-          speed_average[index] = speed_average[index] != 0 ? (speed_average[index] + +row.speed) / 2 : +row.speed;
-          accuracy_average[index] = accuracy_average[index] != 0 ? (accuracy_average[index] + +row.accuracy) / 2 : +row.accuracy;
-          points_average[index] = points_average[index] != 0 ? (points_average[index] + +row.points) / 2 : +row.points;
-        }
-    });
-    return [result.reverse(), speed_average.reverse(), accuracy_average.reverse(), points_average.reverse()];
-}
 
 // ========== МОЖНО ПОПРОБОВАТЬ ==========
 // возвращает 4 поля данных для лэйблов в статистике
