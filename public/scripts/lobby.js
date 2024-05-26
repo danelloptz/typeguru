@@ -7,24 +7,27 @@ let modal_email = document.querySelector('.modal_email');
 let modal_btns_save = document.querySelector('.modal_btns_save');
 let modal_btns_cancel = document.querySelector('.modal_btns_cancel');
 
-console.log(localStorage.getItem('user'));
-
+// ========== ТЕСТИРУЕТСЯ В ДРУГОМ МОДУЛЕ==========
 // валидация email (ещё есть на серваке), на случай sql-инъекций
 function ValidateEmail(str) {
     let re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(str);
 }
 
-// валидация pass, на случай sql-инъекций
+// ========== ТЕСТИРУЕТСЯ В ДРУГОМ МОДУЛЕ==========
 function ValidatePass(str) {
     const regex = /['"\/\\=<>]/;
     return !regex.test(str);
 }
+
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
 function openModal() {
     modalWrapper.style.visibility = 'visible';
     modalWrapper.style.pointerEvents = 'all';
     modalClick.dataset.check = 1;
 }
+
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
 function CloseModal() {
     modalWrapper.style.visibility = 'hidden';
     modalWrapper.style.pointerEvents = 'none';
@@ -40,7 +43,7 @@ modal_name.value = user_data.data.name;
 modal_email.value = user_data.data.email;
 user_name.innerHTML = user_data.data.name;
 
-
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
 // Кнопки сохранения и отмены в меню
 function saveButton() {
     if (ValidateEmail(modal_email.value) && ValidatePass(modal_name.value)) {
@@ -73,6 +76,8 @@ function saveButton() {
         .catch(error => console.error('Ошибка:', error));
     }
 }
+
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
 function cancelButton() {
     modal_email.value = user_data.data.email;
     modal_name.value = user_data.data.name;
@@ -85,6 +90,7 @@ modal_btns_cancel.addEventListener('click', cancelButton);
 let toogle = document.querySelector('.toggle'); // переключатель
 let audio = document.getElementById('audio'); // аудио-файл
 
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
 function musicToogle(e) {
     if (toogle.dataset.check == 0) {
         audio.play();
@@ -101,6 +107,7 @@ function musicToogle(e) {
 
 toogle.onclick = musicToogle;
 
+// ========== МОЖНО ПОПРОБОВАТЬ ПРОВЕРЯТЬ РАЗМЕР И РАСШИРЕНИЕ ФАЙЛА ==========
 function changeAvatar(e) {
     let file = e.target.files[0];
     if (!file) return;

@@ -84,3 +84,16 @@ describe('Проверка почты на шаблон', () => {
   });
 
 });
+
+describe('Проверка пароля на запрещенные символы', () => {
+  test('Разрешенные символы', async () => {
+    const status = await ValidatePass('123$_-dfgw1')
+    expect(status).toBe(true); 
+  });
+
+  test('Запрещенные символы', async () => {
+    const status = await ValidatePass('123/<fergrg>')
+    expect(status).toBe(false); 
+  });
+
+});

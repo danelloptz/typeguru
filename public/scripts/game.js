@@ -1,9 +1,12 @@
+import { checkLetter } from "./game_modules.js";
+
 let sandbox_words = document.querySelector('.sandbox_words'), sandboxField = document.querySelector('.sandbox'), resultField = document.querySelector('.results');
 let sandbox_input = document.querySelector('.sandbox_input'), pointer_letter = 0, pointer_word = 0;
 let sandbox_letter = document.getElementsByClassName('sandbox_letter');
 let text;
 
 // ассинхронная функция, т.к ответ приходит не сразу
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
 export async function fetchText(sandbox_words) {
     try {
         // настройки желаемого текста менять в ссылке (можно добавить пользовательские настройки)
@@ -32,6 +35,7 @@ let incorrectLetters = {}, start_time, last_input_value = 0, speedCheckpoints = 
 let user_data_string = localStorage.getItem('user');
 let user_data = user_data_string ? JSON.parse(user_data_string).data : null; 
 
+// ========== ОТСЮДА ТЕСТИРУЕТСЯ ТОЛЬКО checkLetter ==========
 export function inputText(curr_letter) {
     if (sandbox_input.value.length < 2) {
         start_time = new Date();
@@ -40,48 +44,52 @@ export function inputText(curr_letter) {
     
     let curr_time = new Date();
     
+    // это очень приятное условие для того, чтобы на каждую секунду были записаны данные
     if ((curr_time - start_time) / 1000 >= Math.ceil((last_time - start_time) / 1000) && String((curr_time - start_time) / 1000).split('.')[0]!= String((last_time - start_time) / 1000).split('.')[0]) {
         let curr_speed = ((pointer_letter + 1) / ((curr_time - start_time) / 1000)).toFixed(2);
         speedList.push([Math.floor((curr_time - start_time) / 1000), +curr_speed]);
         last_time = curr_time;
     }
-    if (pointer_letter + 1 <= text.length) {
-        if (curr_letter == ' ' && text[pointer_letter]!= ' ') {
-            sandbox_input.value = sandbox_input.value.replace(' ', '');
+
+    const text_status = checkLetter(curr_letter, text[pointer_letter], sandbox_input.value.length, last_input_value.length);
+
+    // действия в зависимости от того, какой был ввод символа
+    switch (text_status) {
+        case -1:
+            sandbox_letter[pointer_letter].classList.add('incorrect_space')
+            break;
+        case 0:
+            sandbox_letter[pointer_letter].classList.add('incorrect');
+            incorrectLetters[text[pointer_letter]] = (incorrectLetters[text[pointer_letter]] || 0) + 1;
+            break;
+        case 1:
+            sandbox_letter[pointer_letter].classList.add('correct');
+            break;
+        case 2:
+            sandbox_letter[pointer_letter].classList.add('correct_space');
+            break;
+        case 3:
+            pointer_letter--;
+            ['incorrect', 'correct', 'incorrect_space', 'correct_space'].forEach(className => sandbox_letter[pointer_letter].classList.remove(className));
+            break;
+    }
+
+    try { // try нужен, чтобы не портить код для обработки ввода первого символа и удаления несуществующего
+        if (text_status < 3) {
+            sandbox_letter[pointer_letter - 1].classList.remove('activeLetter');
+            sandbox_letter[pointer_letter].classList.add('activeLetter');
+            pointer_letter++;
         } else {
-            if (sandbox_input.value.length < last_input_value.length) { // был нажат backspace
-                pointer_letter--;
-                try {
-                    sandbox_letter[pointer_letter - 1].classList.add('activeLetter');
-                    sandbox_letter[pointer_letter].classList.remove('activeLetter');
-                } catch(e) {}
-                ['incorrect', 'correct', 'incorrect_space', 'correct_space'].forEach(className => sandbox_letter[pointer_letter].classList.remove(className));
-            } else {
-                if (text[pointer_letter] == curr_letter) {
-                    if (curr_letter!= ' ') sandbox_letter[pointer_letter].classList.add('correct');
-                    else sandbox_letter[pointer_letter].classList.add('correct_space');
-                }
-                else {
-                    if (curr_letter!= ' ') {
-                        sandbox_letter[pointer_letter].classList.add('incorrect');
-                        incorrectLetters[text[pointer_letter]] = (incorrectLetters[text[pointer_letter]] || 0) + 1;
-                    }
-                    else sandbox_letter[pointer_letter].classList.add('incorrect_space');
-                }
-
-                try {
-                    sandbox_letter[pointer_letter - 1].classList.remove('activeLetter');
-                    sandbox_letter[pointer_letter].classList.add('activeLetter');
-                } catch(e) {}
-
-                pointer_letter++;
-            }
+            sandbox_letter[pointer_letter - 1].classList.add('activeLetter');
+            sandbox_letter[pointer_letter].classList.remove('activeLetter');
         }
-    } 
-    last_input_value = sandbox_input.value;
+    } catch(err) { pointer_letter = text_status < 3 ? pointer_letter + 1 : pointer_letter - 1; }
+
+    last_input_value = sandbox_input.value; // запомнить длину последнего состояния
     return pointer_letter + 1 > text.length; // статус, завершён ли ввод
 }
 
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
 export function endGame(isTest = false) {
     let endTime = new Date(), sumWrong = 0;
     let timeTaken = endTime - start_time;
@@ -144,6 +152,7 @@ export function endGame(isTest = false) {
     
 }
 
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
 export function setUi(speed_changes, accuracy_changes, arrow_speed_stroke, arrow_speed_changes, speed_diff, accuracy_diff, result_data, isTest, resultTime, resultSpeed, modalResultAccuracy) {
     speed_changes.innerHTML = speed_diff, accuracy_changes.innerHTML = accuracy_diff;
     if (speed_diff > 0) {
@@ -171,6 +180,7 @@ export function setUi(speed_changes, accuracy_changes, arrow_speed_stroke, arrow
     modalResultAccuracy.innerHTML = result_data.data.accuracy.toFixed(2) + '<span style="color: white;opacity: .4;font-size: 30px;">%</span>';
 }
 
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
 export function drawDiagram(labelsModal, seriesModal) {
     // Диаграмма скорости
     new Chartist.Line('#chart1', {
