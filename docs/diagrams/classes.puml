@@ -74,7 +74,7 @@ Lobby --> Statistics : ассоциация
 Lobby --> Profile : ассоциация
 Game --> Server
 Statistics --> Server
-Profile --> User
+Profile --|> User : насследование
 User <--> Game
 User --|> Statistics  : наследование
 

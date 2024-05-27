@@ -101,7 +101,7 @@ class UserController {
 ' Ассоциации:
 '-------------
 
-Profile --> User
+Profile --|> User : насследование
 User --|> Statistics : наследование
 Game <--> User
 Lobby --> Game : ассоциация
