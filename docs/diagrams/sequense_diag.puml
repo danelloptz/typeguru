@@ -1,16 +1,19 @@
 @startuml
 actor User
+participant "Клавиатура" as keyboard
 participant "JavaScript" as JS
 participant "HTML DOM" as DOM
+participant "Fishtext API" as fish
 participant "Server" as Server
-participant "Database" as DB
+participant "Database" as Database
 
-User -> DOM: Ввод символа
-activate JS
-JS -> DOM: Обращение к введённому символу
-activate DOM
+User -> fish : GET запрос на генерацию текста (тип: слово, предложение, абзац; кол-во)
+fish -> JS : возрват статуса и при успехе текст
+JS -> DOM : вывод текста на экран
+DOM -> User 
+User -> keyboard : Нажатие на клавишу
+keyboard -> DOM : вывод символа
 DOM --> JS: Получение введённого символа
-deactivate DOM
 JS -> JS: Проверка длины всех введённых символов
 alt length < 2
     JS -> JS: Если длина меньше 2, то старт времени
@@ -20,41 +23,37 @@ else
         JS -> JS: если прошла секунда, то записываем текущую скорость
         JS -> JS: Вносим скорость в speedList
         JS -> JS: Обновляем last_time
-JS -> JS: Обрабатываем корректность ввода
-JS -> DOM: Устанавливаем класс в зависимости от корректности ввода
-activate DOM
+JS -> JS: вызов функции checkLetter, которая вернёт статус корректности ввода
+JS -> JS: если -1 (ожидался пробел), то добавить класс incorrect_space
+JS -> JS: если 0 (ожидался другой символ), то добавить класс incorrect
+JS -> JS: если 1 (правильно введённый символ), то добавить класс correct
+JS -> JS: если 2 (правильно введённый пробел), то добавить класс correct_space
+JS -> JS: если 3 (нажат backspace), то убрать все классы с текущего символа
+JS -> DOM: Устанавливаем нужный класс
 DOM --> JS: Статус
-deactivate DOM
-activate User
-JS -> User : Статус
-User -> JS : Ввод последнего символа
-deactivate User
-activate JS
-JS -> JS : Подсчёт статистики за попытку
-JS -> JS :Создание объекта для отправки на сервер
-JS -> Server : POST по адресу /api/endgame
-deactivate JS
+JS -> User
+User -> keyboard : Нажатие на клавишу
+keyboard -> DOM : вывод последнего символа
+DOM -> JS : получение введённого символа
+JS -> JS : остановка времени на попытку
+JS -> JS : подсчёт кол-ва очков полученных за игру
+JS -> JS :Создание объекта с полями: id, name, time, speed, accuracy,points
+JS -> Server : POST запрос с данными о текущей попытке по адресу /api/endgame
 Server -> Database : Получаем последний id пользователя
 Database -> Server : id
-activate Server
 Server -> Server : Текущее время
 Server -> Database : Обновление данных в таблице Users 
 Database -> Server : Статус
 Server -> Database : Добавление попытки в таблицу Attempts
 Database -> Server : Статус
 Server -> JS : Статус
-deactivate Server
-activate JS
-JS -> DOM : Вывода данных
+JS -> JS : вызов функции setUi 
+JS -> DOM : вывод окна конца игры
+DOM -> JS : Статус
+JS -> JS : формирование массивов данных для графика скорости
+JS -> JS : Вызов функции drawDiagram 
+JS -> DOM : вывод диаграммы скорости
 DOM -> JS : Статус
 JS -> JS : Запись данных в localStorage
-JS -> JS : Создание диаграммы скорости
-JS -> DOM : Вывод диаграммы
-deactivate JS
-activate DOM
-DOM -> User 
-
-
-
-deactivate JS
+JS -> User 
 @enduml
