@@ -93,7 +93,7 @@ export function inputText(curr_letter) {
 export function endGame(isTest = false) {
     let endTime = new Date(), sumWrong = 0;
     let timeTaken = endTime - start_time;
-    let resultTime = document.getElementById('results_time'), resultSpeed = document.getElementById('results_speed'), modalResultAccuracy = document.getElementById('results_accuracy'), speed_changes = document.getElementById('speed_changes'), arrow_speed_changes = document.getElementById('arrow_speed_changes'),arrow_speed_stroke = document.getElementById('arrow_speed_stroke'), accuracy_changes = document.getElementById('accuracy_changes'), arrow_accuracy_changes = document.getElementById('accuracy_changes'),arrow_accuracy_stroke = document.getElementById('arrow_accuracy_stroke');
+    let resultTime = document.getElementById('results_time'), resultPoints = document.getElementById('results_points'), resultSpeed = document.getElementById('results_speed'), modalResultAccuracy = document.getElementById('results_accuracy'), speed_changes = document.getElementById('speed_changes'), arrow_speed_changes = document.getElementById('arrow_speed_changes'),arrow_speed_stroke = document.getElementById('arrow_speed_stroke'), accuracy_changes = document.getElementById('accuracy_changes'), arrow_accuracy_changes = document.getElementById('accuracy_changes'),arrow_accuracy_stroke = document.getElementById('arrow_accuracy_stroke');
 
     for (let letter in incorrectLetters) sumWrong += incorrectLetters[letter];
 
@@ -131,7 +131,7 @@ export function endGame(isTest = false) {
     let lastTake = user_data, speed_diff = (result_data.data.speed - lastTake.speed).toFixed(2), accuracy_diff = (result_data.data.accuracy - lastTake.accuracy).toFixed(2);
     
     // выносим установку ui в отдельный нетестируемую функцию
-    setUi(speed_changes, accuracy_changes, arrow_speed_stroke, arrow_speed_changes, speed_diff, accuracy_diff, result_data, isTest, resultTime, resultSpeed, modalResultAccuracy);
+    setUi(speed_changes, accuracy_changes, arrow_speed_stroke, arrow_speed_changes, speed_diff, accuracy_diff, result_data, isTest, resultTime, resultSpeed, modalResultAccuracy, resultPoints);
 
     // формирование массивов данных для графика скорости
     let labelsModal = [], seriesModal = [];
@@ -153,7 +153,7 @@ export function endGame(isTest = false) {
 }
 
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
-export function setUi(speed_changes, accuracy_changes, arrow_speed_stroke, arrow_speed_changes, speed_diff, accuracy_diff, result_data, isTest, resultTime, resultSpeed, modalResultAccuracy) {
+export function setUi(speed_changes, accuracy_changes, arrow_speed_stroke, arrow_speed_changes, speed_diff, accuracy_diff, result_data, isTest, resultTime, resultSpeed, modalResultAccuracy, resultPoints) {
     speed_changes.innerHTML = speed_diff, accuracy_changes.innerHTML = accuracy_diff;
     if (speed_diff > 0) {
         speed_changes.style.color = 'green';
@@ -178,6 +178,7 @@ export function setUi(speed_changes, accuracy_changes, arrow_speed_stroke, arrow
     resultTime.innerHTML = result_data.data.time.toFixed(2) + '<span style="color: white;opacity: .4; font-size: 30px;">s</span>';
     resultSpeed.innerHTML = result_data.data.speed.toFixed(2) + '<span style="color: white;opacity: .4;font-size: 30px;">s/m</span>';
     modalResultAccuracy.innerHTML = result_data.data.accuracy.toFixed(2) + '<span style="color: white;opacity: .4;font-size: 30px;">%</span>';
+    resultPoints.innerHTML = result_data.data.points.toFixed(0);
 }
 
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
