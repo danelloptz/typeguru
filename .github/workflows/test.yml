@@ -19,7 +19,7 @@ jobs:
 
     - name: Run tests
       run: npm test --coverage
-      
-    - uses: coveralls-action@v3
+
+    - uses: action/coveralls-action@v3
       with:
-        token: ${{ secrets.COVERALLS_API_TOKEN }}
+        token: ${{ secrets.COVERALLS_TOKEN }}
