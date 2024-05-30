@@ -3,7 +3,7 @@ export function ValidateEmail(str) {
     return re.test(str);
 }
 export function ValidatePass(str) {
-    const regex = /['"\/\\=<>]/;
+    const regex = /['"/\\=<>]/;
     return !regex.test(str);
 }
 export function login(email_input, pass_input, e = 'test') {

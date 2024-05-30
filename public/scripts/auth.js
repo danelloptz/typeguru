@@ -1,4 +1,4 @@
-import { login, registr, ValidateEmail, ValidatePass } from "./auth_modules.js";
+import { login, registr } from "./auth_modules.js";
 
 let sign_btn = document.querySelector('.signin_submit');
 let signup_btn = document.querySelector('.signup_submit');
