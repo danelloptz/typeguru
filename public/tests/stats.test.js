@@ -3,7 +3,7 @@
  */
 
 
-const { parseDate } = require('../scripts/stats_modules'); 
+const { parseDate, formatDate, getAverage } = require('../scripts/stats_modules'); 
 
 let correct_attempts = [
     {
@@ -71,6 +71,8 @@ let incorrect_attempts = [
     }
   ]
 
+let zero_attempts = [];
+
 describe('Подсчёт статистики за каждый из последних 7 дней', () => {
     test('Тест с имеющимися попытками за последние 7 дней', async () => {
       let [timesSeries, speedSeries, accuracySeries, pointsSeries] = await parseDate(correct_attempts);
@@ -88,3 +90,32 @@ describe('Подсчёт статистики за каждый из после�
     });
 });
 
+describe('Вывод даты в формате дд/мм', () => {
+    test('Обычный тест 1', async () => {
+        const date = new Date(1716731529240);
+        const time = await formatDate(date);
+        expect(time).toBe('26/05');
+    });
+    test('Обычный тест 2', async () => {
+        const date = new Date(1716126930374);
+        const time = await formatDate(date);
+        expect(time).toBe('19/05');
+    });
+});
+
+describe('Подсчёт средних значений статистики за всё время', () => {
+    test('Обычный тест', async () => {
+        let [summaryTime, summarySpeed, summaryAccuracy, pointsBest] = await getAverage(correct_attempts);
+        expect(summaryTime).toBe(1);
+        expect(summarySpeed).toBe(5.8);
+        expect(summaryAccuracy).toBe(92.3);
+        expect(pointsBest).toBe(5967);
+    });
+    test('Без попыток - в аргумент функции передаётся пустой массив', async () => {
+        let [summaryTime, summarySpeed, summaryAccuracy, pointsBest] = await getAverage(zero_attempts);
+        expect(summaryTime).toBe(0);
+        expect(summarySpeed).toBe(0);
+        expect(summaryAccuracy).toBe(0);
+        expect(pointsBest).toBe(0);
+    });
+});

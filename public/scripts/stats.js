@@ -1,4 +1,4 @@
-import { parseDate } from "./stats_modules.js";
+import { parseDate, formatDate } from "./stats_modules.js";
 
 let user_data = JSON.parse(localStorage.getItem('user')).data; // данные о пользователе
 let attempts, dates = [];
@@ -28,7 +28,7 @@ async function stats7Days() {
           attempts = data.data;
           [timesSeries, speedSeries, accuracySeries, pointsSeries] = parseDate(attempts); //  средние попытки за последние 7 дней (среднее за каждый день)
           timesLabels = getLast7Dates();
-          const averageStats = getAverage(); // общее время, средняя скорость и точность
+          const averageStats = getAverage(attempts); // общее время, средняя скорость и точность
           drawBarDiagram(timesSeries, timesLabels);
           drawSpeedDiagram(speedSeries, timesLabels);
           setValues(averageStats);
@@ -81,27 +81,6 @@ function setTopAttempts(list) {
 }
 
 stats7Days();
-
-// ========== МОЖНО ПОПРОБОВАТЬ ==========
-// возвращает 4 поля данных для лэйблов в статистике
-function getAverage() {
-  let sumTime = 0, sumSpeed = 0, sumAccuracy = 0, maxPoints = 0;
-  attempts.forEach(row => {
-    sumTime += +row.time;
-    sumSpeed += +row.speed;
-    sumAccuracy += +row.accuracy;
-    maxPoints = Math.max(maxPoints, row.points);
-  });
-  return [Math.trunc(sumTime / 60), +(sumSpeed / attempts.length).toFixed(1), +(sumAccuracy / attempts.length).toFixed(1), maxPoints];
-}
-
-// ========== МОЖНО ПОПРОБОВАТЬ ==========
-// возвращает строку в формате 'мм/дд'
-function formatDate(date) {
-    const dd = String(date.getDate()).padStart(2, '0');
-    const mm = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0, поэтому +1
-    return dd + '/' + mm;
-}
 
 // ========== МОЖНО ПОПРОБОВАТЬ ==========
 // возвращает массив последних 7 дат в формате 'мм/дд'

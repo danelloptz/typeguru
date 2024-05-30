@@ -14,3 +14,26 @@ export function parseDate(attempts) {
     });
     return [result.reverse(), speed_average.reverse(), accuracy_average.reverse(), points_average.reverse()];
 }
+
+// возвращает строку в формате 'мм/дд'
+export function formatDate(date) {
+  const dd = String(date.getDate()).padStart(2, '0');
+  const mm = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0, поэтому +1
+  return dd + '/' + mm;
+}
+
+// возвращает 4 поля данных для лэйблов в статистике
+export function getAverage(attempts) {
+  let sumTime = 0, sumSpeed = 0, sumAccuracy = 0, maxPoints = 0;
+  attempts.forEach(row => {
+    sumTime += +row.time;
+    sumSpeed += +row.speed;
+    sumAccuracy += +row.accuracy;
+    maxPoints = Math.max(maxPoints, row.points);
+  });
+
+  const averageSpeed = +(sumSpeed / attempts.length).toFixed(1);
+  const averageAccuracy = +(sumAccuracy / attempts.length).toFixed(1);
+
+  return [Math.trunc(sumTime / 60), isNaN(averageSpeed) ? 0 : averageSpeed, isNaN(averageAccuracy) ? 0 : averageAccuracy, maxPoints];
+}
