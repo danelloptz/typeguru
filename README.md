@@ -1,5 +1,5 @@
 # Typeguru 👋
-[![Coverage Status](https://coveralls.io/repos/github/danelloptz/typeguru/badge.svg?branch=main)](https://coveralls.io/github/danelloptz/typeguru?branch=main)        
+[![Coverage Status](https://coveralls.io/repos/github/danelloptz/typeguru/badge.svg?branch=main)](https://coveralls.io/github/danelloptz/typeguru?branch=main)      
 ---
 > *Пользователь печатает....*
 
