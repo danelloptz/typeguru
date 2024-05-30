@@ -18,8 +18,7 @@ jobs:
       run: npm ci
 
     - name: Run tests
-      run: npm test --coverage
-
-    - uses: action/coveralls-action@v3
-      with:
-        token: ${{ secrets.COVERALLS_TOKEN }}
+      run: npm test
+      
+    - name: Coveralls
+      uses: coverallsapp/github-action@v2
