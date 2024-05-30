@@ -1,4 +1,4 @@
-import { parseDate, formatDate } from "./stats_modules.js";
+import { parseDate, formatDate, getAverage } from "./stats_modules.js";
 
 let user_data = JSON.parse(localStorage.getItem('user')).data; // данные о пользователе
 let attempts, dates = [];
