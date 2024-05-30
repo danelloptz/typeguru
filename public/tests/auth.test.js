@@ -3,7 +3,7 @@
  */
 
 
-const { login, registr, ValidateEmail, ValidatePass } = require('../scripts/auth'); 
+const { login, registr, ValidateEmail, ValidatePass } = require('../scripts/auth_modules'); 
 
 describe('Аунтефикация пользователя в системе', () => {
   beforeEach(() => {
