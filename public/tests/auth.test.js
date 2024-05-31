@@ -68,17 +68,17 @@ describe('Регистрация пользователя в системе', ()
 
 describe('Проверка почты на шаблон', () => {
   test('Правильно введённые данные', async () => {
-    const status = await ValidateEmail('ass@mail.ru')
+    const status = ValidateEmail('ass@mail.ru')
     expect(status).toBe(true); 
   });
 
   test('Нет значка @', async () => {
-    const status = await ValidateEmail('ass.ru')
+    const status = ValidateEmail('ass.ru')
     expect(status).toBe(false); 
   });
 
   test('Использование запрещенных символов', async () => {
-    const status = await ValidateEmail('as<s123?@mai/l.ru')
+    const status = ValidateEmail('as<s123?@mai/l.ru')
     expect(status).toBe(false); 
   });
 
@@ -86,12 +86,12 @@ describe('Проверка почты на шаблон', () => {
 
 describe('Проверка пароля на запрещенные символы', () => {
   test('Разрешенные символы', async () => {
-    const status = await ValidatePass('123$_-dfgw1')
+    const status = ValidatePass('123$_-dfgw1')
     expect(status).toBe(true); 
   });
 
   test('Запрещенные символы', async () => {
-    const status = await ValidatePass('123/<fergrg>')
+    const status = ValidatePass('123/<fergrg>')
     expect(status).toBe(false); 
   });
 

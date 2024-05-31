@@ -2,6 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/danelloptz/typeguru/badge.svg?branch=main)](https://coveralls.io/github/danelloptz/typeguru?branch=main)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=danelloptz_typeguru&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=danelloptz_typeguru)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=danelloptz_typeguru&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=danelloptz_typeguru)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=danelloptz_typeguru&metric=bugs)](https://sonarcloud.io/summary/new_code?id=danelloptz_typeguru)
 ---
 > *Пользователь печатает....*
 

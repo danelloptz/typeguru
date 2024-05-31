@@ -87,7 +87,7 @@ stats7Days();
 function getLast7Dates() {
     const today = new Date();
     let dates = [];
-    for (var i = 6; i >= 0; i--) {
+    for (let i = 6; i >= 0; i--) {
         let date = new Date(today);
         date.setDate(today.getDate() - i);
         dates.push(formatDate(date));
@@ -98,12 +98,12 @@ function getLast7Dates() {
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
 // рисуем столбчатую диграмму
 function drawBarDiagram(timesSeries, timesLabels) {
-    var data = {
+    let data = {
         labels: timesLabels,
         series: [ timesSeries ]
       };
       
-      var options = {
+      let options = {
         seriesBarDistance: 10,
         axisY: {
             labelInterpolationFnc: function(value, index) {
@@ -112,7 +112,7 @@ function drawBarDiagram(timesSeries, timesLabels) {
           }
       };
       
-      var responsiveOptions = [
+      let responsiveOptions = [
         ['screen and (max-width: 640px)', {
           seriesBarDistance: 5,
           axisX: {
@@ -149,7 +149,7 @@ function setValues(averageStats) {
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
 // отрисовка диаграммы средней скорости
 function drawSpeedDiagram(speedSeries, timesLabels) {
-    let diag = new Chartist.Line('#chart2', {
+    return new Chartist.Line('#chart2', {
       labels: timesLabels,
       series: [speedSeries]
     }, {

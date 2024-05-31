@@ -184,7 +184,7 @@ export function setUi(speed_changes, accuracy_changes, arrow_speed_stroke, arrow
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
 export function drawDiagram(labelsModal, seriesModal) {
     // Диаграмма скорости
-    let diag = new Chartist.Line('#chart1', {
+    return new Chartist.Line('#chart1', {
         labels: labelsModal,
         series: [seriesModal]
     }, {
