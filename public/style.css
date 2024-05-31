@@ -68,7 +68,7 @@
 }
 
 body {
-  font-family: "RMB";
+  font-family: "RMB", sans-serif;
 }
 
 .auth_bg {
@@ -114,7 +114,7 @@ body {
   font-size: 30px;
   color: #C8F0B4;
   outline: none;
-  font-family: "RML";
+  font-family: "RML", sans-serif;
 }
 .auth .signin input::-moz-placeholder, .auth .signup input::-moz-placeholder {
   color: #C8F0B4;
@@ -162,10 +162,10 @@ body {
 }
 @keyframes BarGrow {
   from {
-    height: 0% !important;
+    height: 0%;
   }
   to {
-    height: 100% !important;
+    height: 100%;
   }
 }
 .lobby {
@@ -325,7 +325,7 @@ body {
   font-size: 30px;
   color: #C8F0B4;
   outline: none;
-  font-family: "RML";
+  font-family: "RML", sans-serif;
   margin-top: -5px;
 }
 .modal_wrapper .modal .modal_row input::-moz-placeholder {
@@ -647,7 +647,6 @@ body {
   }
 }
 .results .results_block .results_block_content h2 {
-  text-align: center;
   font-size: 60px;
   text-align: start;
 }
@@ -811,7 +810,7 @@ body {
 .ct-label {
   color: white;
   letter-spacing: 1px;
-  font-family: "RML";
+  font-family: "RML", sans-serif;
 }
 
 .ct-chart {
@@ -833,10 +832,10 @@ body {
 }
 @keyframes BarGrow {
   from {
-    height: 0% !important;
+    height: 0%;
   }
   to {
-    height: 100% !important;
+    height: 100%;
   }
 }
 .stats {
@@ -1081,7 +1080,7 @@ body {
 .stats .stats_row .stats_bar .stats_all_rows .stats_all_row h3, .stats .stats_row .average_stats .stats_all_rows .stats_all_row h3, .stats .stats_row .stats_all .stats_all_rows .stats_all_row h3 {
   font-size: 30px;
   font-weight: 600;
-  font-family: "RML";
+  font-family: "RML", sans-serif;
   color: #abd5e9;
 }
 .stats .stats_row .stats_all {
@@ -1100,7 +1099,7 @@ body {
 .stats .stats_row .stats_all .stats_showAll {
   font-size: 20px;
   font-weight: 600;
-  font-family: "RML";
+  font-family: "RML", sans-serif;
   color: rgba(198, 165, 241, 0.5960784314);
   cursor: pointer;
 }
@@ -1149,7 +1148,7 @@ body {
 }
 .stats .stats_top .stats_top_row span, .stats .stats_top .stats_top_row div span {
   color: white;
-  font-family: "RML";
+  font-family: "RML", sans-serif;
 }
 .stats .stats_top .stats_top_row div img {
   width: auto;

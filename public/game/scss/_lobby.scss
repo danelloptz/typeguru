@@ -157,7 +157,7 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
                 font-size: $text_normal;
                 color: $green;
                 outline: none;
-                font-family: 'RML';
+                font-family: 'RML', sans-serif;
                 margin-top: -5px;
                 &::placeholder {
                     color: $green;

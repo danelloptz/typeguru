@@ -7,7 +7,7 @@
     margin: 0;
 }
 body {
-    font-family: 'RMB';
+    font-family: 'RMB', sans-serif;
 }
 
 .auth_bg {
@@ -52,7 +52,7 @@ body {
             font-size: $text_normal;
             color: $green;
             outline: none;
-            font-family: 'RML';
+            font-family: 'RML', sans-serif;
             &::placeholder {
                 color: $green;
                 opacity: .7;

@@ -231,7 +231,7 @@
                 h3 { 
                     font-size: $labels_normal; 
                     font-weight: 600; 
-                    font-family: 'RML';
+                    font-family: 'RML', sans-serif;
                     color: $cyan; 
                 }
             }
@@ -249,7 +249,7 @@
             .stats_showAll {
                 font-size: $labels_small; 
                 font-weight: 600; 
-                font-family: 'RML';
+                font-family: 'RML', sans-serif;
                 color: $purple_light; 
                 cursor: pointer;
             }
@@ -291,7 +291,7 @@
                 text-align: center;
             }
             h3 { font-size: $labels_normal; }
-            span, div span { color: white; font-family: 'RML'; }
+            span, div span { color: white; font-family: 'RML', sans-serif; }
             div img {
                 width: auto;
                 height: 10vh;
@@ -306,36 +306,6 @@
             }
         }
     }
-    // .stats_attempts {
-    //     grid-area: attempts;
-    //     width: 100%;
-    //     table {
-    //         font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-    //         border-collapse: collapse;
-    //         color: white;
-    //         width: 100%;
-    //       }
-    //       th {
-    //         border-bottom: 3px solid $green;
-    //         padding: 10px;
-    //         text-align: left;
-    //         font-size: $labels_normal;
-    //         color: white;
-    //       }
-    //       td {
-    //         padding: 10px;
-    //         background: none;
-    //       }
-    //       tr {
-    //         border-bottom: 1px solid $dark;
-    //       }
-    //       tr:nth-child(odd) {
-    //         background: none;
-    //       }
-    //       tr:nth-child(even) {
-    //         background: none;
-    //       }
-    // }
     .lobby_footer {
         position: absolute;
         left: 0;

@@ -104,7 +104,6 @@
                 padding: 0;
             }
             h2 {
-                text-align: center;
                 font-size: $labels_big;
                 text-align: start;
                 @media (max-width: 1200px) {
@@ -238,7 +237,7 @@
 .ct-label {
     color: white;
     letter-spacing: 1px;
-    font-family: 'RML';
+    font-family: 'RML', sans-serif;
 }
 .ct-chart {
     height: 50vh;
