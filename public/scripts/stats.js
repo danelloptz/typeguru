@@ -149,7 +149,7 @@ function setValues(averageStats) {
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
 // отрисовка диаграммы средней скорости
 function drawSpeedDiagram(speedSeries, timesLabels) {
-    new Chartist.Line('#chart2', {
+    let diag = new Chartist.Line('#chart2', {
       labels: timesLabels,
       series: [speedSeries]
     }, {
