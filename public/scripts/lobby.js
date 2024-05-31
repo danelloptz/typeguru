@@ -113,7 +113,9 @@ function changeAvatar(e) {
     if (!file) return;
   
     let formData = new FormData();
+
     formData.append('file', file);
+    formData.append('id', user_data.data.id);
   
     fetch('/api/upload', {
       method: 'POST',

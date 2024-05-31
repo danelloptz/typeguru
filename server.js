@@ -1,6 +1,5 @@
 const express = require('express');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
 const path = require('path');
 const app = express();
 const mysql = require('mysql2');
@@ -9,6 +8,20 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const session = require('express-session');
+
+const storage = multer.diskStorage({
+   destination: function(req, file, cb) {
+     cb(null, 'uploads/');
+   },
+   filename: function(req, file, cb) {
+     // Используем req.body.id для создания имени файла
+     const id = req.body.id; // Убедитесь, что id действительно передается в теле запроса
+     cb(null, `${id}_${Date.now()}.${file.mimetype.split('/')[1]}`);
+   }
+});
+
+
+const upload = multer({ storage: storage });
 
 app.use(session({
  secret: 'your_secret_key',
