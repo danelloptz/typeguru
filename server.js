@@ -9,19 +9,19 @@ const saltRounds = 10;
 
 const session = require('express-session');
 
-const storage = multer.diskStorage({
-   destination: function(req, file, cb) {
-     cb(null, 'uploads/');
-   },
-   filename: function(req, file, cb) {
-     // Используем req.body.id для создания имени файла
-     const id = req.body.id; // Убедитесь, что id действительно передается в теле запроса
-     cb(null, `${id}_${Date.now()}.${file.mimetype.split('/')[1]}`);
-   }
-});
+// const storage = multer.diskStorage({
+//    destination: function(req, file, cb) {
+//      cb(null, 'uploads/');
+//    },
+//    filename: function(req, file, cb) {
+//      // Используем req.body.id для создания имени файла
+//      const id = req.body.id; // Убедитесь, что id действительно передается в теле запроса
+//      cb(null, `${id}_${Date.now()}.${file.mimetype.split('/')[1]}`);
+//    }
+// });
 
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
 app.use(session({
  secret: 'your_secret_key',
@@ -268,10 +268,10 @@ app.get('/api/topfive', (req, res) => {
 });
 });
    
-// смена аватарки
-app.post('/api/upload', upload.single('file'), (req, res) => {
-   res.json({ exists: true });
- });
+// // смена аватарки
+// app.post('/api/upload', upload.single('file'), (req, res) => {
+//    res.json({ exists: true });
+//  });
 
 // Приватим папку game для неавторизованных пользователей
 app.use('/public/game', isAuthenticated, express.static(path.join(__dirname, 'public/game')));
