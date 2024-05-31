@@ -31,7 +31,7 @@ export async function fetchText(sandbox_words) {
 
 fetchText(sandbox_words);
 
-let incorrectLetters = {}, start_time, last_input_value = 0, speedCheckpoints = [], last_time = 0, speedList = [];
+let incorrectLetters = {}, start_time, last_input_value = 0, speedCheckpoints = [], last_time = 0, speedList = [], count_letters = 0;
 let user_data_string = localStorage.getItem('user');
 let user_data = user_data_string ? JSON.parse(user_data_string).data : null; 
 
@@ -86,6 +86,7 @@ export function inputText(curr_letter) {
     } catch(err) { pointer_letter = text_status < 3 ? pointer_letter + 1 : pointer_letter - 1; }
 
     last_input_value = sandbox_input.value; // запомнить длину последнего состояния
+    count_letters++;
     return pointer_letter + 1 > text.length; // статус, завершён ли ввод
 }
 
@@ -105,7 +106,7 @@ export function endGame(isTest = false) {
             'id': user_data.id,
             'name': user_data.name,
             'time': timeTaken / 1000, 
-            'speed': text.length / (timeTaken / 1000),
+            'speed': count_letters / (timeTaken / 1000),
             'accuracy': 100 - (sumWrong / text.length * 100 ),
             'email': user_data.email,
             'wins': user_data.wins + 1,
