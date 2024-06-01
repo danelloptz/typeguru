@@ -132,7 +132,7 @@ export function endGame(isTest = false) {
     let lastTake = user_data, speed_diff = (result_data.data.speed - lastTake.speed).toFixed(2), accuracy_diff = (result_data.data.accuracy - lastTake.accuracy).toFixed(2);
     
     // выносим установку ui в отдельный нетестируемую функцию
-    setUi(speed_changes, accuracy_changes, arrow_speed_stroke, arrow_speed_changes, speed_diff, accuracy_diff, result_data, isTest, resultTime, resultSpeed, modalResultAccuracy, resultPoints);
+    setUi();
 
     // формирование массивов данных для графика скорости
     let labelsModal = [], seriesModal = [];
