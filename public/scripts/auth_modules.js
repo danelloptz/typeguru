@@ -25,7 +25,7 @@ export function login(email_input, pass_input, e = 'test') {
        .then(data => {
             if (data.exists) {
                 localStorage.setItem('user', JSON.stringify(data));
-                if (e != 'test') document.location.href = "http://127.0.0.1:3000/public/game/lobby.html";
+                document.location.href = "http://127.0.0.1:3000/public/game/lobby.html";
             } 
             else alert(data.message);
             return data.exists;
@@ -60,7 +60,7 @@ export function registr(email_input, pass_input, name_input, pass_confirm_input,
         .then(data => {
             if (data.exists) {
                 localStorage.setItem('user', JSON.stringify(data));
-                if (e != 'test') document.location.href = "http://127.0.0.1:3000/public/game/lobby.html";
+                document.location.href = "http://127.0.0.1:3000/public/game/lobby.html";
                 return data.exists;
             }
         })
