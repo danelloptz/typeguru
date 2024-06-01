@@ -16,7 +16,7 @@ function ValidateEmail(str) {
 
 // ========== ТЕСТИРУЕТСЯ В ДРУГОМ МОДУЛЕ==========
 function ValidatePass(str) {
-    const regex = /['"\/\\=<>]/;
+    const regex = /['"/\\=<>]/;
     return !regex.test(str);
 }
 

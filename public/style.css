@@ -374,9 +374,12 @@ body {
   position: relative;
   height: 24px;
   width: 48px;
-  border-radius: 15px;
   background: #d6d6d6;
   overflow: hidden;
+  border: 2px solid #444249;
+  border-radius: 20px;
+  transition: border-color 0.6s ease-out;
+  box-sizing: border-box;
 }
 
 .toggle-inner {
@@ -425,14 +428,6 @@ body {
 #switch {
   width: 75px;
   height: 40px;
-}
-
-.toggle {
-  position: relative;
-  border: 2px solid #444249;
-  border-radius: 20px;
-  transition: border-color 0.6s ease-out;
-  box-sizing: border-box;
 }
 
 .toggle.toggle-on {
@@ -785,22 +780,15 @@ body {
 }
 
 /* ========= Элементы диаграммы ========= */
-/* Use this selector to override the line style on a given series */
 .ct-series-a .ct-line {
-  /* Set the colour of this series line */
   stroke: #FBCC24;
-  /* Control the thikness of your lines */
   stroke-width: 5px;
-  /* Create a dashed line with a pattern */
 }
 
 /* This selector overrides the points style on line charts. Points on line charts are actually just very short strokes. This allows you to customize even the point size in CSS */
 .ct-series-a .ct-point {
-  /* Colour of your points */
   stroke: #FBCC24;
-  /* Size of your points */
   stroke-width: 10px;
-  /* Make your points appear as squares */
 }
 
 .ct-series-a .ct-area {

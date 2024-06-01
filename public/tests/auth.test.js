@@ -96,3 +96,27 @@ describe('Проверка пароля на запрещенные символ
   });
 
 });
+
+// Добавляем описания для новых тестовых случаев
+describe('Обработка ошибок в функциях login и registr', () => {
+  beforeEach(() => {
+    // Заменяем alert на мок-функцию, т.к в тестируемой функции вызывается alert
+    window.alert = jest.fn();
+  });
+  test('Ошибка выполнения запроса в функции login', async () => {
+    // Мокируем fetch так, чтобы он выбрасывал ошибку
+    global.fetch = jest.fn().mockRejectedValue(new Error('Network error'));
+
+    const status = await login('ass@mail.ru', '123');
+    expect(status).toBe(false);
+  });
+
+  test('Ошибка выполнения запроса в функции registr', async () => {
+    // Мокируем fetch так, чтобы он выбрасывал ошибку
+    global.fetch = jest.fn().mockRejectedValue(new Error('Network error'));
+
+    const status = await registr('skibidy@mail.ru', '123', 'SkibidyToilet', '123');
+    expect(status).toBe(false);
+  });
+});
+

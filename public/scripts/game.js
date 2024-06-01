@@ -154,7 +154,7 @@ export function endGame(isTest = false) {
 }
 
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
-export function setUi(speed_changes, accuracy_changes, arrow_speed_stroke, arrow_speed_changes, speed_diff, accuracy_diff, result_data, isTest, resultTime, resultSpeed, modalResultAccuracy, resultPoints) {
+export function setUi() {
     speed_changes.innerHTML = speed_diff, accuracy_changes.innerHTML = accuracy_diff;
     if (speed_diff > 0) {
         speed_changes.style.color = 'green';

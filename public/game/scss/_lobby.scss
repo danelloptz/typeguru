@@ -52,7 +52,6 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
         display: flex;
         column-gap: 2vw;
         margin-top: 2vh;
-        // filter: drop-shadow(0 0 0.1rem $green);
         a .lobby_btn {
             text-align: center;
             display: inline-block;
@@ -153,7 +152,6 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
                 background: none;
                 border: none;
                 border-bottom: 2px solid $green;
-                // padding-bottom: 10px;
                 font-size: $text_normal;
                 color: $green;
                 outline: none;
@@ -201,9 +199,13 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
     position: relative;
     height: 24px;
     width: 48px;
-    border-radius: 15px;
     background: #d6d6d6;
-    overflow: hidden;
+    overflow: hidden;   
+    border: 2px solid #444249;
+    border-radius: 20px;
+    -webkit-transition: border-color .6s  ease-out;
+    transition: border-color .6s  ease-out;
+    box-sizing: border-box;
   }
   
   .toggle-inner {
@@ -252,15 +254,6 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
   #switch{
     width: 75px;
     height: 40px;
-}
-
-.toggle{
-    position: relative;
-    border: 2px solid #444249;
-    border-radius: 20px;
-    -webkit-transition: border-color .6s  ease-out;
-    transition: border-color .6s  ease-out;
-    box-sizing: border-box;
 }
 
 .toggle.toggle-on{

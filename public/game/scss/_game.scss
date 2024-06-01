@@ -214,22 +214,15 @@
 
 /* ========= Элементы диаграммы ========= */
 
-/* Use this selector to override the line style on a given series */
 .ct-series-a .ct-line {
-    /* Set the colour of this series line */
     stroke: $orange;
-    /* Control the thikness of your lines */
     stroke-width: 5px;
-    /* Create a dashed line with a pattern */
 }
 
 /* This selector overrides the points style on line charts. Points on line charts are actually just very short strokes. This allows you to customize even the point size in CSS */
 .ct-series-a .ct-point {
-    /* Colour of your points */
     stroke: $orange;
-    /* Size of your points */
     stroke-width: 10px;
-    /* Make your points appear as squares */
 }
 .ct-series-a .ct-area {
     fill: $orange_light;

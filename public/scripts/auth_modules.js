@@ -14,7 +14,7 @@ export function login(email_input, pass_input, e = 'test') {
             pass: pass_input
         };
     
-        return fetch('/api/signin', {
+        fetch('/api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -49,7 +49,7 @@ export function registr(email_input, pass_input, name_input, pass_confirm_input,
             pass: pass_input
         };
     
-        return fetch('/api/signup', {
+        fetch('/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -63,7 +63,6 @@ export function registr(email_input, pass_input, name_input, pass_confirm_input,
                 if (e != 'test') document.location.href = "http://127.0.0.1:3000/public/game/lobby.html";
                 return data.exists;
             }
-            else alert(data.message);
         })
         .catch(error => {
             console.error('Ошибка:', error);
