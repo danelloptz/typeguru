@@ -14,7 +14,7 @@ export function login(email_input, pass_input, e = 'test') {
             pass: pass_input
         };
     
-        fetch('/api/signin', {
+        return fetch('/api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -49,7 +49,7 @@ export function registr(email_input, pass_input, name_input, pass_confirm_input,
             pass: pass_input
         };
     
-        fetch('/api/signup', {
+        return fetch('/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
