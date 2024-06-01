@@ -41,7 +41,7 @@ export function login(email_input, pass_input, e = 'test') {
 }
 
 export function registr(email_input, pass_input, name_input, pass_confirm_input, e = 'test') {
-    if (e != 'test') e.preventDefault();
+    if (e!= 'test') e.preventDefault();
     if (ValidateEmail(email_input) && ValidatePass(pass_input) && ValidatePass(name_input) && pass_input == pass_confirm_input) {
         let signup_data = {
             name: name_input,
