@@ -2,10 +2,12 @@ import { parseDate, formatDate, getAverage } from "./stats_modules.js";
 
 let user_data = JSON.parse(localStorage.getItem('user')).data; // данные о пользователе
 let attempts, dates = [];
-let userName = document.getElementById('userName'), summary_time = document.getElementById('summary_time'), summary_speed = document.getElementById('summary_speed'), summary_accuracy = document.getElementById('summary_accuracy'), best_points = document.getElementById('best_points'), stats_top = document.querySelector('.stats_top'), speed_diag = document.getElementById('speed_diag'), accur_diag = document.getElementById('accur_diag'), points_diag = document.getElementById('points_diag'), svg_average = document.querySelectorAll('.svg_average'), stats_all = document.querySelector('.stats_all_rows'), stats_showAll = document.querySelector('.stats_showAll');
+let userName = document.getElementById('userName'), summary_time = document.getElementById('summary_time'), summary_speed = document.getElementById('summary_speed'), summary_accuracy = document.getElementById('summary_accuracy'), best_points = document.getElementById('best_points'), stats_top = document.querySelector('.stats_top'), speed_diag = document.getElementById('speed_diag'), accur_diag = document.getElementById('accur_diag'), points_diag = document.getElementById('points_diag'), svg_average = document.querySelectorAll('.svg_average'), stats_all = document.querySelector('.stats_all_rows'), stats_showAll = document.querySelector('.stats_showAll'), user_image = document.getElementById('avatar');
 
 userName.innerHTML = user_data.name; // имя пользователя под аватаркой
+user_image.src = '../../' + user_data.avatar; // аватарка пользователя
 let timesLabels, timesSeries, speedSeries, accuracySeries, pointsSeries;
+
 
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
 async function stats7Days() {
@@ -62,13 +64,14 @@ async function bestUsersAttempts() {
 // создаём строки с лучшими результатами, не более 5 строк
 function setTopAttempts(list) {
   list.data.forEach((row, index) => {
-    let date = new Date(+row.date), name;
+    let date = new Date(+row.date), name, path;
     list.dataUsers.forEach((row_users) => name = row_users.id == row.user_id ? row_users.name : name ); // актуальное имя пользователя
+    list.dataUsers.forEach((row_users) => path = row_users.id == row.user_id ? row_users.avatar : path ); // актуальная аватарка пользователя
     stats_top.innerHTML += 
     `
     <div class="stats_top_row ${user_data.id == row.user_id ? 'stats_top_row_active' : ''}">
       <div>
-          <img src="../img/profile_image.png">
+          <img src="../../${path}">
           <span>${name}</span>
       </div>
       <span>${formatDate(date) + '/' + date.getFullYear()}</span>

@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const fs = require('fs');
 const path = require('path');
 const app = express();
 const mysql = require('mysql2');
@@ -9,19 +10,7 @@ const saltRounds = 10;
 
 const session = require('express-session');
 
-// const storage = multer.diskStorage({
-//    destination: function(req, file, cb) {
-//      cb(null, 'uploads/');
-//    },
-//    filename: function(req, file, cb) {
-//      // Используем req.body.id для создания имени файла
-//      const id = req.body.id; // Убедитесь, что id действительно передается в теле запроса
-//      cb(null, `${id}_${Date.now()}.${file.mimetype.split('/')[1]}`);
-//    }
-// });
-
-
-// const upload = multer({ storage: storage });
+const upload = multer({ dest: 'public/uploads/' })
 
 app.use(session({
  secret: 'your_secret_key',
@@ -255,6 +244,7 @@ app.get('/api/topfive', (req, res) => {
       connection.query(`SELECT * FROM Users WHERE id IN (${userIds.map(id => `${id}`).join(', ')})`, (error, result_names) => {
          if (err) throw err;
          if (result.length > 0) {
+            result_names.forEach(item => delete item.pass); // убрать поле pass
             return res.json({ exists: true, data: result, dataUsers: result_names });
          } else {
             res.json({ exists: false, message: "Что-то пошло не так" });
@@ -269,9 +259,26 @@ app.get('/api/topfive', (req, res) => {
 });
    
 // // смена аватарки
-// app.post('/api/upload', upload.single('file'), (req, res) => {
-//    res.json({ exists: true });
-//  });
+app.post('/api/upload', upload.single('file'), function (req, res) {
+   const fileName = req.body.user_id + '.' + req.file.originalname.split('.')[1];
+
+   fs.rename(req.file.path, 'public/uploads/' + fileName, function (err) {
+        if (err) throw err;
+   });
+
+   connection.query('UPDATE Users SET avatar = ? WHERE id = ?', ['public/uploads/' + fileName, +req.body.user_id], (err, result) => {
+      if (err) throw err;
+   });
+
+   res.json({
+      exists: true,
+      filePath : 'public/uploads/' + fileName
+   });
+   return;
+
+ // req.body will hold the text fields, if there were any
+})
+
 
 // Приватим папку game для неавторизованных пользователей
 app.use('/public/game', isAuthenticated, express.static(path.join(__dirname, 'public/game')));

@@ -27,8 +27,10 @@
             align-items: center;
             row-gap: 2vh;
             img {
-                width: 70%;
-                height: auto;
+                width: 5vw;
+                height: 5vw;
+                object-fit: cover;
+                object-position: center;
                 border-radius: 50%;
             }   
             span {
@@ -292,9 +294,11 @@
             h3 { font-size: $labels_normal; }
             span, div span { color: white; font-family: 'RML', sans-serif; }
             div img {
-                width: auto;
+                width: 10vh;
                 height: 10vh;
                 border-radius: 50%;
+                object-fit: cover;
+                object-position: center;
             }
         }
         .stats_top_row_active {

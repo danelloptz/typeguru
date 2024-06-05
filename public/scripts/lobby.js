@@ -6,6 +6,11 @@ let modal_name = document.querySelector('.modal_name');
 let modal_email = document.querySelector('.modal_email');
 let modal_btns_save = document.querySelector('.modal_btns_save');
 let modal_btns_cancel = document.querySelector('.modal_btns_cancel');
+let lobby_profile_img = document.querySelector('.lobby_profile_img');
+let big_avatar = document.getElementById('big_avatar');
+let inputAvatar = document.getElementById('changeAvatar'); 
+
+let uniqueId = new Date().getTime(); // стартовая метка времени (нужно для обновления аватарки пользователя без перезагрузки страницы)
 
 // ========== ТЕСТИРУЕТСЯ В ДРУГОМ МОДУЛЕ==========
 // валидация email (ещё есть на серваке), на случай sql-инъекций
@@ -34,14 +39,23 @@ function CloseModal() {
     modalClick.dataset.check = 0;
 }
 
+function updateAvatar() {
+    lobby_profile_img.src = '../../' + user_data.data.avatar;
+    big_avatar.src = '../../' + user_data.data.avatar;
+    uniqueId = new Date().getTime(); // обновляем метку времени (браузер понимает, что нужно перерисовать картинку)
+}
+
 modalClick.addEventListener('click',openModal);
 modalClose.addEventListener('click', CloseModal);
 
 // Ставим данные пользователя в меню
 let user_data = JSON.parse(localStorage.getItem('user'));
+console.log(user_data);
 modal_name.value = user_data.data.name;
 modal_email.value = user_data.data.email;
 user_name.innerHTML = user_data.data.name;
+updateAvatar();
+
 
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
 // Кнопки сохранения и отмены в меню
@@ -69,7 +83,7 @@ function saveButton() {
                 user_data.data.name = modal_name.value;
                 localStorage.setItem('user', JSON.stringify(user_data));
                 user_name.innerHTML = user_data.data.name;
-                alert('Изменения сохранены');
+                CloseModal();
             } 
             else alert(data.message);
         })
@@ -107,26 +121,52 @@ function musicToogle(e) {
 
 toogle.onclick = musicToogle;
 
+function showError(message) {
+    document.getElementById('error-message').textContent = message;
+}
+function cleanError() {
+    document.getElementById('error-message').textContent = '';
+}
+
 // ========== МОЖНО ПОПРОБОВАТЬ ПРОВЕРЯТЬ РАЗМЕР И РАСШИРЕНИЕ ФАЙЛА ==========
 function changeAvatar(e) {
     let file = e.target.files[0];
     if (!file) return;
-  
-    let formData = new FormData();
 
-    formData.append('file', file);
-    formData.append('id', user_data.data.id);
-  
+    let sizeLimit = 5 * 1024 * 1024; // максимально допустимый размер
+    let allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png']; // допустимые расширения
+
+    if (!allowedExtensions.includes(file.type)) {
+        showError('Разрешены только форматы JPEG, JPG и PNG.');
+        return;
+    }
+    
+    if (file.size > sizeLimit) {
+        showError('Размер файла не должен превышать 5 МБ.');
+        return;
+    }
+    cleanError(); // если были до этого ошибки, то очищаем поле, т.к. данные прошли валидацию
+
+    let formData = new FormData();
+    formData.append('file', file); 
+    formData.append('user_id', user_data.data.id); // id пользователя для имени фото
+
     fetch('/api/upload', {
       method: 'POST',
       body: formData
     }).then(response => response.json())
      .then(data => {
-        if (data.exists) console.log('Успех')
+        user_data.data.avatar = data.filePath;
+        localStorage.setItem('user', JSON.stringify(user_data));
+        updateAvatar();
       })
      .catch(error => {
         console.error('Ошибка загрузки:', error);
       });
 }
 
-document.getElementById('changeAvatar').addEventListener('change', (e) => changeAvatar(e));
+document.getElementById('big_avatar').addEventListener('click', () => {
+    inputAvatar.click();
+    inputAvatar.addEventListener('change', (e) => changeAvatar(e));
+});
+

@@ -3,7 +3,7 @@ import { checkLetter } from "./game_modules.js";
 let sandbox_words = document.querySelector('.sandbox_words'), sandboxField = document.querySelector('.sandbox'), resultField = document.querySelector('.results');
 let sandbox_input = document.querySelector('.sandbox_input'), pointer_letter = 0, pointer_word = 0;
 let sandbox_letter = document.getElementsByClassName('sandbox_letter');
-let resultTime = document.getElementById('results_time'), resultPoints = document.getElementById('results_points'), resultSpeed = document.getElementById('results_speed'), modalResultAccuracy = document.getElementById('results_accuracy'), speed_changes = document.getElementById('speed_changes'), arrow_speed_changes = document.getElementById('arrow_speed_changes'),arrow_speed_stroke = document.getElementById('arrow_speed_stroke'), accuracy_changes = document.getElementById('accuracy_changes'), arrow_accuracy_changes = document.getElementById('accuracy_changes'),arrow_accuracy_stroke = document.getElementById('arrow_accuracy_stroke');
+let resultTime = document.getElementById('results_time'), resultPoints = document.getElementById('results_points'), resultSpeed = document.getElementById('results_speed'), modalResultAccuracy = document.getElementById('results_accuracy'), speed_changes = document.getElementById('speed_changes'), arrow_speed_changes = document.getElementById('arrow_speed_changes'),arrow_speed_stroke = document.getElementById('arrow_speed_stroke'), accuracy_changes = document.getElementById('accuracy_changes'), arrow_accuracy_changes = document.getElementById('arrow_accuracy_changes'),arrow_accuracy_stroke = document.getElementById('arrow_accuracy_stroke');
 let text;
 
 // ассинхронная функция, т.к ответ приходит не сразу
@@ -174,7 +174,9 @@ export function setUi(speed_diff, accuracy_diff, result_data) {
         arrow_accuracy_changes.style.transform = 'rotate(180deg)';
     }
 
-    localStorage.setItem('user', JSON.stringify(result_data));
+    user_data.speed = result_data.data.speed;
+    user_data.accuracy = result_data.data.accuracy;
+    localStorage.setItem('user', JSON.stringify({exists: true, data: user_data}));
 
     resultTime.innerHTML = result_data.data.time.toFixed(2) + '<span style="color: white;opacity: .4; font-size: 30px;">s</span>';
     resultSpeed.innerHTML = result_data.data.speed.toFixed(2) + '<span style="color: white;opacity: .4;font-size: 30px;">s/m</span>';
