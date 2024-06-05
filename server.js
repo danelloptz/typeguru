@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
+const validator = require('validator');
 const path = require('path');
 const app = express();
 const mysql = require('mysql2');
@@ -262,23 +263,28 @@ app.get('/api/topfive', (req, res) => {
 app.post('/api/upload', upload.single('file'), function (req, res) {
    const id = req.body.user_id;
    const type = req.file.mimetype.split('/')[1];
-   const fileName = 'public/uploads/' + id + '.' + type;
+   if (!validator.isAlphanumeric(id)) {
+      res.json({exists: false, message: 'Неправильный формат id'});
+      return;
+   }
+   if (!['jpg', 'jpeg', 'png'].includes(type)) {
+      res.json({exists: false, message: 'Неправильный формат фотографии'});
+      return;
+   }
+   const fileName = `public/uploads/${id}.${type}`;
 
    fs.rename(req.file.path, fileName, function (err) {
         if (err) throw err;
    });
 
-   connection.query('UPDATE Users SET avatar = ? WHERE id = ?', ['public/uploads/' + fileName, +req.body.user_id], (err, result) => {
+   const sqlUpdate = 'UPDATE Users SET avatar =? WHERE id =?';
+   connection.query(sqlUpdate, [fileName, id], (err, result) => {
       if (err) throw err;
+      res.json({
+         exists: true,
+         filePath : fileName
+      });
    });
-
-   res.json({
-      exists: true,
-      filePath : fileName
-   });
-   return;
-
- // req.body will hold the text fields, if there were any
 })
 
 
