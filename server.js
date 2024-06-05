@@ -260,7 +260,8 @@ app.get('/api/topfive', (req, res) => {
    
 // // смена аватарки
 app.post('/api/upload', upload.single('file'), function (req, res) {
-   const fileName = req.body.user_id + '.' + req.file.originalname.split('.')[1];
+   console.log(req.file);
+   const fileName = req.body.user_id + '.' + req.file.mimetype.split('/')[1];
 
    fs.rename(req.file.path, 'public/uploads/' + fileName, function (err) {
         if (err) throw err;
