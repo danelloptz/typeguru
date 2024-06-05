@@ -261,9 +261,9 @@ app.get('/api/topfive', (req, res) => {
 // // смена аватарки
 app.post('/api/upload', upload.single('file'), function (req, res) {
    console.log(req.file);
-   const fileName = req.body.user_id + '.' + req.file.mimetype.split('/')[1];
+   const fileName = 'public/uploads/' + req.body.user_id + '.' + req.file.mimetype.split('/')[1];
 
-   fs.rename(req.file.path, 'public/uploads/' + fileName, function (err) {
+   fs.rename(req.file.path, fileName, function (err) {
         if (err) throw err;
    });
 
@@ -273,7 +273,7 @@ app.post('/api/upload', upload.single('file'), function (req, res) {
 
    res.json({
       exists: true,
-      filePath : 'public/uploads/' + fileName
+      filePath : fileName
    });
    return;
 
