@@ -11,7 +11,16 @@ const saltRounds = 10;
 
 const session = require('express-session');
 
-const upload = multer({ dest: 'public/uploads/' })
+const fileFilter = (req, file, cb) => {
+   if((file.mimetype).includes('jpeg') || (file.mimetype).includes('png') || (file.mimetype).includes('jpg')){
+       cb(null, true);
+   } else{
+       cb(null, false);
+
+   }
+
+};
+const upload = multer({ dest: 'public/uploads/', fileFilter: fileFilter })
 
 app.use(session({
  secret: 'your_secret_key',
