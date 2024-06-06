@@ -12,14 +12,21 @@ const saltRounds = 10;
 const session = require('express-session');
 
 const fileFilter = (req, file, cb) => {
-   if((file.mimetype).includes('jpeg') || (file.mimetype).includes('png') || (file.mimetype).includes('jpg')){
+   if (['image/jpeg', 'image/png', 'image/jpg'].includes(file.mimetype)) {
        cb(null, true);
-   } else{
-       cb(null, false);
-
+   } else {
+       cb(new Error('Invalid file type'), false);
    }
-
 };
+
+const storage = multer.diskStorage({
+   destination: 'public/uploads/',
+   filename: (req, file, cb) => {
+      const id = req.body.user_id;
+      const type = file.mimetype.split('/')[1];
+      cb(null, `${id}.${type}`);
+   }
+});
 const upload = multer({ dest: 'public/uploads/', fileFilter: fileFilter })
 
 app.use(session({
@@ -271,30 +278,44 @@ app.get('/api/topfive', (req, res) => {
 // // смена аватарки
 app.post('/api/upload', upload.single('file'), function (req, res) {
    const id = req.body.user_id;
-   const type = req.file.mimetype.split('/')[1];
+
+   // Validate user ID
    if (!validator.isAlphanumeric(id)) {
-      res.json({exists: false, message: 'Неправильный формат id'});
-      return;
+      return res.status(400).json({ exists: false, message: 'Неправильный формат id' });
    }
-   if (!['jpg', 'jpeg', 'png'].includes(type)) {
-      res.json({exists: false, message: 'Неправильный формат фотографии'});
-      return;
-   }
-   const fileName = `public/uploads/${id}.${type}`;
 
+   // Validate file
+   if (!req.file) {
+      return res.status(400).json({ exists: false, message: 'Файл не был загружен' });
+   }
+
+   const fileType = req.file.mimetype.split('/')[1];
+   if (!['jpg', 'jpeg', 'png'].includes(fileType)) {
+      return res.status(400).json({ exists: false, message: 'Неправильный формат фотографии' });
+   }
+
+   // Secure file path creation
+   const fileName = path.join('public', 'uploads', `${id}.${fileType}`);
+
+   // Move file safely
    fs.rename(req.file.path, fileName, function (err) {
-        if (err) throw err;
-   });
+      if (err) {
+         return res.status(500).json({ exists: false, message: 'Ошибка при сохранении файла' });
+      }
 
-   const sqlUpdate = 'UPDATE Users SET avatar =? WHERE id =?';
-   connection.query(sqlUpdate, [fileName, id], (err, result) => {
-      if (err) throw err;
-      res.json({
-         exists: true,
-         filePath : fileName
+      const sqlUpdate = 'UPDATE Users SET avatar = ? WHERE id = ?';
+      connection.query(sqlUpdate, [fileName, id], (err, result) => {
+         if (err) {
+            return res.status(500).json({ exists: false, message: 'Ошибка при обновлении базы данных' });
+         }
+
+         res.json({
+            exists: true,
+            filePath: fileName
+         });
       });
    });
-})
+});
 
 
 // Приватим папку game для неавторизованных пользователей
