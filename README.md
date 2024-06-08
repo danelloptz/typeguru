@@ -6,7 +6,7 @@
 ---
 > *Пользователь печатает....*
 
-![Фотография сервиса](public/img/lobby_bg.png)       
+![Фотография сервиса](public/img/readme_img.png)       
 
 ## Описание функциональных моделей        
 * [functions.md](docs/functions.md)     
