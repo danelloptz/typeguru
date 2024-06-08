@@ -4,13 +4,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: -webkit-linear-gradient(0deg, #1a191a,#263b42);background: linear-gradient(0deg, #1a191a,#263b42);
+    z-index: 2;
+    position: relative;
+    background: $black;
     .sandbox {
         position: relative;
-        width: 50vw;
+        max-width: 80vw;
         height: 40vh;
         .sandbox_words {
-            font-size: $text_normal;
+            font-size: $labels_medium;
             color: gray;
             display: flex;
             flex-wrap: wrap;
@@ -36,7 +38,7 @@
 .incorrect { color: red !important; }
 .correct_space { 
     width: $text_normal; 
-    height: $text_normal; 
+    height: $labels_medium; 
     position: relative;
 }
 .correct_space::before {

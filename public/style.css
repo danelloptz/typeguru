@@ -87,7 +87,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(0deg, rgba(26, 25, 26, 0.7607843137), rgba(38, 59, 66, 0.7921568627), rgba(38, 59, 66, 0.7921568627));
+  background: #121417;
   position: relative;
   z-index: 2;
 }
@@ -98,12 +98,12 @@ body {
   align-items: center;
   row-gap: 2vw;
   padding: 3vw 1vw;
-  background: linear-gradient(0deg, #1a191a, #263b42, #263b42);
+  background: #1c1f24;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }
 .auth .signin h1, .auth .signup h1 {
   font-size: 60px;
-  color: #C8F0B4;
+  color: #a6c0f1;
 }
 .auth .signin input, .auth .signup input {
   width: 70%;
@@ -112,16 +112,16 @@ body {
   border: none;
   border-bottom: 2px solid rgb(37, 36, 34);
   font-size: 30px;
-  color: #C8F0B4;
+  color: #a6c0f1;
   outline: none;
   font-family: "RML", sans-serif;
 }
 .auth .signin input::-moz-placeholder, .auth .signup input::-moz-placeholder {
-  color: #C8F0B4;
+  color: #a6c0f1;
   opacity: 0.7;
 }
 .auth .signin input::placeholder, .auth .signup input::placeholder {
-  color: #C8F0B4;
+  color: #a6c0f1;
   opacity: 0.7;
 }
 @media (max-width: 700px) {
@@ -135,7 +135,7 @@ body {
 }
 .auth .signin a, .auth .signup a {
   font-size: 15px;
-  color: #C8F0B4;
+  color: #a6c0f1;
   opacity: 0.7;
 }
 .auth .signin a:hover, .auth .signup a:hover {
@@ -168,7 +168,27 @@ body {
     height: 100%;
   }
 }
+body {
+  background: black;
+}
+
+.lobby_img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  height: 100vh;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  filter: blur(10px) brightness(0.7);
+}
+
 .lobby {
+  position: relative;
+  z-index: 2;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -176,7 +196,6 @@ body {
   flex-direction: column;
   justify-content: center;
   row-gap: 3vh;
-  background: linear-gradient(0deg, #1a191a, #263b42);
 }
 .lobby a .lobby_profile {
   position: absolute;
@@ -187,7 +206,7 @@ body {
   align-items: center;
   row-gap: 1vh;
   cursor: pointer;
-  filter: drop-shadow(0 0 0.35rem #C8F0B4);
+  filter: drop-shadow(0 0 0.35rem #a6c0f1);
 }
 .lobby a .lobby_profile img {
   width: 5vw;
@@ -200,21 +219,21 @@ body {
 }
 .lobby a .lobby_profile span {
   font-size: 30px;
-  color: #C8F0B4;
+  color: #a6c0f1;
 }
 .lobby h1 {
-  color: #C8F0B4;
+  color: #a6c0f1;
   font-size: 80px;
   letter-spacing: 3px;
 }
 .lobby h2 {
-  color: #C8F0B4;
+  color: #a6c0f1;
   font-size: 30px;
 }
 .lobby .lobby_line {
   width: 40%;
   height: 0.8px;
-  background: #C8F0B4;
+  background: #a6c0f1;
   opacity: 0.7;
 }
 .lobby .lobby_items {
@@ -263,7 +282,7 @@ body {
 }
 .lobby_footer a {
   font-size: 15px;
-  color: #C8F0B4;
+  color: #a6c0f1;
   opacity: 0.5;
 }
 
@@ -273,7 +292,7 @@ body {
   height: 100vh;
   left: 0;
   top: 0;
-  background: rgba(0, 0, 0, 0.19);
+  background: rgba(0, 0, 0, 0.373);
   visibility: hidden;
   pointer-events: none;
   display: flex;
@@ -284,13 +303,14 @@ body {
 .modal_wrapper .modal {
   width: 30vw;
   height: 70vh;
-  background: linear-gradient(0deg, #1a191a, #263b42, #263b42);
+  background: #121417;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding-left: 2vw;
   row-gap: 2vh;
+  border-radius: 20px;
 }
 .modal_wrapper .modal .modal_close {
   position: absolute;
@@ -344,7 +364,7 @@ body {
 }
 .modal_wrapper .modal .modal_row h2 {
   font-size: 30px;
-  color: #C8F0B4;
+  color: #a6c0f1;
 }
 .modal_wrapper .modal .modal_row input[type=file] {
   visibility: hidden;
@@ -355,19 +375,19 @@ body {
   height: 100%;
   background: none;
   border: none;
-  border-bottom: 2px solid #C8F0B4;
+  border-bottom: 2px solid #a6c0f1;
   font-size: 30px;
-  color: #C8F0B4;
+  color: #a6c0f1;
   outline: none;
   font-family: "RML", sans-serif;
   margin-top: -5px;
 }
 .modal_wrapper .modal .modal_row input::-moz-placeholder {
-  color: #C8F0B4;
+  color: #a6c0f1;
   opacity: 0.7;
 }
 .modal_wrapper .modal .modal_row input::placeholder {
-  color: #C8F0B4;
+  color: #a6c0f1;
   opacity: 0.7;
 }
 @media (max-width: 700px) {
@@ -394,7 +414,7 @@ body {
 .modal_wrapper .modal .modal_btns .button {
   min-width: 7vw;
   margin: 0;
-  border: 1px solid #C8F0B4;
+  border: 1px solid #a6c0f1;
 }
 
 .label {
@@ -565,15 +585,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(0deg, #1a191a, #263b42);
+  z-index: 2;
+  position: relative;
+  background: #121417;
 }
 .game .sandbox {
   position: relative;
-  width: 50vw;
+  max-width: 80vw;
   height: 40vh;
 }
 .game .sandbox .sandbox_words {
-  font-size: 30px;
+  font-size: 45px;
   color: gray;
   display: flex;
   flex-wrap: wrap;
@@ -602,7 +624,7 @@ body {
 
 .correct_space {
   width: 30px;
-  height: 30px;
+  height: 45px;
   position: relative;
 }
 
@@ -873,7 +895,7 @@ body {
   padding-left: 7vw;
   padding-right: 2vw;
   row-gap: 3vh;
-  background: #171215;
+  background: #121417;
 }
 .stats .stats_menu {
   position: fixed;
@@ -881,7 +903,7 @@ body {
   top: 0;
   height: 100vh;
   width: 6vw;
-  background: #171215;
+  background: #121417;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -956,7 +978,7 @@ body {
   display: flex;
   align-items: center;
   padding-left: 2vw;
-  background: #171215;
+  background: #121417;
   padding-top: 5vh;
 }
 .stats .stats_title h1 {
@@ -978,7 +1000,7 @@ body {
   -moz-column-gap: 2vw;
        column-gap: 2vw;
   margin: auto;
-  background: #1c191b;
+  background: #1c1f24;
   padding: 4vh 2vw;
   border-radius: 40px;
 }
@@ -1012,7 +1034,7 @@ body {
   left: 4vh;
 }
 .stats .stats_content .stats_content_panels .stats_content_panel h2 {
-  color: #171215;
+  color: #121417;
   font-size: 90px;
   letter-spacing: 1.5px;
 }
@@ -1020,7 +1042,7 @@ body {
   font-size: 30px;
 }
 .stats .stats_content .stats_content_panels .stats_content_panel span {
-  color: #171215;
+  color: #121417;
   font-size: 20px;
   letter-spacing: 1px;
   opacity: 0.7;
@@ -1047,7 +1069,7 @@ body {
   width: 50%;
   row-gap: 15px;
   padding: 2vw 1vw;
-  background: #1c191b;
+  background: #1c1f24;
   border-radius: 40px;
 }
 .stats .stats_row .stats_bar h2, .stats .stats_row .average_stats h2, .stats .stats_row .stats_all h2 {
@@ -1139,7 +1161,7 @@ body {
   width: auto;
   row-gap: 15px;
   padding: 2vw 0;
-  background: #1c191b;
+  background: #1c1f24;
   border-radius: 40px;
 }
 .stats .stats_top h2 {

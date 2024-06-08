@@ -23,7 +23,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: -webkit-linear-gradient(0deg, #1a191ac2,#263b42ca, #263b42ca);background: linear-gradient(0deg, #1a191ac2,#263b42ca, #263b42ca);
+    background: $black;
     position: relative;
     z-index: 2;
     .signin, .signup {
@@ -33,11 +33,11 @@ body {
         align-items: center;
         row-gap: 2vw;
         padding: 3vw 1vw;
-        background: -webkit-linear-gradient(0deg, #1a191a,#263b42, #263b42);background: linear-gradient(0deg, #1a191a, #263b42, #263b42);
+        background: $black_light;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
         h1 {
             font-size: $labels_big;
-            color: $green;
+            color: $blue;
         }
         input {
             width: 70%;
@@ -46,11 +46,11 @@ body {
             border: none;
             border-bottom: 2px solid $dark;
             font-size: $text_normal;
-            color: $green;
+            color: $blue;
             outline: none;
             font-family: 'RML', sans-serif;
             &::placeholder {
-                color: $green;
+                color: $blue;
                 opacity: .7;
             }
             @media (max-width: 700px) {
@@ -62,7 +62,7 @@ body {
         }
         a {
             font-size: $labels_tiny;
-            color: $green;
+            color: $blue;
             opacity: .7;
         }
         a:hover {

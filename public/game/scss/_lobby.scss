@@ -3,7 +3,21 @@
 $icon-size	  : 60px;
 $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
 
+body {background: black;}
+.lobby_img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: blur(10px) brightness(.7);
+}
 .lobby {
+    position: relative;
+    z-index: 2;
     width: 100%;
     height: 100vh;
     display: flex;
@@ -11,7 +25,7 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
     flex-direction: column;
     justify-content: center;
     row-gap: 3vh;
-    background: -webkit-linear-gradient(0deg, #1a191a,#263b42);background: linear-gradient(0deg, #1a191a,#263b42);
+    // background: -webkit-linear-gradient(0deg, #1a191a,#263b42);background: linear-gradient(0deg, #1a191a,#263b42);
     a .lobby_profile {
         position: absolute;
         top: 2vw;
@@ -21,7 +35,7 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
         align-items: center;
         row-gap: 1vh;
         cursor: pointer;
-        filter: drop-shadow(0 0 0.35rem $green);
+        filter: drop-shadow(0 0 0.35rem $blue);
         img {
             width: 5vw;
             height: 5vw;
@@ -31,22 +45,22 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
         }
         span {
             font-size: $labels_normal;
-            color: $green;
+            color: $blue;
         }
     }
     h1 { 
-        color: $green; 
+        color: $blue; 
         font-size: $labels_huge;
         letter-spacing: 3px;
     }
     h2 { 
-        color:$green; 
+        color:$blue; 
         font-size: $labels_normal;
     }
     .lobby_line {
         width: 40%;
         height: .8px;
-        background: $green;
+        background: $blue;
         opacity: .7;
     }
     .lobby_items {
@@ -96,7 +110,7 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
     justify-content: center;
     a {
         font-size: $labels_tiny;
-        color: $green;
+        color: $blue;
         opacity: .5;
     }
 }
@@ -107,7 +121,7 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
     height: 100vh;
     left: 0;
     top: 0;
-    background: rgba(0, 0, 0, 0.19);
+    background: rgba(0, 0, 0, 0.373);
     visibility: hidden;
     pointer-events: none;
     display: flex;
@@ -117,13 +131,14 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
     .modal {
         width: 30vw;
         height: 70vh;
-        background: -webkit-linear-gradient(0deg, #1a191a,#263b42, #263b42);background: linear-gradient(0deg, #1a191a, #263b42, #263b42);
+        background: $black;
         position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         padding-left: 2vw;
         row-gap: 2vh;
+        border-radius: 20px;
         .modal_close {
             position: absolute;
             top: -30px;
@@ -172,11 +187,10 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
             column-gap: 1vw;
             h2 {
                 font-size: $labels_normal;
-                color: $green;
+                color: $blue;
             }
             input[type='file'] {
                 visibility: hidden;
-                // pointer-events: none;
                 color: transparent;
               }
             input {
@@ -184,14 +198,14 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
                 height: 100%;
                 background: none;
                 border: none;
-                border-bottom: 2px solid $green;
+                border-bottom: 2px solid $blue;
                 font-size: $text_normal;
-                color: $green;
+                color: $blue;
                 outline: none;
                 font-family: 'RML', sans-serif;
                 margin-top: -5px;
                 &::placeholder {
-                    color: $green;
+                    color: $blue;
                     opacity: .7;
                 }
                 @media (max-width: 700px) {
@@ -215,12 +229,12 @@ $border-radius: 0.5;//15% = 0.15, 50% = 0.50 etc.
             .button {
                 min-width: 7vw;
                 margin: 0;
-                border: 1px solid $green;
+                border: 1px solid $blue;
             }
         }
     }
 }
-
+    
 .label {
     display: inline-flex;
     align-items: center;
