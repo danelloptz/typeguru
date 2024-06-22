@@ -28,15 +28,19 @@ async function stats7Days() {
   .then(data => {
         if (data.exists) {
           attempts = data.data;
+          console.log(attempts);
           [timesSeries, speedSeries, accuracySeries, pointsSeries] = parseDate(attempts); //  средние попытки за последние 7 дней (среднее за каждый день)
-          timesLabels = getLast7Dates();
+          
           const averageStats = getAverage(attempts); // общее время, средняя скорость и точность
-          drawBarDiagram(timesSeries, timesLabels);
-          drawSpeedDiagram(speedSeries, timesLabels);
+          
           setValues(averageStats);
-          bestUsersAttempts();
-          userAttempts(attempts.reverse(), 0);
+          userAttempts(attempts.reverse(), 0, 0, attempts.length);
         } 
+        timesLabels = getLast7Dates();
+        drawBarDiagram(timesSeries, timesLabels);
+        drawSpeedDiagram(speedSeries, timesLabels);
+        bestUsersAttempts();
+
     })
   .catch(error => console.error('Ошибка:', error));
 }
@@ -49,6 +53,10 @@ async function bestUsersAttempts() {
       method: 'GET',
     });
     const data = await response.json();
+
+    // =======================  
+    console.log(data);
+    // =======================  
     
     if (!data.exists) {
       alert('ГОВНИЩЕ');

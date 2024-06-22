@@ -66,7 +66,6 @@ body {background: black;}
     .lobby_items {
         display: flex;
         column-gap: 2vw;
-        margin-top: 2vh;
         a .lobby_btn {
             text-align: center;
             display: inline-block;
@@ -96,6 +95,16 @@ body {background: black;}
         a .lobby_btn:hover:before {
             height: 100%;
           }
+        
+        &:first-of-type {
+            margin-top: 2vh;
+        }
+        .button {
+            min-width: 7vw;
+            font-size: 18px;
+            letter-spacing: 2px;
+            background: rgba(255, 0, 0, 0.150);
+        }
     }
 }
 

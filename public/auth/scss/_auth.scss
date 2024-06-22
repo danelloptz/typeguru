@@ -33,7 +33,8 @@ body {
         align-items: center;
         row-gap: 2vw;
         padding: 3vw 1vw;
-        background: $black_light;
+        background: -webkit-linear-gradient(171deg, #181a1e, #1c1f24,#181a1e);
+        background: linear-gradient(171deg, #181a1e, #1c1f24,#181a1e);
         box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
         h1 {
             font-size: $labels_big;

@@ -11,13 +11,13 @@
   text-align: center;
   display: inline-block;
   padding: 15px 40px;
-  border: 1px solid #fff;
+  border: 1px solid rgba(255, 255, 255, 0.5803921569);
   cursor: pointer;
   letter-spacing: 2px;
   position: relative;
   overflow: hidden;
   margin: 0 20px;
-  color: white;
+  color: rgba(255, 255, 255, 0.5803921569);
   min-width: 12vw;
   background: none;
   font-size: 20px;
@@ -43,6 +43,16 @@
     letter-spacing: 1px;
     font-size: 10px;
   }
+}
+
+.button:hover {
+  color: white;
+  border: 1px solid #ffffff;
+}
+
+.button_red {
+  color: red;
+  border: 1px solid red;
 }
 
 .button:before {
@@ -98,7 +108,7 @@ body {
   align-items: center;
   row-gap: 2vw;
   padding: 3vw 1vw;
-  background: #1c1f24;
+  background: linear-gradient(171deg, #181a1e, #1c1f24, #181a1e);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }
 .auth .signin h1, .auth .signup h1 {
@@ -240,7 +250,6 @@ body {
   display: flex;
   -moz-column-gap: 2vw;
        column-gap: 2vw;
-  margin-top: 2vh;
 }
 .lobby .lobby_items a .lobby_btn {
   text-align: center;
@@ -268,6 +277,15 @@ body {
 }
 .lobby .lobby_items a .lobby_btn:hover:before {
   height: 100%;
+}
+.lobby .lobby_items:first-of-type {
+  margin-top: 2vh;
+}
+.lobby .lobby_items .button {
+  min-width: 7vw;
+  font-size: 18px;
+  letter-spacing: 2px;
+  background: rgba(255, 0, 0, 0.15);
 }
 
 .lobby_footer {

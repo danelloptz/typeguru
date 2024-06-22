@@ -98,7 +98,7 @@ export function endGame(isTest = false) {
 
     for (let letter in incorrectLetters) sumWrong += incorrectLetters[letter];
 
-    const gameKef = (text.length / (timeTaken / 1000)) * (100 - (sumWrong / text.length * 100 )) * 10;
+    const gameKef = (text.length / (timeTaken / 100) * 10) * (100 - (sumWrong / text.length * 100 )) * 10;
 
     let result_data = {
         'exists': true,

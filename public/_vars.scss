@@ -43,13 +43,13 @@ $pink: #f7cddb;
     text-align: center;
     display: inline-block;
     padding: 15px 40px;
-    border: 1px solid #fff;
+    border: 1px solid #ffffff94;
     cursor: pointer;
     letter-spacing: 2px;
     position:relative;
     overflow:hidden;
     margin: 0 20px;
-    color: white;
+    color: #ffffff94;
     min-width: 12vw;
     background: none;
     font-size: $labels_small;
@@ -69,6 +69,15 @@ $pink: #f7cddb;
         letter-spacing: 1px;
         font-size: 10px;
     }
+  }
+  .button:hover {
+    color: white;
+    border: 1px solid #ffffff;
+  }
+
+  .button_red {
+    color: red;
+    border: 1px solid red;
   }
   
   .button:before {

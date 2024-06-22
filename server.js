@@ -37,11 +37,11 @@ app.use(session({
 }));
 
 const isAuthenticated = (req, res, next) => {
-   if (req.session.isAuthenticated) {
-      return next();
+   if (req.session && req.session.isAuthenticated) {
+       return next();
    }
-   res.redirect('/public/auth/signin.html'); // Перенаправление на страницу входа, если пользователь не аутентифицирован
-  };
+   res.redirect('/public/auth/signin.html');
+};
   
 
 // Подключаемся к БД
@@ -120,6 +120,7 @@ app.post('/api/signup', (req, res) => {
             if (err) throw err;
             if (result.serverStatus == 2) {
                req.session.isAuthenticated = true;
+               // по хорошему надо переписать этот код, чтобы мы кидали строку с бд, а не формировали её сами (есть дефолтные значения и из-за этого неудобно)
                return res.json({ 
                   exists: true, 
                   data: {
@@ -129,7 +130,8 @@ app.post('/api/signup', (req, res) => {
                      speed: 0,
                      accuracy: 0, 
                      wins: 0, 
-                     points: 0
+                     points: 0,
+                     avatar: 'public/uploads/default.png'
                } });
             } else {
                return res.json({ exists: false, message: "Регистрация неудачна"});
@@ -142,13 +144,16 @@ app.post('/api/signup', (req, res) => {
 
 app.get('/api/signout', (req, res) => {
    req.session.destroy(err => {
-      if (err) {
-        return res.redirect('/public/auth/signin.html');
-      }
-      res.clearCookie('connect.sid');
-      res.redirect('/public/auth/signin.html');
+       if (err) {
+           console.error('Failed to destroy session:', err);
+           return res.status(500).send('Failed to sign out');
+       }
+       res.clearCookie('connect.sid', { path: '/' });
+       res.redirect('/public/auth/signin.html');
    });
-  });  
+});
+
+
 
 app.post('/api/modalChange', (req, res) => {
    if(!req.body) return res.sendStatus(400);
@@ -322,7 +327,7 @@ app.post('/api/upload', upload.single('file'), function (req, res) {
 app.use('/public/game', isAuthenticated, express.static(path.join(__dirname, 'public/game')));
 
 // Указываем Express использовать папку 'public' для обслуживания статических файлов
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));  
 
 
 // Закрываем подключение к БД при завершении работы сервера

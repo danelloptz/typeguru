@@ -170,3 +170,14 @@ document.getElementById('big_avatar').addEventListener('click', () => {
     inputAvatar.addEventListener('change', (e) => changeAvatar(e));
 });
 
+document.getElementById('quit_system').addEventListener('click', () => {
+    fetch('/api/signout', { method: 'GET' })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                console.error('Signout failed');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+});
