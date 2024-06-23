@@ -5,19 +5,38 @@ let sandbox_input = document.querySelector('.sandbox_input'), pointer_letter = 0
 let sandbox_letter = document.getElementsByClassName('sandbox_letter');
 let resultTime = document.getElementById('results_time'), resultPoints = document.getElementById('results_points'), resultSpeed = document.getElementById('results_speed'), modalResultAccuracy = document.getElementById('results_accuracy'), speed_changes = document.getElementById('speed_changes'), arrow_speed_changes = document.getElementById('arrow_speed_changes'),arrow_speed_stroke = document.getElementById('arrow_speed_stroke'), accuracy_changes = document.getElementById('accuracy_changes'), arrow_accuracy_changes = document.getElementById('arrow_accuracy_changes'),arrow_accuracy_stroke = document.getElementById('arrow_accuracy_stroke');
 let text;
+let gameSettings = JSON.parse(localStorage.getItem('gameSettings'));
 
 // ассинхронная функция, т.к ответ приходит не сразу
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
 export async function fetchText(sandbox_words) {
     try {
-        // настройки желаемого текста менять в ссылке (можно добавить пользовательские настройки)
-        const response = await fetch('https://fish-text.ru/get?&type=sentence&number=1', {
+        const type = gameSettings.type;
+        const number = gameSettings.number;
+        let help_list = [], help_text = '';
+
+        const response = await fetch(`https://fish-text.ru/get?&type=${type != 'title' ? type : 'sentence'}&number=${number}`, {
             method: 'GET'
         });
         const data = await response.json();
         text = data.text;
 
-        text.split(' ').forEach(word => {
+        if (type == 'title') {
+            text.split(' ').forEach(word => { 
+                if (help_list.length < number && word.length > 1) {
+                    let _ = word.replace(/[.,?!:;]/g, '').toLowerCase();
+                    help_list.push(_); 
+                    help_text += _ + ' ';
+                }
+            });
+            text = help_text.trim();
+            console.log(help_text);
+        } 
+
+        help_list.length == 0 ? help_list = text.split(' ') : help_list;
+        console.log(help_list);
+
+        help_list.forEach(word => {
             let words_tag = ''; // здесь хранятся все span с буквами
             word.split('').forEach(letter => words_tag += (`<span class="sandbox_letter">${letter}</span>`));
             words_tag += `<span class="sandbox_letter">&nbsp;</span>`; // пробел
