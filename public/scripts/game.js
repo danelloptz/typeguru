@@ -5,12 +5,53 @@ let sandbox_input = document.querySelector('.sandbox_input'), pointer_letter = 0
 let sandbox_letter = document.getElementsByClassName('sandbox_letter');
 let resultTime = document.getElementById('results_time'), resultPoints = document.getElementById('results_points'), resultSpeed = document.getElementById('results_speed'), modalResultAccuracy = document.getElementById('results_accuracy'), speed_changes = document.getElementById('speed_changes'), arrow_speed_changes = document.getElementById('arrow_speed_changes'),arrow_speed_stroke = document.getElementById('arrow_speed_stroke'), accuracy_changes = document.getElementById('accuracy_changes'), arrow_accuracy_changes = document.getElementById('arrow_accuracy_changes'),arrow_accuracy_stroke = document.getElementById('arrow_accuracy_stroke');
 let text;
-let gameSettings = JSON.parse(localStorage.getItem('gameSettings'));
+
+let modalGame_item = document.querySelectorAll('.modalGame_item');
+let modalGame_item_input = document.querySelectorAll('.modalGame_item_input');
+let modalGameWrapper = document.querySelector(".modalGame_wrapper");
+
+
+
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
+function openGameModal() {
+    modalGameWrapper.style.visibility = 'visible';
+    modalGameWrapper.style.pointerEvents = 'all';
+}
+
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
+function CloseGameModal() {
+    modalGameWrapper.style.visibility = 'hidden';
+    modalGameWrapper.style.pointerEvents = 'none';
+}
+
+openGameModal();
+
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
+function isNumber(str) {
+    let re = /^[0-9]+$/;
+    return re.test(str);
+}
+
+modalGame_item.forEach((item, index) => item.addEventListener('click', () => {
+    const input = modalGame_item_input[index].value.replaceAll(' ', ''); // введённое значение
+    if (!isNumber(input)) return; // проверяем что только цифры
+    const type = item.dataset.type; // желаемый тип данных (слово, предложение, абзац)
+    localStorage.setItem('gameSettings', JSON.stringify(
+        {
+            'type' : type,
+            'number' : +input
+        }
+    ));
+    CloseGameModal();
+    fetchText(sandbox_words);
+}))
 
 // ассинхронная функция, т.к ответ приходит не сразу
 // ========== НЕ ТЕСТИРУЕТСЯ ==========
 export async function fetchText(sandbox_words) {
     try {
+        let gameSettings = JSON.parse(localStorage.getItem('gameSettings'));
+
         const type = gameSettings.type;
         const number = gameSettings.number;
         let help_list = [], help_text = '';
@@ -43,15 +84,15 @@ export async function fetchText(sandbox_words) {
             sandbox_words.innerHTML += `<div class="sandbox_word">${words_tag}</div>`
         });
         sandbox_input.focus(); // сразу доступен для ввода
+        console.log(sandbox_words);
+
     } catch (error) {
         console.error('Ошибка:', error);
     }
 }
 
 
-fetchText(sandbox_words);
-
-let incorrectLetters = {}, start_time, last_input_value = 0, speedCheckpoints = [], last_time = 0, speedList = [], count_letters = 0;
+let incorrectLetters = {}, start_time, last_input_value = 0, speedCheckpoints = [], last_time = 0, speedList = [], count_letters = 0, count_words = 0, row_width = 0;
 let user_data_string = localStorage.getItem('user');
 let user_data = user_data_string ? JSON.parse(user_data_string).data : null; 
 
@@ -104,6 +145,19 @@ export function inputText(curr_letter) {
             sandbox_letter[pointer_letter].classList.remove('activeLetter');
         }
     } catch(err) { pointer_letter = text_status < 3 ? pointer_letter + 1 : pointer_letter - 1; }
+
+    // эта штука нужна, чтобы убирать введённую строку слов (так можно показывать большие тексты по кусочкам в небольшом контейнере)
+    if (text[pointer_letter - 1] == ' ') {
+        const word_width = sandbox_words.children[count_words].clientWidth; // длина последнего введённого слова
+        const next_width = sandbox_words.children[count_words + 1].clientWidth; // длина следующего слова
+
+        row_width += word_width;
+        if (row_width + next_width > window.innerWidth*0.8) { // 0.8 здесь это 80vw для контейнера, где текст находится
+            row_width = 0;
+            for (let index = 0; index <= count_words; index++) sandbox_words.children[index].style.display = 'none'; // не удаляем элементы, а просто скрываем их, так не сбиваются счётчики проверки правильности ввода
+        } 
+        count_words++;
+    }
 
     last_input_value = sandbox_input.value; // запомнить длину последнего состояния
     count_letters++;

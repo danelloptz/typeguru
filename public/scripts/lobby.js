@@ -1,6 +1,5 @@
 let modalClick = document.getElementById("modalClick");
 let modalWrapper = document.querySelector(".modal_wrapper");
-let modalGameWrapper = document.querySelector(".modalGame_wrapper");
 let modalClose = document.querySelector(".modal_close");
 let user_name = document.querySelector('.lobby_profile_name');
 let modal_name = document.querySelector('.modal_name');
@@ -11,9 +10,7 @@ let lobby_profile_img = document.querySelector('.lobby_profile_img');
 let big_avatar = document.getElementById('big_avatar');
 let inputAvatar = document.getElementById('changeAvatar'); 
 let lobby_play = document.querySelector('.lobby_play');
-let modalGameClose = document.querySelector(".modalGame_close");
-let modalGame_item = document.querySelectorAll('.modalGame_item');
-let modalGame_item_input = document.querySelectorAll('.modalGame_item_input');
+
 
 
 let uniqueId = new Date().getTime(); // стартовая метка времени (нужно для обновления аватарки пользователя без перезагрузки страницы)
@@ -45,19 +42,6 @@ function CloseModal() {
     modalClick.dataset.check = 0;
 }
 
-// ========== НЕ ТЕСТИРУЕТСЯ ==========
-function openGameModal() {
-    modalGameWrapper.style.visibility = 'visible';
-    modalGameWrapper.style.pointerEvents = 'all';
-    lobby_play.dataset.check = 1;
-}
-
-// ========== НЕ ТЕСТИРУЕТСЯ ==========
-function CloseGameModal() {
-    modalGameWrapper.style.visibility = 'hidden';
-    modalGameWrapper.style.pointerEvents = 'none';
-    lobby_play.dataset.check = 0;
-}
 
 function updateAvatar() {
     lobby_profile_img.src = '../../' + user_data.data.avatar;
@@ -67,9 +51,6 @@ function updateAvatar() {
 
 modalClick.addEventListener('click',openModal);
 modalClose.addEventListener('click', CloseModal);
-
-lobby_play.addEventListener('click',openGameModal);
-modalGameClose.addEventListener('click', CloseGameModal);
 
 
 // Ставим данные пользователя в меню
@@ -206,20 +187,3 @@ document.getElementById('quit_system').addEventListener('click', () => {
         .catch(error => console.error('Error:', error));
 });
 
-function isNumber(str) {
-    let re = /^[0-9]+$/;
-    return re.test(str);
-}
-
-modalGame_item.forEach((item, index) => item.addEventListener('click', () => {
-    const input = modalGame_item_input[index].value.replaceAll(' ', ''); // введённое значение
-    if (!isNumber(input)) return; // проверяем что только цифры
-    const type = item.dataset.type; // желаемый тип данных (слово, предложение, абзац)
-    localStorage.setItem('gameSettings', JSON.stringify(
-        {
-            'type' : type,
-            'number' : +input
-        }
-    ));
-    window.location.href = 'game.html';
-}))
