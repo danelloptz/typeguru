@@ -9,6 +9,10 @@ let text;
 let modalGame_item = document.querySelectorAll('.modalGame_item');
 let modalGame_item_input = document.querySelectorAll('.modalGame_item_input');
 let modalGameWrapper = document.querySelector(".modalGame_wrapper");
+let modalGame_buttons = document.querySelectorAll('.button_play');
+let svg_average = document.querySelectorAll('.svg_average');
+let labelsModal = [], seriesModal = [], accurLabels = [], accurSeries = [];
+
 
 
 
@@ -32,10 +36,31 @@ function isNumber(str) {
     return re.test(str);
 }
 
+// 3 режима набора текста
 modalGame_item.forEach((item, index) => item.addEventListener('click', () => {
+    if (modalGame_buttons[index].dataset.state == 0) { // этот слушатель отрабатывает после того, что ниже, поэтому если не ставить это условие, то выбранная кнопка останется видимой
+        // сбрасываем прошлую активную плашку (да, просто сбрасываем все, вместо только одной, но их всего 3, так что не страшно)
+        modalGame_item.forEach(el => el.style.background = 'none');
+        modalGame_buttons.forEach(el => { el.style.visibility = 'hidden'; el.style.pointerEvents = 'none'; });
+
+        // устанавливаем состояние для текущей
+        item.style.background = '#a6c0f15d';
+        modalGame_buttons[index].style.visibility = 'visible';
+        modalGame_buttons[index].style.pointerEvents = 'all';
+    }
+}));
+
+// кнопки начала игры в режимах набора текста
+modalGame_buttons.forEach((button, index) => button.addEventListener('click', () => {
     const input = modalGame_item_input[index].value.replaceAll(' ', ''); // введённое значение
+    const type = button.dataset.type; // желаемый тип данных (слово, предложение, абзац)
+
     if (!isNumber(input)) return; // проверяем что только цифры
-    const type = item.dataset.type; // желаемый тип данных (слово, предложение, абзац)
+
+    button.style.visibility = 'hidden'; 
+    button.style.pointerEvents = 'none';
+    button.dataset.state = 1;
+    
     localStorage.setItem('gameSettings', JSON.stringify(
         {
             'type' : type,
@@ -65,17 +90,15 @@ export async function fetchText(sandbox_words) {
         if (type == 'title') {
             text.split(' ').forEach(word => { 
                 if (help_list.length < number && word.length > 1) {
-                    let _ = word.replace(/[.,?!:;]/g, '').toLowerCase();
+                    let _ = word.replace(/[.,?!:;()]/g, '').toLowerCase();
                     help_list.push(_); 
                     help_text += _ + ' ';
                 }
             });
             text = help_text.trim();
-            console.log(help_text);
         } 
 
         help_list.length == 0 ? help_list = text.split(' ') : help_list;
-        console.log(help_list);
 
         help_list.forEach(word => {
             let words_tag = ''; // здесь хранятся все span с буквами
@@ -84,7 +107,6 @@ export async function fetchText(sandbox_words) {
             sandbox_words.innerHTML += `<div class="sandbox_word">${words_tag}</div>`
         });
         sandbox_input.focus(); // сразу доступен для ввода
-        console.log(sandbox_words);
 
     } catch (error) {
         console.error('Ошибка:', error);
@@ -92,7 +114,7 @@ export async function fetchText(sandbox_words) {
 }
 
 
-let incorrectLetters = {}, start_time, last_input_value = 0, speedCheckpoints = [], last_time = 0, speedList = [], count_letters = 0, count_words = 0, row_width = 0;
+let incorrectLetters = {}, start_time, last_input_value = 0, speedCheckpoints = [], last_time = 0, speedList = [], accuracyList = [], count_letters = 0, count_words = 0, row_width = 0;
 let user_data_string = localStorage.getItem('user');
 let user_data = user_data_string ? JSON.parse(user_data_string).data : null; 
 
@@ -107,7 +129,12 @@ export function inputText(curr_letter) {
     
     // это очень приятное условие для того, чтобы на каждую секунду были записаны данные
     if ((curr_time - start_time) / 1000 >= Math.ceil((last_time - start_time) / 1000) && String((curr_time - start_time) / 1000).split('.')[0]!= String((last_time - start_time) / 1000).split('.')[0]) {
-        let curr_speed = ((pointer_letter + 1) / ((curr_time - start_time) / 1000)).toFixed(2);
+        let curr_speed = ((pointer_letter + 1) / ((curr_time - start_time) / 1000)).toFixed(2), incorrect = 0;
+        for (let count in incorrectLetters) incorrect += incorrectLetters[count];
+
+        const curr_accur = 100 - (incorrect / count_letters * 100);
+        
+        accuracyList.push([Math.floor((curr_time - start_time) / 1000), +curr_accur]);
         speedList.push([Math.floor((curr_time - start_time) / 1000), +curr_speed]);
         last_time = curr_time;
     }
@@ -208,13 +235,20 @@ export function endGame(isTest = false) {
     setUi(speed_diff, accuracy_diff, result_data);
 
     // формирование массивов данных для графика скорости
-    let labelsModal = [], seriesModal = [];
     for (let i = 0; i < speedList.length - 1; i++) {
         // этот костыль, чтобы если была пауза и в какие-то секунды не было данных, просто записать данные из последней записанной секунды
         let modal_repeat_index = speedList[i+1][0] - speedList[i][0] == 1 ? 1 : speedList[i+1][0] - speedList[i][0];
         for (let j = 0; j < modal_repeat_index; j++) {
             labelsModal.push(speedList[i][0]+j);
             seriesModal.push(speedList[i][1]);
+        }
+    }
+    for (let i = 0; i < accuracyList.length - 1; i++) {
+        // этот костыль, чтобы если была пауза и в какие-то секунды не было данных, просто записать данные из последней записанной секунды
+        let modal_repeat_index = accuracyList[i+1][0] - accuracyList[i][0] == 1 ? 1 : accuracyList[i+1][0] - accuracyList[i][0];
+        for (let j = 0; j < modal_repeat_index; j++) {
+            accurLabels.push(accuracyList[i][0]+j);
+            accurSeries.push(accuracyList[i][1]);
         }
     }
 
@@ -284,6 +318,28 @@ sandbox_input.addEventListener('input', (e) => {
     let status = inputText(e.target.value[e.target.value.length - 1]);
     if (status) endGame();
 });
+
+
+// ========== НЕ ТЕСТИРУЕТСЯ ==========
+function averageSwitch(el) {
+    const func_name = el.getAttribute('data-name');
+    document.querySelector('.svg_active').classList.toggle('svg_active');
+    el.classList.add('svg_active');
+    switch (func_name) {
+      case 'speed':
+        drawDiagram(labelsModal, seriesModal);
+        break;
+  
+      case 'accuracy':
+        drawDiagram(accurLabels, accurSeries);
+        break;
+    }
+    console.log(ct_area);
+
+  }
+
+// кнопки переключения диаграммы в конце попытки
+svg_average.forEach(el => el.addEventListener('click', () => averageSwitch(el)));
 
 
 

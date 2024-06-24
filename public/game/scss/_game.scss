@@ -131,6 +131,11 @@
                   height: 2vh;
                 }
             }
+            .button_play {
+                visibility: hidden;
+                pointer-events: none;
+                margin-top: 2vh;
+            }
         }
     }
 }
@@ -312,6 +317,25 @@
         justify-content: center;
         align-items: center;
         height: 100%;
+        flex-direction: column;
+        .diagram_block_switch {
+            display: flex;
+            column-gap: 2vw;
+            margin-top: 2vh;
+            align-self: flex-start;
+            margin-left: 2vw;
+            svg {
+                height: 4vw;
+                width: auto;
+                padding: 10px;
+                border-radius: 15px;
+                cursor: pointer;
+                g path { fill: $cyan_light; }
+            }
+            .svg_active {
+                background: $cyan_light;
+            }
+        }
     }
 }
 

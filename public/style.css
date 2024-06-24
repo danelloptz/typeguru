@@ -737,6 +737,11 @@ body {
     height: 2vh;
   }
 }
+.modalGame_wrapper .modalGame .modalGame_item .button_play {
+  visibility: hidden;
+  pointer-events: none;
+  margin-top: 2vh;
+}
 
 /* ========= Стили для введённых символов во время игры ========= */
 .correct {
@@ -962,6 +967,28 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
+  flex-direction: column;
+}
+.results .diagram_block .diagram_block_switch {
+  display: flex;
+  -moz-column-gap: 2vw;
+       column-gap: 2vw;
+  margin-top: 2vh;
+  align-self: flex-start;
+  margin-left: 2vw;
+}
+.results .diagram_block .diagram_block_switch svg {
+  height: 4vw;
+  width: auto;
+  padding: 10px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.results .diagram_block .diagram_block_switch svg g path {
+  fill: rgba(171, 213, 233, 0.4941176471);
+}
+.results .diagram_block .diagram_block_switch .svg_active {
+  background: rgba(171, 213, 233, 0.4941176471);
 }
 
 /* ========= Элементы диаграммы ========= */
