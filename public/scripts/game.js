@@ -109,7 +109,7 @@ export async function fetchText(sandbox_words) {
             text = help_text.trim();
         } 
 
-        help_list.length == 0 ? help_list = text.split(' ') : help_list;
+        help_list = help_list.length == 0 ? text.split(' ') : help_list;
 
         help_list.forEach(word => {
             let words_tag = ''; // здесь хранятся все span с буквами
