@@ -81,11 +81,22 @@ export async function fetchText(sandbox_words) {
         const number = gameSettings.number;
         let help_list = [], help_text = '';
 
-        const response = await fetch(`https://fish-text.ru/get?&type=${type != 'title' ? type : 'sentence'}&number=${number}`, {
+        const response_fish = await fetch(`https://fish-text.ru/get?&type=${type != 'title' ? type : 'sentence'}&number=${number}`, {
             method: 'GET'
         });
-        const data = await response.json();
-        text = data.text;
+
+        const data_fish = await response_fish.json();
+
+        // const response_translate = await fetch('/api/translate', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json;charset=utf-8'
+        //     },
+        //     body: JSON.stringify(data_fish)
+        // });
+        // const data_translate = await response_translate.json();
+        text = data_fish.text;
+
 
         if (type == 'title') {
             text.split(' ').forEach(word => { 

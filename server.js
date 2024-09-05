@@ -8,6 +8,10 @@ const mysql = require('mysql2');
 const hostname = "127.0.0.1";
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+// const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+// Access your API key as an environment variable (see "Set up your API key" above)
+// const genAI = new GoogleGenerativeAI(API_KEY);
 
 const session = require('express-session');
 
@@ -322,6 +326,24 @@ app.post('/api/upload', upload.single('file'), function (req, res) {
    });
 });
 
+// async function translate(text, from_lang, to_lang) {
+//    // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
+//    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+ 
+//    const prompt = `Translate this text from ${from_lang} to ${to_lang}: ${text}`
+ 
+//    const result = await model.generateContent(prompt);
+//    const response = await result.response;
+//    const answ = response.text();
+//    return answ;
+//  }
+
+//  // Все попытки пользователя
+// app.post('/api/translate', (req, res) => {
+//    if(!req.body) return res.sendStatus(400);
+//    const answ = translate(req.body.text, 'ru', 'eng');
+//    return answ;
+// });
 
 // Приватим папку game для неавторизованных пользователей
 app.use('/public/game', isAuthenticated, express.static(path.join(__dirname, 'public/game')));
