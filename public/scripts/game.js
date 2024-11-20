@@ -135,7 +135,7 @@ export function inputText(curr_letter) {
         start_time = new Date();
         last_time = new Date();
     }
-    
+        
     let curr_time = new Date();
     
     // это очень приятное условие для того, чтобы на каждую секунду были записаны данные
